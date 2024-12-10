@@ -1,0 +1,19 @@
+/* theme.css */
+:root {
+  --primary-color: #004aad;
+  --secondary-color: #ff9500;
+  --background-color: #f9fafb;
+  --text-color: #333333;
+  --error-color: #e63946;
+  --success-color: #38b000;
+}
+
+.primary-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.secondary-btn {
+  background-color: var(--secondary-color);
+  color: white;
+}
