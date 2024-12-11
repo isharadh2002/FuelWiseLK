@@ -57,12 +57,18 @@ function Header() {
                         headerOperations()
                     }
                 
-                    <Tab label="LOGO"/>
-                        
+                   
+
+                    
+                   
                     
                 
                 
-                </Tabs>
+          </Tabs>
+          <Button variant="contained" sx={{
+            bgcolor: "black",
+            borderRadius:10,px
+          }}>Register</Button>
                
             </Box>
             </div>
