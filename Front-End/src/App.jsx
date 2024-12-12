@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import VehicleRegistrationPage from "./pages/VehicleRegistrationPage";
 import Header from "./components/common/Header";
 
+
 function App() {
   return (
     <Router>

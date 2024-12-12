@@ -1,9 +1,7 @@
 import React from "react";
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { colors } from "@mui/material";
+import "../../index.css";
+
+
 
 function Header() {
   const pagesInHome = ["Home", "About Us", "Resources"];
@@ -24,54 +22,74 @@ function Header() {
         return operations.map((page, index) => (
             <Tab key={index} label={page} />
         ));
-    };
+  };
+  const div = [""];
  
 
-    return (
-      <div>
-            <Box sx={{
-                maxWidth: { xs: 320, sm: 480 },
-                bgcolor: 'background.gray',
-                alignContent: 'center',
-                color: "black",
-                '&:hover': {
-                    color: "black"
-                }
-                    
-                
-                
-            }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        variant="scrollable"
-        scrollButtons={false}
-        aria-label="scrollable prevent tabs example"
-        
-      >
-                    {
-                        headerInput()
-                    }
+  return (
+     
+    <>
+      
 
-                    {
-                        headerOperations()
-                    }
-                
-                   
 
-                    
-                   
-                    
-                
-                
-          </Tabs>
-          <Button variant="contained" sx={{
-            bgcolor: "black",
-            borderRadius:10,px
-          }}>Register</Button>
-               
-            </Box>
-            </div>
+      <div class="flex-row justify-evenly grid grid-flow-row-dense grid-cols-2  "> 
+        <div class="flex flex-wrap flex-row w-2/">
+    <nav class="flex justify-center space-x-3">
+
+      <div class="flex flex-wrap flex-row align-middle
+       w-full">
+                    <div class="w-auto h-auto">
+                        <a href="/Home" 
+                          class="font-bold px-3 py-2 text-slate-700 
+                          hover:border-b-2 hover:border-black 
+                          focus:border-b-2 focus:border-black 
+                          active:border-b-2 active:border-black-500 
+                          hover:bg-slate-100 hover:text-slate-900">
+                          Home
+                        </a>
+                    </div>
+                    <div class="w-auto h-auto">
+                        <a href="/About Us" 
+                          class="font-bold px-3 py-2 text-slate-700 
+                          hover:border-b-2 hover:border-black 
+                          focus:border-b-2 focus:border-black 
+                          active:border-b-2 active:border-black-500 
+                          hover:bg-slate-100 hover:text-slate-900">
+                          About Us
+                        </a>
+                  </div>
+          
+                <div class="w-auto h-auto">
+                        <a href="/Resources" 
+                        class="font-bold px-3 py-2 text-slate-700 
+                        hover:border-b-2 hover:border-black 
+                        focus:border-b-2 focus:border-black 
+                        active:border-b-2 active:border-black-500 
+                        hover:bg-slate-100 hover:text-slate-900">
+                        Resources
+                        </a>
+              </div>
+     <div class="flex flex-wrap flex-row 
+        w-full">
+              <div class="mx-5">
+                      <button class=" bg-slate-800 w-15 text-white hover:bg-white hover:text-black">
+                        Register
+                      </button>
+              </div>
+              <div class="mx-5">
+                      <button class="bg-white w-15 m-0 border-slate-800 text-slate-800 hover:text-white hover:bg-black ">
+                        LogIn
+                      </button>
+              </div>
+      </div>
+        </div>
+          </nav>
+          </div>
+      
+      </div>
+      
+    </>
+    
   );
 }
 
