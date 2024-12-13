@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_quota_app/screens/vehicle_details.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({super.key});
@@ -10,8 +10,7 @@ class QRScanner extends StatefulWidget {
 }
 
 class _QRScannerState extends State<QRScanner> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
+  MobileScannerController? controller;
 
   @override
   void dispose() {
@@ -19,23 +18,19 @@ class _QRScannerState extends State<QRScanner> {
     super.dispose();
   }
 
-  void _onQRViewCreated(QRViewController qrController) {
-    controller = qrController;
-    controller?.scannedDataStream.listen((scanData) {
-      final vehicleId = scanData.code;
+  void _onScan(BarcodeCapture capture) {
+    final vehicleId = capture.barcodes.first.rawValue;
 
-      if (vehicleId != null) {
-        controller?.pauseCamera();
+    if (vehicleId != null) {
+      controller?.stop();
 
-        // Redirect to VehicleDetails page with the vehicleId
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VehicleDetails(vehicleId: vehicleId),
-          ),
-        );
-      }
-    });
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VehicleDetails(vehicleId: vehicleId),
+        ),
+      );
+    }
   }
 
   @override
@@ -45,9 +40,9 @@ class _QRScannerState extends State<QRScanner> {
         title: const Text('Scan QR Code'),
         centerTitle: true,
       ),
-      body: QRView(
-        key: qrKey,
-        onQRViewCreated: _onQRViewCreated,
+      body: MobileScanner(
+        controller: controller ??= MobileScannerController(),
+        onDetect: _onScan,
       ),
     );
   }
