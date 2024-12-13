@@ -103,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                'Skip Login',
+                'Dashboard',
                 style: TextStyle(
                   color: Colors.blue,
                 ),
