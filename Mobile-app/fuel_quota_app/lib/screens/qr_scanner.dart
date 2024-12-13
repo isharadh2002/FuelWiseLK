@@ -13,15 +13,19 @@ class QRScanner extends StatelessWidget {
         centerTitle: true,
       ),
       body: MobileScanner(
-        onDetect: (barcode, args) {
-          final String? data = barcode.rawValue;
-          if (data != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => VehicleDetails(vehicleId: data),
-              ),
-            );
+        onDetect: (capture) {
+          final List<Barcode> barcodes = capture.barcodes;
+          for (final barcode in barcodes) {
+            final String? data = barcode.rawValue;
+            if (data != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VehicleDetails(vehicleId: data),
+                ),
+              );
+              break;
+            }
           }
         },
       ),
