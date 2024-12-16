@@ -24,16 +24,16 @@ function Footer() {
                     <h4>Follow Us</h4>
                     <div className="social-icons">
                         <a href="https://facebook.com" target="_blank" rel="noreferrer">
-                            <img src="../../../public/SocialMediaIcons/Facebook.png" alt='Facebook Logo'/>
+                            <img src="/public/SocialMediaIcons/Facebook.png" alt='Facebook Logo'/>
                         </a>
                         <a href="https://x.com" target="_blank" rel="noreferrer">
-                            <img src="../../../public/SocialMediaIcons/X.png" alt='Facebook Logo'/>
+                            <img src="/public/SocialMediaIcons/X.png" alt='Facebook Logo'/>
                         </a>
                         <a href="https://youtube.com" target="_blank" rel="noreferrer">
-                            <img src="../../../public/SocialMediaIcons/YouTube.png" alt='Facebook Logo'/>
+                            <img src="/public/SocialMediaIcons/YouTube.png" alt='Facebook Logo'/>
                         </a>
                         <a href="https://instagram.com" target="_blank" rel="noreferrer">
-                            <img src="../../../public/SocialMediaIcons/Instagram.png" alt='Facebook Logo'/>
+                            <img src="/public/SocialMediaIcons/Instagram.png" alt='Facebook Logo'/>
                         </a>
                     </div>
                 </div>

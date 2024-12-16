@@ -21,6 +21,10 @@
     flex-grow: 1;
 }
 
+.footer-logo, .footer-links, .footer-social{
+    margin: 0px 20px;
+}
+
 .footer-logo {
     flex: 1;
     max-width: 300px;
