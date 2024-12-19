@@ -1,0 +1,136 @@
+/* General Footer Styles */
+.footer {
+    background: linear-gradient(135deg, #1e1e2f, #282843);
+    color: #ffffff;
+    padding: 40px 10%;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 1000px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100vw;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 100px;
+    align-items: flex-start;
+    max-width: 1000px;
+    flex-grow: 1;
+}
+
+.footer-logo, .footer-links, .footer-social{
+    margin: 0px 20px;
+}
+
+.footer-logo {
+    flex: 1;
+    max-width: 300px;
+}
+
+.footer-logo h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #ffd700; /* Golden accent color */
+}
+
+.footer-logo p {
+    font-size: 14px;
+    color: #cccccc;
+    line-height: 1.6;
+}
+
+.footer-links {
+    flex: 1;
+    max-width: 200px;
+}
+
+.footer-links h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #ffd700;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin: 8px 0;
+}
+
+.footer-links ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: #ffd700;
+}
+
+.footer-social {
+    flex: 1;
+    max-width: 200px;
+}
+
+.footer-social h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #ffd700;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #ffd700;
+    color: #1e1e2f;
+    border-color: #ffd700;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #cccccc;
+    max-width: 1000px;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-logo, .footer-links, .footer-social {
+        max-width: 100%;
+    }
+}
