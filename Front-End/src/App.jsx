@@ -10,17 +10,20 @@ import LoginForm from './pages/LoginPage';
 
 function App() {
     return (
-        <>
-            <Router>
-                <Routes>
-                    <Global styles={globalStyles}/>
-                    <LoginForm/>
-                    <Route path="/Home" element={<Header/>}/>
-                    <Route path="/" element={<VehicleRegistrationPage/>}/>
-                    <Route path='/footer' element={<Footer/>}/>
-                </Routes>
-            </Router>
-        </>
+      <>
+        <Router>
+          <Global styles={globalStyles} />
+          
+            <Routes>
+              <Route path="/home" element={<Header />} />
+              <Route path="/" element={<VehicleRegistrationPage />} />
+              <Route path="/footer" element={<Footer />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="*" element={<div>404 Not Found</div>} />
+            </Routes>
+            
+        </Router>
+      </>
     );
 }
 

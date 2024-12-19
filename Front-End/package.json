@@ -12,20 +12,22 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.1.10",
+    "@mui/icons-material": "^6.2.1",
     "@mui/lab": "^6.0.0-beta.18",
-    "@mui/material": "^6.1.10",
+    "@mui/material": "^6.2.1",
     "@mui/styled-engine-sc": "^6.1.10",
+    "formik": "^2.4.6",
     "material": "^0.9.20",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.2",
     "styled": "^1.0.0",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "yup": "^1.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
-    "@types/react": "^19.0.1",
+    "@types/react": "^18.3.17",
     "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react-swc": "^3.7.2",
     "autoprefixer": "^10.4.20",
