@@ -1,23 +1,8 @@
-/** @type {import('tailwindcss').Config} */
-//const plugin = require('tailwindcss/plugin');
-import plugin from "tailwindcss";
-
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
-  darkMode: ['variant', [
-    '@media (prefers-color-scheme: dark) { &:not(.light *) }',
-    '&:is(.dark *)',
-  ]],
+module.exports = {
+  darkMode: "class", // Enable class-based dark mode
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {},
   },
-  plugins: [plugin(function({ addUtilities, addComponents, e, config }) {
-    
-  }),
-    
-  ],
-}
-
+  plugins: [],
+};
