@@ -6,7 +6,7 @@ import Footer from "./components/common/Footer";
 import {Global} from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
-import RegisterForm from "./pages/RegisterForm";
+import RegisterForm from './pages/RegisterPage';
 
 function App() {
     return (
