@@ -6,7 +6,7 @@ import Footer from "./components/common/Footer";
 import {Global} from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
-
+import RegisterForm from "./pages/RegisterForm";
 
 function App() {
     return (
@@ -19,6 +19,7 @@ function App() {
               <Route path="/" element={<VehicleRegistrationPage />} />
               <Route path="/footer" element={<Footer />} />
               <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<RegisterForm />} />
               <Route path="*" element={<div>404 Not Found</div>} />
             </Routes>
             
