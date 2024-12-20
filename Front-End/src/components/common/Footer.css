@@ -110,6 +110,13 @@
     border-color: #ffd700;
 }
 
+.social-icons img{
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
 /* Footer Bottom */
 .footer-bottom {
     margin-top: 20px;
