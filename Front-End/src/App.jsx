@@ -6,24 +6,25 @@ import Footer from "./components/common/Footer";
 import {Global} from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
+import PageNotFound from "./PageNotFound";
 
 
 function App() {
     return (
-      <>
-        <Router>
-          <Global styles={globalStyles} />
-          
-            <Routes>
-              <Route path="/home" element={<Header />} />
-              <Route path="/" element={<VehicleRegistrationPage />} />
-              <Route path="/footer" element={<Footer />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="*" element={<div>404 Not Found</div>} />
-            </Routes>
-            
-        </Router>
-      </>
+        <>
+            <Router>
+                <Global styles={globalStyles}/>
+
+                <Routes>
+                    <Route path="/home" element={<Header/>}/>
+                    <Route path="/" element={<VehicleRegistrationPage/>}/>
+                    <Route path="/footer" element={<Footer/>}/>
+                    <Route path="/login" element={<LoginForm/>}/>
+                    <Route path="*" element={<PageNotFound/>}/>
+                </Routes>
+
+            </Router>
+        </>
     );
 }
 
