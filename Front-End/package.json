@@ -15,7 +15,7 @@
     "@headlessui/react": "^2.2.0",
     "@mui/icons-material": "^6.1.10",
     "@mui/lab": "^6.0.0-beta.18",
-    "@mui/material": "^6.1.10",
+    "@mui/material": "^6.2.1",
     "@mui/styled-engine-sc": "^6.1.10",
     "antd": "^5.22.4",
     "material": "^0.9.20",

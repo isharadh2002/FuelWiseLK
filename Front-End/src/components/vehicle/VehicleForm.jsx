@@ -1,57 +1,98 @@
-// src/components/vehicle/VehicleForm.jsx
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
-import InputField from "../common/InputField";
 
-const VehicleForm = () => {
-  const [formData, setFormData] = useState({
-    vehicleNumber: "",
-    ownerName: "",
-    model: "",
-  });
+import { experimentalStyled as styled } from '@mui/material/styles';
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+import {Card,TextField,Paper,Box,Grid} from '@mui/material';
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Vehicle Registered:", formData);
-    // Call API to register vehicle
-  };
+function VehicleForm() {
 
-  return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ maxWidth: "500px", margin: "0 auto" }}
-    >
-      <InputField
-        label="Vehicle Number"
-        name="vehicleNumber"
-        value={formData.vehicleNumber}
-        onChange={handleChange}
-        required
-      />
-      <InputField
-        label="Owner Name"
-        name="ownerName"
-        value={formData.ownerName}
-        onChange={handleChange}
-        required
-      />
-      <InputField
-        label="Vehicle Model"
-        name="model"
-        value={formData.model}
-        onChange={handleChange}
-        required
-      />
-      <button type="submit" className="primary-btn">
-        Register Vehicle
-      </button>
-    </form>
-  );
-};
+  
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(2),
+    textAlign: 'center',
+   
+    
+    }));
 
-export default VehicleForm;
+  
+
+   return (
+     <>
+       <div className=' h-screen  w-screen flex justify-center items-center '>
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 1, sm: 1, md: 2 }}>
+                  <Item sx={{boxShadow:'none',display:'flex',alignItems:'center',justifyContent:'center' ,width:'65%'}}>
+                      <div className='flex flex-col  items-center text-green-600 font-bold text-6xl'>
+                        <h1>Welcome!...</h1>
+                        <h2 className='font-mono text-wrap text'>Register your Vehicle Here</h2>
+                      </div>
+                  </Item>
+                  <Item sx={{boxShadow:'none',display:'flex',alignItems:'center',justifyContent:'center' ,width:'35%'}}>
+                  <Card sx={{ maxWidth: 345,boxShadow:'5px', margin:'15px' }}>
+                      <div className=' '>
+                   <TextField
+                     sx={{
+                       marginBottom: '10px',
+                       
+                            
+                          }}
+                          id="outlined-multiline-flexible"
+                          label="Vehicle Brand"
+                          multiline
+                          maxRows={4}
+                        />
+                   <TextField
+                     sx={{marginBottom:'10px'}}
+                          id="outlined-multiline-flexible"
+                          label="Vehicle Model"
+                          multiline
+                          maxRows={4}
+                   />
+                   <TextField
+                     sx={{marginBottom:'10px'}}
+                          id="outlined-multiline-flexible"
+                          label="Register Number"
+                          multiline
+                          maxRows={4}
+                   />
+                   <TextField
+                     sx={{marginBottom:'10px'}}
+                          id="outlined-multiline-flexible"
+                          label="Vehicle Brand"
+                          multiline
+                          maxRows={4}
+                   />
+                   <TextField
+                     sx={{marginBottom:'10px'}}
+                          id="outlined-multiline-flexible"
+                          label="Owner's Full Name"
+                          multiline
+                          maxRows={4}
+                   />
+                   <TextField
+                     sx={{marginBottom:'10px'}}
+                          id="outlined-multiline-flexible"
+                          label="Name with initial"
+                          multiline
+                          maxRows={4}
+                   />
+                   
+                   
+                   
+                   
+                      </div>
+                    </Card>
+                  </Item>
+            </Grid>
+        </Box>
+           
+            
+       
+       </div>
+
+     </>
+   );
+ }
+ export default VehicleForm;
+
