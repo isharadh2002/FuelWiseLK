@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface VehicleOwnerRepository extends JpaRepository<VehicleOwner, Integer> {
 
-    Optional<VehicleOwner> findByEmail(String ownerEmail);
+    Optional<VehicleOwner> findByEmail(String email);
 
-    Optional<VehicleOwner> findOneByEmailAndPassword(String ownerEmail, String ownerPassword);
+    Optional<VehicleOwner> findOneByEmailAndPassword(String email, String password);
 }

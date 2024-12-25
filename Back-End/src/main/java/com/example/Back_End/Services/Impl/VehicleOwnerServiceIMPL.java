@@ -45,7 +45,7 @@ public class VehicleOwnerServiceIMPL implements VehicleOwnerService {
         if (vehicleOwnerOpt.isPresent()) {
             VehicleOwner vehicleOwner = vehicleOwnerOpt.get();
             String password = loginDTO.getPassword();
-            String encodedPassword = vehicleOwner.getOwnerPassword();
+            String encodedPassword = vehicleOwner.getPassword();
             boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
 
             if (isPwdRight) {

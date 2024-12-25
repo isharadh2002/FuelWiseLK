@@ -18,18 +18,18 @@ public class VehicleOwner {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incremented primary key
     @Column(name = "owner_id") // Explicit column name in DB
     @EqualsAndHashCode.Include // Primary key for equality
-    private Long ownerID;
+    private Integer ownerID;
 
     @Column(name = "owner_name", nullable = false) // Ensure not null
     @ToString.Include
     private String ownerName;
 
-    @Column(name = "owner_email", nullable = false, unique = true) // Email must be unique
+    @Column(name = "email", nullable = false, unique = true) // Email must be unique
     @ToString.Include
-    private String ownerEmail;
+    private String email;
 
-    @Column(name = "owner_password", nullable = false)
-    private String ownerPassword; // Excluded from ToString
+    @Column(name = "password", nullable = false)
+    private String password; // Excluded from ToString
 
     @Column(name = "owner_phone")
     @ToString.Include

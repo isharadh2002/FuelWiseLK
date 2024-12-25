@@ -17,6 +17,7 @@ public class VehicleOwnerController {
     private VehicleOwnerService vehicleOwnerService;
     @PostMapping(path = "/save")
     public String saveVehicleOwner(@RequestBody VehicleOwnerDTO employeeDTO)
+
     {
         String id = vehicleOwnerService.addVehicleOwner(employeeDTO);
         return id;
@@ -24,6 +25,7 @@ public class VehicleOwnerController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<?> loginEmployee(@RequestBody LoginDTO loginDTO)
+
     {
         LoginResponse loginResponse = vehicleOwnerService.loginVehicleOwner(loginDTO);
         return ResponseEntity.ok(loginResponse);
