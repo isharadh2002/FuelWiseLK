@@ -1,10 +1,8 @@
 package com.example.Back_End.Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+
 import java.util.List;
 
 @Entity
@@ -12,6 +10,8 @@ import java.util.List;
 @Setter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class VehicleOwner {
 
     @Id
@@ -38,9 +38,6 @@ public class VehicleOwner {
     @OneToMany(mappedBy = "vehicleOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vehicle> vehicles; // Bidirectional relationship
 
-    // Optional: Add custom setter for password hashing
-    public void setOwnerPassword(String ownerPassword) {
-        // Hash the password before storing (use a proper library like BCrypt)
-        this.ownerPassword = ownerPassword; // Placeholder for actual hashing logic
-    }
+
+
 }
