@@ -7,7 +7,7 @@ import Footer from "./components/common/Footer";
 import {Global} from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
-
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
     return (
@@ -17,6 +17,7 @@ function App() {
           
             <Routes>
               <Route path="/home" element={<Header />} />
+              <Route path="/register" element={<RegisterPage />} />
               <Route path="/" element={<VehicleRegistrationPage />} />
               <Route path="/footer" element={<Footer />} />
               <Route path="/login" element={<LoginForm />} />

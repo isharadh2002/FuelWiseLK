@@ -1,4 +1,4 @@
-package com.example.Back_End.repository;
+package com.example.Back_End.Repository;
 
 import com.example.Back_End.Entity.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
