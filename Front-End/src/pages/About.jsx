@@ -3,9 +3,9 @@ import React from "react";
 const About = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-green-50">
-      <div className="max-w-4xl bg-white rounded-lg shadow-lg p-8">
+      <div className="max-w-4xl bg-light green rounded-lg shadow-lg p-8">
         {/* Heading */}
-        <h1 className="text-3xl font-bold text-center text-green-800 mb-6">
+        <h1 className="text-3xl font-bold text-center text-green-500 mb-6">
           About Us
         </h1>
 
@@ -13,7 +13,7 @@ const About = () => {
         <p className="text-black text-lg mb-6 leading-relaxed">
           In the face of fuel crises, effective management is crucial to ensure
           equitable distribution and reduce inconvenience for citizens. Our{" "}
-          <span className="font-semibold text-green-700">
+          <span className="font[550] text-green-600">
             Fuel Quota Management System
           </span>{" "}
           is tailored to streamline fuel allocation and distribution in Sri
@@ -22,7 +22,7 @@ const About = () => {
         </p>
 
         {/* Section: Our Purpose */}
-        <h2 className="text-2xl font-semibold text-green-800 mb-4">
+        <h2 className="text-2xl font-semibold text-green-600 mb-4">
           Our Purpose
         </h2>
         <p className="text-black mb-6 leading-relaxed">
@@ -34,7 +34,7 @@ const About = () => {
         </p>
 
         {/* Section: Key Features */}
-        <h2 className="text-2xl font-semibold text-green-800 mb-4">
+        <h2 className="text-2xl font-semibold text-green-600 mb-4">
           Key Features
         </h2>
         <ul className="list-disc pl-6 space-y-2 mb-6 text-black">
@@ -57,7 +57,7 @@ const About = () => {
         </ul>
 
         {/* Section: Technology Stack */}
-        <h2 className="text-2xl font-semibold text-green-800 mb-4">
+        <h2 className="text-2xl font-semibold text-green-600 mb-4">
           Technology Stack
         </h2>
         <ul className="list-disc pl-6 space-y-2 mb-6 text-black">
@@ -83,7 +83,7 @@ const About = () => {
         </ul>
 
         {/* Section: Our Mission */}
-        <h2 className="text-2xl font-semibold text-green-800 mb-4">
+        <h2 className="text-2xl font-semibold text-green-600 mb-4">
           Our Mission
         </h2>
         <p className="text-black mb-6 leading-relaxed">
@@ -94,7 +94,7 @@ const About = () => {
         </p>
 
         {/* Section: Our Team */}
-        <h2 className="text-2xl font-semibold text-green-800 mb-4">
+        <h2 className="text-2xl font-semibold text-green-600 mb-4">
           Our Team
         </h2>
         <p className="text-black leading-relaxed">
