@@ -22,33 +22,97 @@ function VehicleForm() {
     const [capacity,setCapacity]=useState("");
     const [owFullName,setOwFullName]=useState("");
     const [nameWithInitials,setNameWithInitial]=useState("");
-    const [nic,setNic]=useState("");
-    
-  const isEmpty = () => {
-    
-    
-  };
-  const afterSubmitting = (e) => {
-    e.preventDefault();
-    if (!isEmpty()) {
-      document.location.href("");
-      //To giving another Location to above space
-    }
-    // to submit the values in to database through Backend DataBase
-
-
-
+    const [nic, setNic] = useState("");
+    const [errors, setErrors] = useState("");
+  //To set the values to the useStates()
+    const handleInputChange = (event) => {
+      const { name, value } = event.target;
+      switch (name) {
+        case "brand":
+          setBrand(value);
+          break;
+        case "model":
+          setModel(value);
+          break;
+        case "number":
+          setNumber(value);
+          break;
+        case "capacity":
+          setCapacity(value);
+          break;
+        case "owFullName":
+          setOwFullName(value);
+          break;
+        case "nameWithInitial":
+          setNameWithInitial();
+          break;
+        case "nic":
+          setNic();
+          break;
+        default:
+          alert("There may be a server Error !,So Try again later");
+          break;
+      }
       
-  }; 
+  };
+  //Validate the Text fields
+  const validation = () => {
+    const newErrors = {};
+    const fields = [brand, model, number, capacity, owFullName, nameWithInitials, nic];
+    fields.forEach(element => {
+      if (!element.trim()) {
+        newErrors.element = {element}+"is required";
+      }
+      
+      
+    });
+    setErrors(newErrors);
+    //If no errors return true
+    return newErrors.length === 0;
+  };
     
-    
+    const handleSubmit =  (event) => {
+      event.preventDefault();
+      handleInputChange(event);
+      if (validation()) {
+        alert("Data Submitted Successfully!...");
+      }
+      else {
+        alert("There is issue of data submitting!...");
+        return;
+      }
+      //The code to store the data in the database using rest API
+      /*
+      const formData = {
+        brand,
+        model,
+        number,
+        capacity,
+        owFullName,
+        nameWithInitials,
+        nic,
+        
+      };
+ 
+      try {
+        const response =  fetch("/api/submit-vehicle", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
   
+        if (!response.ok) {
+          throw new Error("Failed to submit vehicle data");
+        }
   
-
-
-
+        // Handle successful submission (e.g., clear form, show success message)
+      } catch (error) {
+        console.error("Error submitting vehicle data:", error);
+        // Handle errors (e.g., display error message to user)
+      }
+      */
+    };
   
-
    return (
      <>
        
@@ -117,6 +181,11 @@ function VehicleForm() {
                           maxRows={4}
                    />
                    
+                   { 
+                    //To print if the textfield is not fulfilled  
+                     errors.brand && <p className="text-center text-blue-600 font-semibold"> {errors.brand} </p>
+                   }
+                   
                    
                    <TextField
                      sx={{
@@ -124,11 +193,7 @@ function VehicleForm() {
                        marginTop: '20px', 
                        width: '265px',
                        height: 'auto',
-                       
-                       
-                       
-                       
-                            
+                              
                      }}
                           value={model}
                           onInput={()=>setModel()}
@@ -138,25 +203,21 @@ function VehicleForm() {
                           name='model'
                           type='text'
                           autoFocus
-                          
                           required
                           fullWidth
-
                           variant='outlined'
                           color='success'
                           multiline
                           maxRows={4}
                    />
+                        {errors.model && <p className="text-center text-blue-600 font-semibold"> {errors.model} </p>}
+
                    <TextField
                      sx={{
                        marginBottom: '20px',
                        marginTop: '20px', 
                        width: '265px',
                        height: 'auto',
-                       
-                       
-                       
-                       
                             
                      }}
                           value={number}
@@ -167,26 +228,20 @@ function VehicleForm() {
                           name='brand'
                           type='text'
                           autoFocus
-                          
                           required
                           fullWidth
-
                           variant='outlined'
                           color='success'
                           multiline
                           maxRows={4}
                    />
+                   {errors.number && <p className="text-center text-blue-600 font-semibold"> {errors.number} </p>}
                    <TextField
                      sx={{
                        marginBottom: '20px',
                        marginTop: '20px', 
                        width: '265px',
                        height: 'auto',
-                       
-                       
-                       
-                       
-                            
                      }}
                           value={capacity}
                           onInput={()=>setCapacity()}
@@ -196,27 +251,21 @@ function VehicleForm() {
                           name='en_Capacity'
                           type='text'
                           autoFocus
-                          
                           required
                           fullWidth
-
                           variant='outlined'
                           color='success'
                           multiline
                           maxRows={4}
                    />
-                   
+                   {errors.capacity && <p className="text-center text-blue-600 font-semibold"> {errors.capacity} </p>}
                    <TextField
                      sx={{
                        marginBottom: '20px',
                        marginTop: '20px', 
                        width: '265px',
                        height: 'auto',
-                       
-                       
-                       
-                       
-                            
+                        
                      }}
                           value={owFullName}
                           onInput={()=>setOwFullName()}
@@ -226,15 +275,14 @@ function VehicleForm() {
                           name='ow_Fullname'
                           type='text'
                           autoFocus
-                          
                           required
                           fullWidth
-
                           variant='outlined'
                           color='success'
                           multiline
                           maxRows={4}
                    />
+                   {errors.owFullName && <p className="text-center text-blue-600 font-semibold"> {errors.owFullName} </p>}
                    
                    <TextField
                      sx={{
@@ -242,11 +290,7 @@ function VehicleForm() {
                        marginTop: '20px', 
                        width: '265px',
                        height: 'auto',
-                       
-                       
-                       
-                       
-                            
+                          
                           }}
                           value={nameWithInitials}
                           onInput={()=>setNameWithInitial()}
@@ -256,24 +300,20 @@ function VehicleForm() {
                           name='with_Initials'
                           type='text'
                           autoFocus
-                          
                           required
                           fullWidth
-
                           variant='outlined'
                           color='success'
                           multiline
                           maxRows={4}
                    />
+                   {errors.nameWithInitials && <p className="text-center text-blue-600 font-semibold"> {errors.nameWithInitials} </p>}
                    <TextField
                      sx={{
                        marginBottom: '20px',
                        marginTop: '20px', 
                        width: '265px',
                        height: 'auto',
-                       
-                       
-                       
                        
                             
                           }}
@@ -285,15 +325,14 @@ function VehicleForm() {
                           name='nic_Number'
                           type='text'
                           autoFocus
-                          
                           required
                           fullWidth
-
                           variant='outlined'
                           color='success'
                           multiline
                           maxRows={4}
                    />
+                   {errors.nic && <p className="text-center text-blue-600 font-semibold"> {errors.nic} </p>}
                    
                   <div>
                    <Button variant="contained"
@@ -308,20 +347,17 @@ function VehicleForm() {
                        }}
                       
                        onclick={(e) => {
-                         e.target.value; 
-                         afterSubmitting();
-                       }}
-                   
-                  
-                   
-                   
-                 >
+                         handleSubmit(e);
+                       }} 
+                  >
                        <Typography
                          fontWeight=""
                        >
                          Register
                        </Typography>
-                 </Button>
+                     </Button>
+                     {validation() === true ? <p className="text-center font-semibold text-gray-600">{"Successfully!..."}</p> :
+                      <p className="text-center font-semibold text-gray-600">{"Error!...Try again"}</p>}
                    </div>
                    
                  </div>
