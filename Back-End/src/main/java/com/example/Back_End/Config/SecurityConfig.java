@@ -20,7 +20,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF if required
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/VehicleOwner/save").permitAll()  // Allow public access to this endpoint
+                        .requestMatchers("/api/v1/VehicleOwner/save").permitAll()
+                        .requestMatchers("/api/v1/VehicleOwner/login").permitAll()// Allow public access to this endpoint
                         .anyRequest().authenticated()  // All other endpoints require authentication
                 );
 
