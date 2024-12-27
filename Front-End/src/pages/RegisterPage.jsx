@@ -27,7 +27,7 @@ const RegistrationForm = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-green-50">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-14">
         {/* Vehicle Registration Heading */}
         <h2 className="text-2xl font-bold text-black text-center mb-6">
           Vehicle Registration
