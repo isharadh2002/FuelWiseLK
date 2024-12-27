@@ -1,5 +1,5 @@
 import React from "react";
-import VehicleForm from "../components/vehicle/VehicleForm";
+import VehicleForm from "./VehicleForm";
 
 const VehicleRegistrationPage = () => (
     <div className="container" style={divStyles}>
