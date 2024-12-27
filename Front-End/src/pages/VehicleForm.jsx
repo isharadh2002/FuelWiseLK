@@ -18,12 +18,6 @@ function VehicleForm() {
     textAlign: 'center',
   }));
 
-  // ... rest of the code
-  
-
-  
-  
- 
   
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
