@@ -7,6 +7,7 @@ import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
 import RegisterPage from "./pages/RegisterPage";
 import PageNotFound from "./pages/PageNotFound";
+import VehicleForm from "./pages/VehicleForm";
 
 function App() {
     return (
@@ -14,8 +15,9 @@ function App() {
         <Router>
           <Global styles={globalStyles} />
           
-            <Routes>
-              <Route path="/home" element={<Header />} />
+          <Routes>
+              <Route path="/VehicleRegister" element={<VehicleForm />} />           
+              <Route path="/Home" element={<Header />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/" element={<VehicleRegistrationPage />} />
               <Route path="/footer" element={<Footer />} />
