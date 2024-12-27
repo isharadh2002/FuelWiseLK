@@ -1,56 +1,33 @@
 import React from "react";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import VehicleRegistrationPage from "./pages/VehicleRegistrationPage";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
-import {Global} from '@emotion/react';
+import { Global } from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
-<<<<<<< HEAD
+import RegisterForm from './pages/RegisterPage';
+import About from "./pages/About";
 import PageNotFound from "./PageNotFound";
-
 
 function App() {
     return (
         <>
             <Router>
-                <Global styles={globalStyles}/>
+                <Global styles={globalStyles} />
 
                 <Routes>
-                    <Route path="/home" element={<Header/>}/>
-                    <Route path="/" element={<VehicleRegistrationPage/>}/>
-                    <Route path="/footer" element={<Footer/>}/>
-                    <Route path="/login" element={<LoginForm/>}/>
-                    <Route path="*" element={<PageNotFound/>}/>
+                    <Route path="/home" element={<Header />} />
+                    <Route path="/" element={<VehicleRegistrationPage />} />
+                    <Route path="/footer" element={<Footer />} />
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/register" element={<RegisterForm />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="*" element={<PageNotFound />} />
                 </Routes>
-
             </Router>
         </>
-=======
-import RegisterForm from './pages/RegisterPage';
-import About from "./pages/About";
-
-function App() {
-    return (
-      <>
-        <Router>
-          <Global styles={globalStyles} />
-          
-            <Routes>
-              <Route path="/home" element={<Header />} />
-              <Route path="/" element={<VehicleRegistrationPage />} />
-              <Route path="/footer" element={<Footer />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/about" element={<About />} />
-              <Route path="*" element={<div>404 Not Found</div>} />
-            </Routes>
-            
-        </Router>
-      </>
->>>>>>> Sahani
     );
 }
 
 export default App;
-
