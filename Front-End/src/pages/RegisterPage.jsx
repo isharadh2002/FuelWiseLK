@@ -3,7 +3,6 @@ import axios from "axios";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
-    vehicleNumber: "",
     ownerName: "",
     ownerPhone: "",
     email: "",
@@ -29,11 +28,10 @@ const RegistrationForm = () => {
 
     try {
       await axios.post("http://localhost:8080/api/v1/VehicleOwner/save", {
-        vehicleNumber: formData.vehicleNumber,
         ownerName: formData.ownerName,
         ownerPhone: formData.ownerPhone,
-        email: formData.email,
-        password: formData.password,
+        ownerEmail: formData.email,
+        ownerPassword: formData.password,
       });
       alert("Vehicle Registration Successfully");
     } catch (err) {
@@ -50,25 +48,7 @@ const RegistrationForm = () => {
         </h2>
 
         <form onSubmit={save}>
-          {/* Vehicle Number Input */}
-          <div className="mb-4">
-            <label
-              htmlFor="vehicleNumber"
-              className="block mb-1 text-sm font-medium text-black"
-            >
-              Vehicle Number
-            </label>
-            <input
-              type="text"
-              id="vehicleNumber"
-              name="vehicleNumber"
-              value={formData.vehicleNumber}
-              onChange={handleInputChange}
-              placeholder="Enter vehicle number"
-              className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none"
-              required
-            />
-          </div>
+
 
           {/* Owner Name Input */}
           <div className="mb-4">
@@ -96,7 +76,7 @@ const RegistrationForm = () => {
               htmlFor="ownerPhone"
               className="block mb-1 text-sm font-medium text-black"
             >
-              Vehicle Model
+              Owner Phone
             </label>
             <input
               type="text"
