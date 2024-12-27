@@ -7,6 +7,7 @@ import {Global} from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
 import RegisterForm from './pages/RegisterPage';
+import About from "./pages/About";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
               <Route path="/footer" element={<Footer />} />
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<RegisterForm />} />
+              <Route path="/about" element={<About />} />
               <Route path="*" element={<div>404 Not Found</div>} />
             </Routes>
             
