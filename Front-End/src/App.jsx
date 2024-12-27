@@ -6,6 +6,7 @@ import Footer from "./components/common/Footer";
 import {Global} from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
+<<<<<<< HEAD
 import PageNotFound from "./PageNotFound";
 
 
@@ -25,6 +26,29 @@ function App() {
 
             </Router>
         </>
+=======
+import RegisterForm from './pages/RegisterPage';
+import About from "./pages/About";
+
+function App() {
+    return (
+      <>
+        <Router>
+          <Global styles={globalStyles} />
+          
+            <Routes>
+              <Route path="/home" element={<Header />} />
+              <Route path="/" element={<VehicleRegistrationPage />} />
+              <Route path="/footer" element={<Footer />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<RegisterForm />} />
+              <Route path="/about" element={<About />} />
+              <Route path="*" element={<div>404 Not Found</div>} />
+            </Routes>
+            
+        </Router>
+      </>
+>>>>>>> Sahani
     );
 }
 
