@@ -6,10 +6,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehicleOwnerDTO {
+
     private String ownerName;
     private String ownerEmail;
     private String ownerPassword;
     private String ownerPhone;
-
-
+    
 }

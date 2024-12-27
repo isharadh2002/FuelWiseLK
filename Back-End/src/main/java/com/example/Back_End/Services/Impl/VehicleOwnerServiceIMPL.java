@@ -43,6 +43,7 @@ public class VehicleOwnerServiceIMPL implements VehicleOwnerService {
         Optional<VehicleOwner> vehicleOwnerOpt = vehicleOwnerRepository.findByEmail(loginDTO.getEmail());
 
         if (vehicleOwnerOpt.isPresent()) {
+
             VehicleOwner vehicleOwner = vehicleOwnerOpt.get();
             String password = loginDTO.getPassword();
             String encodedPassword = vehicleOwner.getPassword();

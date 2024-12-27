@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import axios from "axios";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
     vehicleNumber: "",
     ownerName: "",
-    vehicleModel: "",
+    ownerPhone: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -13,32 +14,47 @@ const RegistrationForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData({
+      ...formData,
       [name]: type === "checkbox" ? checked : value,
-    }));
+    });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
-  };
+  async function save(event) {
+    event.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:8080/api/v1/VehicleOwner/save", {
+        vehicleNumber: formData.vehicleNumber,
+        ownerName: formData.ownerName,
+        ownerPhone: formData.ownerPhone,
+        email: formData.email,
+        password: formData.password,
+      });
+      alert("Vehicle Registration Successfully");
+    } catch (err) {
+      alert("Registration failed: " + err.message);
+    }
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-green-50">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+    <div className="flex items-center justify-center overflow-hidden bg-gray-500">
+      <div className="w-full p-7 bg-gray-100 rounded-lg shadow-md sm:w-[26rem]">
         {/* Vehicle Registration Heading */}
-        <h2 className="text-2xl font-bold text-black text-center mb-6">
+        <h2 className="mb-6 text-2xl font-bold text-center text-green-600">
           Vehicle Registration
         </h2>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={save}>
           {/* Vehicle Number Input */}
           <div className="mb-4">
             <label
               htmlFor="vehicleNumber"
-              className="block text-sm font-medium text-black mb-1"
+              className="block mb-1 text-sm font-medium text-black"
             >
               Vehicle Number
             </label>
@@ -49,7 +65,7 @@ const RegistrationForm = () => {
               value={formData.vehicleNumber}
               onChange={handleInputChange}
               placeholder="Enter vehicle number"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none text-black"
+              className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none"
               required
             />
           </div>
@@ -58,7 +74,7 @@ const RegistrationForm = () => {
           <div className="mb-4">
             <label
               htmlFor="ownerName"
-              className="block text-sm font-medium text-black mb-1"
+              className="block mb-1 text-sm font-medium text-black"
             >
               Owner Name
             </label>
@@ -69,27 +85,27 @@ const RegistrationForm = () => {
               value={formData.ownerName}
               onChange={handleInputChange}
               placeholder="Enter owner name"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none text-black"
+              className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none"
               required
             />
           </div>
 
-          {/* Vehicle Model Input */}
+          {/* Owner Phone Input */}
           <div className="mb-4">
             <label
-              htmlFor="vehicleModel"
-              className="block text-sm font-medium text-black mb-1"
+              htmlFor="ownerPhone"
+              className="block mb-1 text-sm font-medium text-black"
             >
               Vehicle Model
             </label>
             <input
               type="text"
-              id="vehicleModel"
-              name="vehicleModel"
-              value={formData.vehicleModel}
+              id="ownerPhone"
+              name="ownerPhone"
+              value={formData.ownerPhone}
               onChange={handleInputChange}
               placeholder="Enter vehicle model"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none text-black"
+              className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none"
               required
             />
           </div>
@@ -98,7 +114,7 @@ const RegistrationForm = () => {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-black mb-1"
+              className="block mb-1 text-sm font-medium text-black"
             >
               Email
             </label>
@@ -109,7 +125,7 @@ const RegistrationForm = () => {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Enter your email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none text-black"
+              className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none"
               required
             />
           </div>
@@ -118,7 +134,7 @@ const RegistrationForm = () => {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-black mb-1"
+              className="block mb-1 text-sm font-medium text-black"
             >
               Password
             </label>
@@ -129,7 +145,7 @@ const RegistrationForm = () => {
               value={formData.password}
               onChange={handleInputChange}
               placeholder="Enter your password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none text-black"
+              className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none"
               required
             />
           </div>
@@ -138,7 +154,7 @@ const RegistrationForm = () => {
           <div className="mb-4">
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-black mb-1"
+              className="block mb-1 text-sm font-medium text-black"
             >
               Confirm Password
             </label>
@@ -149,20 +165,20 @@ const RegistrationForm = () => {
               value={formData.confirmPassword}
               onChange={handleInputChange}
               placeholder="Confirm your password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none text-black"
+              className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none"
               required
             />
           </div>
 
           {/* Terms and Conditions Checkbox */}
-          <div className="mb-4 flex items-center">
+          <div className="flex items-center mb-4">
             <input
               type="checkbox"
               id="termsAccepted"
               name="termsAccepted"
               checked={formData.termsAccepted}
               onChange={handleInputChange}
-              className="h-4 w-4 text-green-500 border-gray-300 rounded focus:ring-green-500"
+              className="w-4 h-4 text-green-500 border-gray-300 rounded focus:ring-green-500"
               required
             />
             <label htmlFor="termsAccepted" className="ml-2 text-sm text-black">
@@ -176,7 +192,7 @@ const RegistrationForm = () => {
           {/* Register Button */}
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+            className="w-full px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           >
             Register Vehicle
           </button>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -40,25 +40,25 @@ async function login(event) {
 
   
   return (
-    <div className="flex items-center justify-center overflow-hidden bg-gray-100">
-      <div className="w-full p-6 bg-white rounded-lg shadow-md sm:w-96">
+    <div className="flex items-center justify-center overflow-hidden bg-gray-500">
+      <div className="w-full p-7 bg-gray-100 rounded-lg shadow-md sm:w-[26rem]">
         <h2 className="mb-6 text-2xl font-semibold text-center text-green-600">
           Welcome Back
         </h2>
 
-        <form>
+        <form onSubmit={login}>
           <div className="mb-4">
             <label
-              htmlFor="username"
+              htmlFor="email"
               className="block mb-1 text-sm font-medium text-gray-700"
             >
               Username
             </label>
             <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Enter your username"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
               value={email}
               onChange={(event) => {
@@ -81,7 +81,9 @@ async function login(event) {
               placeholder="Enter your password"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
               value={password}
-              onClick={(event) => {setPassword(event.target.value);}}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
             />
           </div>
 
