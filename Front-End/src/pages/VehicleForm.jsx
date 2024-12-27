@@ -3,12 +3,6 @@
 import React, { useState } from "react";
 import InputField from "../components/common/InputField";
 
-const VehicleForm = () => {
-  const [formData, setFormData] = useState({
-    vehicleNumber: "",
-    ownerName: "",
-    model: "",
-  });
 
 function VehicleForm() {
 
@@ -21,6 +15,8 @@ function VehicleForm() {
    
     
   }));
+  
+  
  
   
     const [brand,setBrand]=useState("");
