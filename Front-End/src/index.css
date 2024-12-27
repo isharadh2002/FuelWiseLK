@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 /* Ensure Tailwind CSS is properly imported */
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-=======
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
->>>>>>> dev/Isuru
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -18,7 +11,6 @@
 }
 
 body {
-<<<<<<< HEAD
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -27,20 +19,6 @@ body {
   justify-content: center; /* Horizontally center the content */
   min-height: 100vh; /* Ensure body fills the viewport */
   background-color: #f9fafb; /* Light gray background */
-=======
-  margin: 3px;
-  display: flex
-;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  flex-direction: row;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-
->>>>>>> dev/Isuru
 }
 
 
