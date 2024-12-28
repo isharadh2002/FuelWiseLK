@@ -7,22 +7,28 @@ import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
 import RegisterPage from "./pages/RegisterPage";
 import PageNotFound from "./pages/PageNotFound";
+import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
+import Terms from "./pages/Terms";
 
 function App() {
     return (
       <>
         <Router>
           <Global styles={globalStyles} />
-          
-            <Routes>
-              <Route path="/home" element={<Header />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/" element={<VehicleRegistrationPage />} />
-              <Route path="/footer" element={<Footer />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="*" element={<PageNotFound/>} />
-            </Routes>
-            
+
+          <Routes>
+            <Route path="/home" element={<Header />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/" element={<VehicleRegistrationPage />} />
+            <Route path="/footer" element={<Footer />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route
+              path="/FuelStation"
+              element={<FuelStationRegistrationPage />}
+            />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
         </Router>
       </>
     );

@@ -1,7 +1,14 @@
 // src/components/vehicle/VehicleForm.jsx
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-import InputField from "../components/common/InputField";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import { styled } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
 
 
 function VehicleForm() {
@@ -119,11 +126,11 @@ function VehicleForm() {
    return (
      <>
        
-       <div className='m-6 h-screen  w-screen flex justify-center items-center '>
+       <div className='flex items-center justify-center w-screen h-screen m-6 '>
          <Box sx={{ flexGrow: 1, flexBasis: { xs: "column", md: "row" }, alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', flexShrink:''}}>
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 1, sm: 1, md: 2 }}>
                   <Item sx={{boxShadow:'none',display:'flex',alignItems:'center',justifyContent:'center' ,width:{xs:'100%' , md:'65%'}}}>
-                      <div className='flex flex-col  items-center text-green-600 font-extrabold '>
+                      <div className='flex flex-col items-center font-extrabold text-green-600 '>
                  <Typography 
                    sx={{
                      fontSize:{xs:'100px',md:'150px'}
@@ -186,7 +193,7 @@ function VehicleForm() {
                    
                    { 
                     //To print if the textfield is not fulfilled  
-                     errors.brand && <p className="text-center text-blue-600 font-semibold"> {errors.brand} </p>
+                     errors.brand && <p className="font-semibold text-center text-blue-600"> {errors.brand} </p>
                    }
                    
                    
@@ -213,7 +220,7 @@ function VehicleForm() {
                           multiline
                           maxRows={4}
                    />
-                        {errors.model && <p className="text-center text-blue-600 font-semibold"> {errors.model} </p>}
+                        {errors.model && <p className="font-semibold text-center text-blue-600"> {errors.model} </p>}
 
                    <TextField
                      sx={{
@@ -238,7 +245,7 @@ function VehicleForm() {
                           multiline
                           maxRows={4}
                    />
-                   {errors.number && <p className="text-center text-blue-600 font-semibold"> {errors.number} </p>}
+                   {errors.number && <p className="font-semibold text-center text-blue-600"> {errors.number} </p>}
                    <TextField
                      sx={{
                        marginBottom: '20px',
@@ -261,7 +268,7 @@ function VehicleForm() {
                           multiline
                           maxRows={4}
                    />
-                   {errors.capacity && <p className="text-center text-blue-600 font-semibold"> {errors.capacity} </p>}
+                   {errors.capacity && <p className="font-semibold text-center text-blue-600"> {errors.capacity} </p>}
                    <TextField
                      sx={{
                        marginBottom: '20px',
@@ -285,7 +292,7 @@ function VehicleForm() {
                           multiline
                           maxRows={4}
                    />
-                   {errors.owFullName && <p className="text-center text-blue-600 font-semibold"> {errors.owFullName} </p>}
+                   {errors.owFullName && <p className="font-semibold text-center text-blue-600"> {errors.owFullName} </p>}
                    
                    <TextField
                      sx={{
@@ -310,7 +317,7 @@ function VehicleForm() {
                           multiline
                           maxRows={4}
                    />
-                   {errors.nameWithInitials && <p className="text-center text-blue-600 font-semibold"> {errors.nameWithInitials} </p>}
+                   {errors.nameWithInitials && <p className="font-semibold text-center text-blue-600"> {errors.nameWithInitials} </p>}
                    <TextField
                      sx={{
                        marginBottom: '20px',
@@ -335,7 +342,7 @@ function VehicleForm() {
                           multiline
                           maxRows={4}
                    />
-                   {errors.nic && <p className="text-center text-blue-600 font-semibold"> {errors.nic} </p>}
+                   {errors.nic && <p className="font-semibold text-center text-blue-600"> {errors.nic} </p>}
                    
                   <div>
                    <Button variant="contained"
@@ -359,8 +366,8 @@ function VehicleForm() {
                          Register
                        </Typography>
                      </Button>
-                     {validation() === true ? <p className="text-center font-semibold text-gray-600">{"Successfully!..."}</p> :
-                      <p className="text-center font-semibold text-gray-600">{"Error!...Try again"}</p>}
+                     {validation() === true ? <p className="font-semibold text-center text-gray-600">{"Successfully!..."}</p> :
+                      <p className="font-semibold text-center text-gray-600">{"Error!...Try again"}</p>}
                    </div>
                    
                  </div>
