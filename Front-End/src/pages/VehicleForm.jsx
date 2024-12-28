@@ -1,14 +1,7 @@
 // src/components/vehicle/VehicleForm.jsx
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
+//import InputField from "../components/common/InputField";
 
 
 function VehicleForm() {
