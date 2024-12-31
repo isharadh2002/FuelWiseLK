@@ -21,6 +21,8 @@
     "axios": "^1.7.9",
     "formik": "^2.4.6",
     "material": "^0.9.20",
+    "merge2": "^1.4.1",
+    "mui": "^0.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.0.2",
