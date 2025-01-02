@@ -3,54 +3,53 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
+  async function login(event) {
+    event.preventDefault();
+    try {
+      await axios
+        .post("http://localhost:8080/api/v1/VehicleOwner/login", {
+          email: email,
+          password: password,
+        })
+        .then(
+          (res) => {
+            console.log(res.data);
 
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-const navigate = useNavigate();
-
-async function login(event) {
-  event.preventDefault();
-  try {
-    await axios
-      .post("http://localhost:8080/api/v1/VehicleOwner/login", {
-        email: email,
-        password: password,
-      })
-      .then(
-        (res) => {
-          console.log(res.data);
-
-          if (res.data.message == "Email not exits") {
-            alert("Email not exits");
-          } else if (res.data.message == "Login Success") {
-            navigate("/home");
-          } else {
-            alert("Incorrect Email and Password not match");
+            if (res.data.message === "Email not exists") {
+              alert("Email not exists");
+            } else if (res.data.message === "Login Success") {
+              navigate("/home");
+            } else {
+              alert("Incorrect Email and Password do not match");
+            }
+          },
+          (fail) => {
+            console.error(fail); // Error!
           }
-        },
-        (fail) => {
-          console.error(fail); // Error!
-        }
-      );
-  } catch (err) {
-    alert(err);
+        );
+    } catch (err) {
+      alert(err);
+    }
   }
-}
 
-  
   return (
-    <div className="flex items-center justify-center overflow-hidden bg-gray-500">
-      <div className="w-full p-7 bg-gray-100 rounded-lg shadow-md sm:w-[26rem]">
-        <h2 className="mb-6 text-2xl font-semibold text-center text-green-600">
+    <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-br from-green-100 via-green-300 to-green-500">
+      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-xl sm:w-[26rem]">
+        {/* Title */}
+        <h2 className="mb-6 text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-500 drop-shadow-md">
           Welcome Back
         </h2>
 
         <form onSubmit={login}>
-          <div className="mb-4">
+          {/* Email Input */}
+          <div className="mb-6">
             <label
               htmlFor="email"
-              className="block mb-1 text-sm font-medium text-gray-700"
+              className="block mb-2 text-sm font-semibold text-gray-700"
             >
               Username
             </label>
@@ -59,7 +58,7 @@ async function login(event) {
               id="email"
               name="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              className="w-full px-4 py-3 text-gray-700 transition-all duration-300 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-green-400 focus:outline-none focus:ring-opacity-50 hover:shadow-md"
               value={email}
               onChange={(event) => {
                 setEmail(event.target.value);
@@ -67,10 +66,11 @@ async function login(event) {
             />
           </div>
 
-          <div className="mb-4">
+          {/* Password Input */}
+          <div className="mb-6">
             <label
               htmlFor="password"
-              className="block mb-1 text-sm font-medium text-gray-700"
+              className="block mb-2 text-sm font-semibold text-gray-700"
             >
               Password
             </label>
@@ -79,7 +79,7 @@ async function login(event) {
               id="password"
               name="password"
               placeholder="Enter your password"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              className="w-full px-4 py-3 text-gray-700 transition-all duration-300 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-green-400 focus:outline-none focus:ring-opacity-50 hover:shadow-md"
               value={password}
               onChange={(event) => {
                 setPassword(event.target.value);
@@ -87,32 +87,38 @@ async function login(event) {
             />
           </div>
 
-          <div className="flex items-center justify-between mb-4">
+          {/* Remember Me and Forgot Password */}
+          <div className="flex items-center justify-between mb-6">
             <label className="flex items-center text-sm text-gray-600">
               <input
                 type="checkbox"
-                className="text-green-500 border-gray-300 rounded focus:ring-green-500"
+                className="w-4 h-4 text-green-500 border-gray-300 rounded focus:ring-green-400"
               />
               <span className="ml-2">Remember me</span>
             </label>
             <a
               href="/forgot-password"
-              className="text-sm text-green-600 hover:underline"
+              className="text-sm font-semibold text-green-600 transition-colors duration-300 hover:text-green-700"
             >
               Forgot password?
             </a>
           </div>
 
+          {/* Login Button */}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+            className="w-full px-4 py-3 text-lg font-semibold text-white transition-all duration-300 rounded-lg shadow-md bg-gradient-to-r from-green-500 to-teal-500 hover:from-teal-500 hover:to-green-500 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-50"
           >
             Login
           </button>
 
-          <div className="mt-6 text-sm text-center text-gray-600">
+          {/* Register Link */}
+          <div className="mt-8 text-sm text-center text-gray-600">
             Don’t have an account?{" "}
-            <a href="/register" className="text-green-600 hover:underline">
+            <a
+              href="/register"
+              className="font-semibold text-green-600 transition-colors duration-300 hover:text-green-700"
+            >
               Register
             </a>
           </div>
@@ -121,6 +127,5 @@ async function login(event) {
     </div>
   );
 };
-
 
 export default LoginForm;
