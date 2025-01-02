@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import VehicleRegistrationPage from "./pages/VehicleRegistrationPage";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
-import { Global } from '@emotion/react';
+import {Global} from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
 import RegistrationForm from "./pages/RegisterPage";
@@ -15,27 +15,27 @@ import Home from "./pages/Home.jsx";
 
 function App() {
     return (
-      <>
-        <Router>
-          <Global styles={globalStyles} />
+        <>
+            <Router>
+                <Global styles={globalStyles}/>
 
-          <Routes>
-            <Route path="/home" element={<Home />} />
-            <Route path="/register" element={<RegistrationForm />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/" element={<VehicleRegistrationPage />} />
-            <Route path="/footer" element={<Footer />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route
-              path="/FuelStation"
-              element={<FuelStationRegistrationPage />}
-            />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </Router>
-      </>
+                <Routes>
+                    <Route path="/home" element={<Home/>}/>
+                    <Route path="/register" element={<RegistrationForm/>}/>
+                    <Route path="/about" element={<About/>}/>
+                    <Route path="/contact" element={<ContactUs/>}/>
+                    <Route path="/" element={<VehicleRegistrationPage/>}/>
+                    <Route path="/footer" element={<Footer/>}/>
+                    <Route path="/login" element={<LoginForm/>}/>
+                    <Route path="/terms" element={<Terms/>}/>
+                    <Route
+                        path="/FuelStation"
+                        element={<FuelStationRegistrationPage/>}
+                    />
+                    <Route path="*" element={<PageNotFound/>}/>
+                </Routes>
+            </Router>
+        </>
     );
 }
 

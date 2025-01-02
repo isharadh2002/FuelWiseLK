@@ -1,5 +1,6 @@
 import React from 'react';
-import { Globe, Lock, BarChart3 } from 'lucide-react';
+import {Globe, Lock, BarChart3} from 'lucide-react';
+import Header from "../components/common/Header.jsx";
 
 const FuelManagementPlatform = () => {
     // Custom green color palette
@@ -7,17 +8,17 @@ const FuelManagementPlatform = () => {
         {
             title: "Smart Fuel Tracking",
             description: "Track and manage fuel usage efficiently",
-            icon: <BarChart3 className="w-8 h-8 text-green-600" />,
+            icon: <BarChart3 className="w-8 h-8 text-green-600"/>,
         },
         {
             title: "Weekly QR Code",
             description: "Seamless fuel access with weekly generated codes",
-            icon: <Lock className="w-8 h-8 text-green-600" />,
+            icon: <Lock className="w-8 h-8 text-green-600"/>,
         },
         {
             title: "Live Usage Tracking",
             description: "Monitor fuel usage in real-time",
-            icon: <Globe className="w-8 h-8 text-green-600" />,
+            icon: <Globe className="w-8 h-8 text-green-600"/>,
         },
     ];
 
@@ -59,9 +60,12 @@ const FuelManagementPlatform = () => {
 
     return (
         <div className="min-h-screen bg-white">
+            <Header/>
+
             {/* Navigation */}
+            {/*
             <nav className="flex items-center justify-between p-4 bg-green-50">
-                <div className="text-xl font-bold text-green-800">Fuel Management Platform</div>
+                <div className="text-xl font-bold text-green-800">FuelWise.lk</div>
                 <div className="flex gap-6">
                     <a href="#" className="text-green-700 hover:text-green-900">Home</a>
                     <a href="#" className="text-green-700 hover:text-green-900">Features</a>
@@ -70,11 +74,12 @@ const FuelManagementPlatform = () => {
                     <a href="#" className="text-green-700 hover:text-green-900">Sign Up</a>
                 </div>
             </nav>
+            */}
 
             {/* Hero Section */}
             <div className="text-center py-20 bg-green-50">
                 <h1 className="text-4xl font-bold mb-4 text-green-900">
-                    Fuel Smarter, Not Harder —<br />
+                    Fuel Smarter, Not Harder —<br/>
                     Your Weekly QR Code Awaits.
                 </h1>
                 <p className="mb-8 text-green-700">Access Fuel Seamlessly with a Secure Weekly QR Code System.</p>
@@ -107,7 +112,8 @@ const FuelManagementPlatform = () => {
                 <div className="max-w-4xl mx-auto">
                     {steps.map((step, index) => (
                         <div key={index} className="flex items-start mb-8 bg-white p-6 rounded-lg">
-                            <div className="w-12 h-12 flex items-center justify-center bg-green-600 text-white rounded-full mr-4">
+                            <div
+                                className="w-12 h-12 flex items-center justify-center bg-green-600 text-white rounded-full mr-4">
                                 {step.number}
                             </div>
                             <div>
