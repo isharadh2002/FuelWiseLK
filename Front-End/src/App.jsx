@@ -10,7 +10,8 @@ import PageNotFound from "./pages/PageNotFound";
 import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
 import Terms from "./pages/Terms";
 import About from "./pages/About";
-import ContactUs from "./pages/Contact";  
+import ContactUs from "./pages/Contact";
+import Home from "./pages/Home.jsx";
 
 function App() {
     return (
@@ -19,7 +20,7 @@ function App() {
           <Global styles={globalStyles} />
 
           <Routes>
-            <Route path="/home" element={<Header />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<ContactUs />} />
