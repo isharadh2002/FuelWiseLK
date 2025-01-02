@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom"; // React Rout
 import "../../index.css";
 
 function Header() {
-  const pagesInHome = ["Home", "About Us", "Resources", "Services", "Contact Us"];
+  const pagesInHome = ["Home", "AboutUs", "Resources", "Services", "ContactUs"];
   const [activeTab, setActiveTab] = useState('Home'); // Default active tab
   const [showMobileMenu, setShowMobileMenu] = useState(false); // Default menu state
 
@@ -14,12 +14,12 @@ function Header() {
 
   // Set active tab based on URL
   useEffect(() => {
-    const currentPath = location.pathname.replace("/", "").toLowerCase();
+    const currentPath = location.pathname.replace("/", "");
     setActiveTab(currentPath || 'home'); // Default to 'Home' if no path is found
   }, [location]);
 
   const handleTabClick = (page) => {
-    setActiveTab(page.toLowerCase());
+    setActiveTab(page);
   };
 
   return (
@@ -42,7 +42,7 @@ function Header() {
             {pagesInHome.map((page, index) => (
               <Link 
                 key={index} 
-                to={`/${page.replace(/\s+/g, '').toLowerCase()}`} 
+                to={`/${page.replace(/\s+/g, '')}`} 
                 className={`px-4 py-3 font-bold ${activeTab === page.toLowerCase() ? 'border-b-4 border-green-600 text-green-700 bg-white rounded-t-lg hover:text-green-800' : 'text-green-600 hover:border-b-2 hover:border-green-600 hover:bg-green-50 hover:text-green-600'}`} 
                 onClick={() => handleTabClick(page)}
               >
@@ -87,7 +87,7 @@ function Header() {
             {pagesInHome.map((page, index) => (
               <Link 
                 key={index} 
-                to={`/${page.replace(/\s+/g, '').toLowerCase()}`} 
+                to={`/${page.replace(/\s+/g, '')}`} 
                 className="py-4 w-4/5 text-center border-b border-white text-white"
                 onClick={() => {
                   handleTabClick(page);
