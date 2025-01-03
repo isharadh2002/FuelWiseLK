@@ -28,6 +28,10 @@ public class FuelTransaction {
     @ToString.Include
     private String pumpedLitres;
 
+    @Column(nullable = false) // Ensure not null
+    @ToString.Include
+    private String fuelType;
+
     @Column(nullable = false, updatable = false) // Ensure not null and not editable after creation
     @ToString.Include
     private LocalDateTime transactionTime;

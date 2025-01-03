@@ -22,6 +22,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/VehicleOwner/save").permitAll()
                         .requestMatchers("/api/v1/VehicleOwner/login").permitAll()// Allow public access to this endpoint
+                        .requestMatchers("/api/v1/FuelStation/save").permitAll()
+                        .requestMatchers("/api/v1/FuelStation/getStations").permitAll()
+                        .requestMatchers("/api/v1/FuelStation/get").permitAll()// Allow public access to this endpoint
                         .anyRequest().authenticated()  // All other endpoints require authentication
                 );
 
