@@ -1,10 +1,7 @@
 package com.example.Back_End.Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,8 @@ import java.util.List;
 @Setter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class FuelStation {
 
     @Id
@@ -20,7 +19,7 @@ public class FuelStation {
     @EqualsAndHashCode.Include // Primary key for equality
     private int stationID;
 
-    @Column(nullable = false) // Ensure not null
+    @Column(nullable = false, unique = true) // Ensure not null
     @ToString.Include
     private String stationName;
 
@@ -34,4 +33,8 @@ public class FuelStation {
 
     @OneToMany(mappedBy = "fuelStation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FuelTransaction> fuelTransactions; // Bidirectional one-to-many with FuelTransaction
+
+    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Fuel> fuels; // One-to-Many relationship with Fuel
+
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 
 const FuelStationRegistrationPage = () => {
   const [formData, setFormData] = useState({
@@ -16,11 +17,24 @@ const FuelStationRegistrationPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-  };
+  async function save(event) {
+    event.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
+    try {
+      await axios.post("http://localhost:8080/api/v1/FuelStation/save", {
+        stationName: formData.name,
+        location: formData.Location,
+        phone: formData.phone,
+      });
+      alert("Fuel Station Registration Successfully");
+    } catch (err) {
+      alert("Registration failed: " + err.message);
+    }
+  }
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-br from-blue-50 to-green-100">
       <div className="w-full max-w-md p-8 space-y-6 transition-all duration-500 transform bg-white shadow-2xl bg-opacity-90 rounded-3xl hover:scale-105">
@@ -28,7 +42,7 @@ const FuelStationRegistrationPage = () => {
           Register Fuel Station
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={save} className="space-y-6">
           <div className="relative">
             <label className="block mb-2 text-lg font-semibold text-gray-800">
               Station Name

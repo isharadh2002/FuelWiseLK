@@ -22,14 +22,23 @@ public class VehicleOwnerServiceIMPL implements VehicleOwnerService {
     @Override
     public String addVehicleOwner(VehicleOwnerDTO vehicleOwnerDTO) {
         // Create a VehicleOwner instance using the DTO values
-        VehicleOwner vehicleOwner = new VehicleOwner(
-                null, // Primary key (ID) is auto-generated
-                vehicleOwnerDTO.getOwnerName(),
-                vehicleOwnerDTO.getOwnerEmail(),
-                passwordEncoder.encode(vehicleOwnerDTO.getOwnerPassword()),
-                vehicleOwnerDTO.getOwnerPhone(),
-                null // The list of vehicles is initially null
-        );
+        VehicleOwner vehicleOwner = new VehicleOwner();
+
+        vehicleOwner.setOwnerName(vehicleOwnerDTO.getOwnerName());
+        vehicleOwner.setEmail(vehicleOwnerDTO.getOwnerEmail());
+        vehicleOwner.setPassword(passwordEncoder.encode(vehicleOwnerDTO.getOwnerPassword()));
+        vehicleOwner.setOwnerPhone(vehicleOwnerDTO.getOwnerPhone());
+        vehicleOwner.setVehicles(null);
+
+        // Create a VehicleOwner instance using the DTO values
+//        VehicleOwner vehicleOwner = new VehicleOwner(
+//                null, // Primary key (ID) is auto-generated
+//                vehicleOwnerDTO.getOwnerName(),
+//                vehicleOwnerDTO.getOwnerEmail(),
+//                passwordEncoder.encode(vehicleOwnerDTO.getOwnerPassword()),
+//                vehicleOwnerDTO.getOwnerPhone(),
+//                null // The list of vehicles is initially null
+//        );
 
         // Save the VehicleOwner to the repository
         vehicleOwnerRepository.save(vehicleOwner);

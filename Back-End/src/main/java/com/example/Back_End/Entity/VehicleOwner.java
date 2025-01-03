@@ -10,8 +10,6 @@ import java.util.List;
 @Setter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@AllArgsConstructor
-@NoArgsConstructor
 public class VehicleOwner {
 
     @Id
