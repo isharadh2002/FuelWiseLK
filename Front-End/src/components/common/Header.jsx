@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom"; // React Rout
 import "../../index.css";
 
 function Header() {
-  const pagesInHome = ["Home", "AboutUs", "Resources", "Services", "ContactUs"];
+  const pagesInHome = ["Home", "About Us", "Resources", "Services", "Contact Us"];
   const [activeTab, setActiveTab] = useState('Home'); // Default active tab
   const [showMobileMenu, setShowMobileMenu] = useState(false); // Default menu state
 
