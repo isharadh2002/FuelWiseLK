@@ -1,44 +1,18 @@
-<<<<<<< HEAD
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-=======
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import VehicleRegistrationPage from "./pages/VehicleRegistrationPage";
->>>>>>> 28ff15c88c396b5abcba19dcb3466af27ac9c18e
-import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import {Global} from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
 import RegistrationForm from "./pages/RegisterPage";
 import PageNotFound from "./pages/PageNotFound";
-<<<<<<< HEAD
-import VehicleForm from "./pages/VehicleForm";
-import AdminDashboard from "./components/admin/AdminDashboard";
-function App() {
-    return (
-      <>
-        <Router>
-          <Global styles={globalStyles} />
-          
-          <Routes>
-              <Route path="/m" element={<AdminDashboard/>}/>
-              <Route path="/VehicleRegister" element={<VehicleForm />} />           
-              <Route path="/home" element={<Header />} />
-              <Route path="/register" element={<RegisterPage />} />
-             
-              <Route path="/footer" element={<Footer />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="*" element={<PageNotFound/>} />
-            </Routes>
-            
-        </Router>
-      </>
-=======
 import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
 import Terms from "./pages/Terms";
 import About from "./pages/About";
 import ContactUs from "./pages/Contact";
 import Home from "./pages/Home.jsx";
+import VehicleForm from "./pages/VehicleForm";
+import AdminDashboard from "./components/admin/AdminDashboard";
 
 function App() {
     return (
@@ -47,6 +21,8 @@ function App() {
                 <Global styles={globalStyles}/>
 
                 <Routes>
+                    <Route path="/m" element={<AdminDashboard/>}/>
+                    <Route path="/VehicleRegister" element={<VehicleForm/>}/>
                     <Route path="/home" element={<Home/>}/>
                     <Route path="/register" element={<RegistrationForm/>}/>
                     <Route path="/about" element={<About/>}/>
@@ -63,7 +39,6 @@ function App() {
                 </Routes>
             </Router>
         </>
->>>>>>> 28ff15c88c396b5abcba19dcb3466af27ac9c18e
     );
 }
 
