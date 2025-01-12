@@ -1,4 +1,4 @@
-package com.example.Back_End.Util;
+package com.example.Back_End.Utils;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
