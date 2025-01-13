@@ -12,10 +12,9 @@ public class QRCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int QRCodeID;
 
-    @Column(nullable = false, columnDefinition = "TEXT") // Store Base64 QR code
+    @Column(nullable = false, columnDefinition = "TEXT") // Base64-encoded QR code
     private String QRCodeData;
 
-    @OneToOne
-    @JoinColumn(name = "vehicle_id", nullable = false) // Foreign key for vehicle
-    private Vehicle vehicle;
+    @Column(nullable = false)
+    private String referenceId; // This will store a unique reference like vehicle ID or custom data
 }
