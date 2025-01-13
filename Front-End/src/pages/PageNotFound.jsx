@@ -11,7 +11,7 @@ function PageNotFound() {
                     The page you are looking for might have been removed, had its name changed, or is temporarily
                     unavailable.
                 </p>
-                <Link to="/" style={styles.homeButton}>
+                <Link to="/Home" style={styles.homeButton}>
                     Go Back to Home
                 </Link>
             </div>

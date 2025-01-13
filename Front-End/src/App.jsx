@@ -1,6 +1,5 @@
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import VehicleRegistrationPage from "./pages/VehicleRegistrationPage";
-import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import {Global} from '@emotion/react';
 import globalStyles from './styles/global';
@@ -12,6 +11,8 @@ import Terms from "./pages/Terms";
 import About from "./pages/About";
 import ContactUs from "./pages/Contact";
 import Home from "./pages/Home.jsx";
+import VehicleForm from "./pages/VehicleForm";
+import AdminDashboard from "./components/admin/AdminDashboard";
 
 function App() {
     return (
@@ -20,6 +21,8 @@ function App() {
                 <Global styles={globalStyles}/>
 
                 <Routes>
+                    <Route path="/m" element={<AdminDashboard/>}/>
+                    <Route path="/VehicleRegister" element={<VehicleForm/>}/>
                     <Route path="/home" element={<Home/>}/>
                     <Route path="/register" element={<RegistrationForm/>}/>
                     <Route path="/about" element={<About/>}/>
@@ -38,5 +41,6 @@ function App() {
         </>
     );
 }
+
 
 export default App;

@@ -14,12 +14,12 @@ function Header() {
 
   // Set active tab based on URL
   useEffect(() => {
-    const currentPath = location.pathname.replace("/", "").toLowerCase();
+    const currentPath = location.pathname.replace("/", "");
     setActiveTab(currentPath || 'home'); // Default to 'Home' if no path is found
   }, [location]);
 
   const handleTabClick = (page) => {
-    setActiveTab(page.toLowerCase());
+    setActiveTab(page);
   };
 
   return (
@@ -28,8 +28,9 @@ function Header() {
         <div className="flex ml-4 flex-wrap flex-row items-center justify-between px-4">
           {/* Logo Section */}
           <div className="flex items-center">
-            <div className="bg-slate-600 w-12 h-12 rounded-full flex justify-center items-center">
+            <div className="bg-white w-12 h-12 rounded-full flex justify-center items-center">
               {/* Logo Image Placeholder */}
+              <img src="/website_logo.svg" alt="Website Logo"/>
             </div>
             <h1 className="hidden md:flex flex-1 justify-center ml-4 font-semibold font-mono text-green-600 text-4xl">FuelWise.lk</h1>
             <h1 className="md:hidden flex-1 justify-center ml-4 font-semibold font-mono text-green-600 text-4xl">FuelWise.lk</h1>
@@ -42,7 +43,7 @@ function Header() {
             {pagesInHome.map((page, index) => (
               <Link 
                 key={index} 
-                to={`/${page.replace(/\s+/g, '').toLowerCase()}`} 
+                to={`/${page.replace(/\s+/g, '')}`} 
                 className={`px-4 py-3 font-bold ${activeTab === page.toLowerCase() ? 'border-b-4 border-green-600 text-green-700 bg-white rounded-t-lg hover:text-green-800' : 'text-green-600 hover:border-b-2 hover:border-green-600 hover:bg-green-50 hover:text-green-600'}`} 
                 onClick={() => handleTabClick(page)}
               >
@@ -87,7 +88,7 @@ function Header() {
             {pagesInHome.map((page, index) => (
               <Link 
                 key={index} 
-                to={`/${page.replace(/\s+/g, '').toLowerCase()}`} 
+                to={`/${page.replace(/\s+/g, '')}`} 
                 className="py-4 w-4/5 text-center border-b border-white text-white"
                 onClick={() => {
                   handleTabClick(page);
