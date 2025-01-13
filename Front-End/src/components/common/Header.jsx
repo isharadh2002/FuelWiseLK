@@ -28,8 +28,9 @@ function Header() {
         <div className="flex ml-4 flex-wrap flex-row items-center justify-between px-4">
           {/* Logo Section */}
           <div className="flex items-center">
-            <div className="bg-slate-600 w-12 h-12 rounded-full flex justify-center items-center">
+            <div className="bg-white w-12 h-12 rounded-full flex justify-center items-center">
               {/* Logo Image Placeholder */}
+              <img src="/website_logo.svg" alt="Website Logo"/>
             </div>
             <h1 className="hidden md:flex flex-1 justify-center ml-4 font-semibold font-mono text-green-600 text-4xl">FuelWise.lk</h1>
             <h1 className="md:hidden flex-1 justify-center ml-4 font-semibold font-mono text-green-600 text-4xl">FuelWise.lk</h1>
