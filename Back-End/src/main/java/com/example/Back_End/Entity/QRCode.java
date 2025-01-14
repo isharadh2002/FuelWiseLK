@@ -3,26 +3,19 @@ package com.example.Back_End.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import lombok.EqualsAndHashCode;
 
 @Entity
 @Getter
 @Setter
-@ToString(onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class QRCode {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generation of primary key
-    @EqualsAndHashCode.Include // Primary key for equality
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int QRCodeID;
 
-    @Column(nullable = false) // Ensure not null
-    @ToString.Include
+    @Column(nullable = false, columnDefinition = "TEXT") // Store Base64 QR code
     private String QRCodeData;
 
     @OneToOne
-    @JoinColumn(name = "vehicle_id", nullable = false) // Foreign key in the QRCode table
-    private Vehicle vehicle; // Owning side of the one-to-one relationship
+    @JoinColumn(name = "vehicle_id", nullable = false) // Foreign key for vehicle
+    private Vehicle vehicle;
 }
