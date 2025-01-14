@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../widgets/forgot_password_popup.dart';
 import '../controllers/login_controller.dart';
-import '../screens/dashboard.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,48 +70,39 @@ class LoginScreen extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 48),
-                backgroundColor: Colors.blue,
+                // Transparent background to use gradient
+                backgroundColor: Colors.transparent,
+                elevation: 6, // Shadow for the button
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12), // Match rounded corners
                 ),
+                padding: EdgeInsets.zero, // Remove default padding to fit Ink
               ),
-              child: const Text(
-                'Login',
-                style: TextStyle(
-                  color: Colors.white,
+              child: Ink(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF22C55F), Color(0xFF14B8A5)], // Green to teal gradient
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12), // Rounded corners
                 ),
-              ),
-            ),
-
-            const SizedBox(height: 16.0),
-
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Dashboard()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 48),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(
-                    color: Colors.blue,
-                    width: 2,
+                child: Container(
+                  height: 48, // Button height
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600, // Semi-bold text
+                      color: Colors.white, // White text color
+                    ),
                   ),
                 ),
               ),
-              child: const Text(
-                'Dashboard',
-                style: TextStyle(
-                  color: Colors.blue,
-                ),
-              ),
             ),
 
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 10.0),
 
             TextButton(
               onPressed: () {
@@ -120,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                 'Forgot Password?',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+                  color: Color(0xFF22C55F),
                 ),
               ),
             ),
