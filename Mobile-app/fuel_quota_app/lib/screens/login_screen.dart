@@ -38,28 +38,38 @@ class LoginScreen extends StatelessWidget {
 
             TextField(
               controller: emailController,
+              obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF22C55F), width: 2.0),
                 ),
               ),
             ),
 
             const SizedBox(height: 20.0),
 
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+          TextField(
+            controller: passwordController,
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: 'Password',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF22C55F), width: 2.0),
               ),
             ),
+          ),
 
-            const SizedBox(height: 16.0),
+
+          const SizedBox(height: 16.0),
 
             ElevatedButton(
               onPressed: () {
