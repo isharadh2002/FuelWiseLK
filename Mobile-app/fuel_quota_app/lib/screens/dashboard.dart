@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_quota_app/screens/vehicle_details.dart';
-import 'qr_scanner.dart';
+import 'qr_scanner_screen.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -269,7 +269,7 @@ class _DashboardState extends State<Dashboard> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const QRScanner()),
+                    MaterialPageRoute(builder: (context) => const QRScannerScreen()),
                   );
                 },
               ),

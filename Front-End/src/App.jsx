@@ -33,8 +33,7 @@ function App() {
                     <Route path="/login" element={<LoginForm/>}/>
                     <Route path="/terms" element={<Terms/>}/>
                     <Route path="/FuelStation" element={<FuelStationRegistrationPage/>}/>
-                    <Route path="/vehicles" element={<VehicleListPage />} />
-                    <Route path="/vehicle/:vehicleId/qr" element={<QRCodePage />} />
+
                     <Route path="*" element={<PageNotFound/>}/>
                 </Routes>
             </Router>
