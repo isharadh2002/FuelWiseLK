@@ -1,63 +1,67 @@
-import React from 'react';
-import {Globe, Lock, BarChart3} from 'lucide-react';
+import React from "react";
+import { Globe, Lock, BarChart3 } from "lucide-react";
 import Header from "../components/common/Header.jsx";
 import Footer from "../components/common/Footer.jsx";
 
 const FuelManagementPlatform = () => {
-    // Custom green color palette
-    const features = [
-        {
-            title: "Smart Fuel Tracking",
-            description: "Track and manage fuel usage efficiently",
-            icon: <BarChart3 className="w-8 h-8 text-green-600"/>,
-        },
-        {
-            title: "Weekly QR Code",
-            description: "Seamless fuel access with weekly generated codes",
-            icon: <Lock className="w-8 h-8 text-green-600"/>,
-        },
-        {
-            title: "Live Usage Tracking",
-            description: "Monitor fuel usage in real-time",
-            icon: <Globe className="w-8 h-8 text-green-600"/>,
-        },
-    ];
+  // Custom green color palette
+  const features = [
+    {
+      title: "Smart Fuel Tracking",
+      description: "Track and manage fuel usage efficiently",
+      icon: <BarChart3 className="w-8 h-8 text-green-600" />,
+    },
+    {
+      title: "Weekly QR Code",
+      description: "Seamless fuel access with weekly generated codes",
+      icon: <Lock className="w-8 h-8 text-green-600" />,
+    },
+    {
+      title: "Live Usage Tracking",
+      description: "Monitor fuel usage in real-time",
+      icon: <Globe className="w-8 h-8 text-green-600" />,
+    },
+  ];
 
-    const steps = [
-        {
-            number: 1,
-            title: "Sign up for our platform and Get Your Weekly QR Code",
-            team: "FuelSmart Team"
-        },
-        {
-            number: 2,
-            title: "Scan the QR code at the fuel station and start refueling",
-            team: "FuelSmart Team"
-        },
-        {
-            number: 3,
-            title: "Track your fuel usage and manage your quota efficiently",
-            team: "FuelSmart Team"
-        }
-    ];
+  const steps = [
+    {
+      number: 1,
+      title: "Sign up for our platform and Get Your Weekly QR Code",
+      team: "FuelSmart Team",
+    },
+    {
+      number: 2,
+      title: "Scan the QR code at the fuel station and start refueling",
+      team: "FuelSmart Team",
+    },
+    {
+      number: 3,
+      title: "Track your fuel usage and manage your quota efficiently",
+      team: "FuelSmart Team",
+    },
+  ];
 
-    const testimonials = [
-        {
-            name: "Ronald S.",
-            comment: "It's so convenient! I never have to worry about running out of fuel unexpectedly.",
-            rating: 5
-        },
-        {
-            name: "Henry D.",
-            comment: "The weekly QR code system is fast and secure. No more waiting in long queues.",
-            rating: 5
-        },
-        {
-            name: "Karen P.",
-            comment: "Knowing how much fuel I have left has made me more conscious of my usage.",
-            rating: 5
-        }
-    ];
+  const testimonials = [
+    {
+      name: "Ronald S.",
+      comment:
+        "It's so convenient! I never have to worry about running out of fuel unexpectedly.",
+      rating: 5,
+    },
+    {
+      name: "Henry D.",
+      comment:
+        "The weekly QR code system is fast and secure. No more waiting in long queues.",
+      rating: 5,
+    },
+    {
+      name: "Karen P.",
+      comment:
+        "Knowing how much fuel I have left has made me more conscious of my usage.",
+      rating: 5,
+    },
+  ];
+
 
     return (
         <>
@@ -78,6 +82,7 @@ const FuelManagementPlatform = () => {
                 </div>
             </nav>
             */}
+
 
                 {/* Hero Section */}
                 <div className="text-center py-20 bg-green-50">

@@ -13,6 +13,7 @@ import ContactUs from "./pages/Contact";
 import Home from "./pages/Home.jsx";
 import VehicleForm from "./pages/VehicleForm";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import QRCodePage from "./pages/QRCodePage"; // Import the new QR Code page
 
 function App() {
     return (
@@ -31,16 +32,13 @@ function App() {
                     <Route path="/footer" element={<Footer/>}/>
                     <Route path="/login" element={<LoginForm/>}/>
                     <Route path="/terms" element={<Terms/>}/>
-                    <Route
-                        path="/FuelStation"
-                        element={<FuelStationRegistrationPage/>}
-                    />
+                    <Route path="/FuelStation" element={<FuelStationRegistrationPage/>}/>
+
                     <Route path="*" element={<PageNotFound/>}/>
                 </Routes>
             </Router>
         </>
     );
 }
-
 
 export default App;
