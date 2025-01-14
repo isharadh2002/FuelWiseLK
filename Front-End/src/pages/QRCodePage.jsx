@@ -1,65 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import Header from "../components/common/Header.jsx";
-import Footer from "../components/common/Footer.jsx";
 
 const QRCodePage = () => {
-  const [vehicleId, setVehicleId] = useState("");
-  const [qrCodeData, setQrCodeData] = useState(null);
-  const [error, setError] = useState("");
+    const { vehicleId } = useParams(); // Get vehicleId from the URL
+    const [qrCodeData, setQrCodeData] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-  const fetchQRCode = async () => {
-    try {
-      setError(""); // Clear any previous errors
-      const response = await axios.get(`http://localhost:8080/api/v1/qr/${vehicleId}`);
-      setQrCodeData(response.data.qrCodeData); // Update QR code data
-    } catch (err) {
-      setQrCodeData(null);
-      setError("Error fetching QR Code. Please check the Vehicle ID.");
+    useEffect(() => {
+        // Fetch the QR Code data from the backend
+        const fetchQRCode = async () => {
+            try {
+                const response = await axios.get(`/api/v1/qr/${vehicleId}`);
+                setQrCodeData(response.data.qrCodeData); // Set QR Code Base64 string
+                setLoading(false);
+            } catch (err) {
+                console.error("Error fetching QR code:", err);
+                setError("Failed to load QR code. Please try again later.");
+                setLoading(false);
+            }
+        };
+
+        fetchQRCode();
+    }, [vehicleId]);
+
+    if (loading) {
+        return <div className="text-center mt-10 text-green-700">Loading QR Code...</div>;
     }
-  };
 
-  return (
-    <>
-      <Header />
-      <div className="min-h-screen bg-green-50 py-16 px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-green-900">QR Code Generator</h1>
-          <p className="text-green-700">Enter your Vehicle ID to view your QR code</p>
+    if (error) {
+        return <div className="text-center mt-10 text-red-700">{error}</div>;
+    }
+
+    return (
+        <div className="min-h-screen bg-green-50 flex flex-col items-center justify-center p-4">
+            <h1 className="text-2xl font-bold text-green-800 mb-4">Your Vehicle QR Code</h1>
+            {qrCodeData ? (
+                <img src={qrCodeData} alt="QR Code" className="w-64 h-64 border-2 border-green-600 rounded-lg shadow-md" />
+            ) : (
+                <p className="text-red-600">No QR Code available for this vehicle.</p>
+            )}
+            <button
+                onClick={() => window.history.back()}
+                className="mt-6 bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700"
+            >
+                Go Back
+            </button>
         </div>
-
-        <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-8">
-          <input
-            type="text"
-            placeholder="Enter Vehicle ID"
-            value={vehicleId}
-            onChange={(e) => setVehicleId(e.target.value)}
-            className="block w-full border border-green-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-green-600"
-          />
-          <button
-            onClick={fetchQRCode}
-            className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
-          >
-            Fetch QR Code
-          </button>
-
-          {error && <p className="text-red-500 mt-4">{error}</p>}
-
-          {qrCodeData && (
-            <div className="mt-8 text-center">
-              <h3 className="text-green-800 font-semibold mb-4">Your QR Code:</h3>
-              <img
-                src={`data:image/png;base64,${qrCodeData}`}
-                alt="QR Code"
-                className="inline-block shadow-md border border-green-200"
-              />
-            </div>
-          )}
-        </div>
-      </div>
-      <Footer />
-    </>
-  );
+    );
 };
 
 export default QRCodePage;
