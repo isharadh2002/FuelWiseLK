@@ -14,6 +14,7 @@ import Home from "./pages/Home.jsx";
 import VehicleForm from "./pages/VehicleForm";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import QRCodePage from "./pages/QRCodePage"; // Import the new QR Code page
+import CreateAdmins from "./components/admin/CreateAdmins";
 
 function App() {
     return (
@@ -33,8 +34,9 @@ function App() {
                     <Route path="/login" element={<LoginForm/>}/>
                     <Route path="/terms" element={<Terms/>}/>
                     <Route path="/FuelStation" element={<FuelStationRegistrationPage/>}/>
-
+                    <Route path="/QRCode" element={<QRCodePage/>}/>
                     <Route path="*" element={<PageNotFound/>}/>
+                    <Route path="/createAdmin" element={<CreateAdmins/>}/>
                 </Routes>
             </Router>
         </>
