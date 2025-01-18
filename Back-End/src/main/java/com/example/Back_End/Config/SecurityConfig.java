@@ -25,6 +25,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/FuelStation/save").permitAll()
                         .requestMatchers("/api/v1/FuelStation/getStations").permitAll()
                         .requestMatchers("/api/v1/FuelStation/get").permitAll()// Allow public access to this endpoint
+                        .requestMatchers("/api/v1/FuelStation/update").permitAll()
+                        .requestMatchers("/api/v1/FuelStation/delete").permitAll()
                         .anyRequest().authenticated()  // All other endpoints require authentication
                 );
 
