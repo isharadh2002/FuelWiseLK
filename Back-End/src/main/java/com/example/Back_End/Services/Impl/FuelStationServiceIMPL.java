@@ -60,13 +60,38 @@ public class FuelStationServiceIMPL implements FuelStationService {
     }
 
     @Override
-    public FuelStationDTO updateFuelStation(FuelStationDTO fuelStationDTO) {
-        return null;
+    public FuelStationDTO updateFuelStation(FuelStationDTO fuelStationDTO) throws FuelStationException {
+        // Check if the fuel station exists
+        FuelStation existingStation = fuelStationRepository.findOneByStationName(fuelStationDTO.getStationName())
+                .orElseThrow(() -> new FuelStationException("Fuel station not found with name: " + fuelStationDTO.getStationName()));
+
+        // Update fields
+        existingStation.setStationLocation(fuelStationDTO.getStationLocation());
+        existingStation.setStationContact(fuelStationDTO.getStationContact());
+
+        // Save updated entity
+        FuelStation updatedStation = fuelStationRepository.save(existingStation);
+
+        // Map updated entity to DTO and return
+        FuelStationDTO updatedStationDTO = new FuelStationDTO();
+        updatedStationDTO.setStationName(updatedStation.getStationName());
+        updatedStationDTO.setStationLocation(updatedStation.getStationLocation());
+        updatedStationDTO.setStationContact(updatedStation.getStationContact());
+
+        return updatedStationDTO;
     }
 
     @Override
-    public String deleteFuelStation(String stationName) {
-        return null;
+    public String deleteFuelStation(String stationName) throws FuelStationException {
+        // Check if the fuel station exists
+        FuelStation existingStation = fuelStationRepository.findOneByStationName(stationName)
+                .orElseThrow(() -> new FuelStationException("Fuel station not found with name: " + stationName));
+
+        // Delete the station
+        fuelStationRepository.delete(existingStation);
+
+        // Return success message
+        return "Fuel station '" + stationName + "' deleted successfully.";
     }
     
 }

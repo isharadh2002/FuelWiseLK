@@ -1,11 +1,10 @@
 package com.example.Back_End.Controller;
 
-
 import com.example.Back_End.DTO.FuelStationDTO;
+import com.example.Back_End.Exceptions.FuelStationException;
 import com.example.Back_End.Services.FuelStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -35,4 +34,14 @@ public class FuelStationController {
         return fuelStationService.getAllFuelStations();
     }
 
+
+    @PutMapping(path = "/update")
+    public FuelStationDTO updateStationOwner(@RequestBody FuelStationDTO fuelStationDTO) throws FuelStationException {
+        return fuelStationService.updateFuelStation(fuelStationDTO);
+    }
+
+    @DeleteMapping(path = "/delete")
+    public String deleteFuelStation(@PathVariable String stationName) throws FuelStationException {
+        return fuelStationService.deleteFuelStation(stationName);
+    }
 }
