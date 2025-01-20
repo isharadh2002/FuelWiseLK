@@ -61,13 +61,22 @@ public class FuelStationServiceIMPL implements FuelStationService {
 
     @Override
     public FuelStationDTO updateFuelStation(FuelStationDTO fuelStationDTO) throws FuelStationException {
-        // Check if the fuel station exists
+        // Validate input DTO
+        if (fuelStationDTO.getStationName() == null || fuelStationDTO.getStationName().isBlank()) {
+            throw new FuelStationException("Station name cannot be null or empty.");
+        }
+
+        // Check if the station exists
         FuelStation existingStation = fuelStationRepository.findOneByStationName(fuelStationDTO.getStationName())
                 .orElseThrow(() -> new FuelStationException("Fuel station not found with name: " + fuelStationDTO.getStationName()));
 
-        // Update fields
-        existingStation.setStationLocation(fuelStationDTO.getStationLocation());
-        existingStation.setStationContact(fuelStationDTO.getStationContact());
+        // Update fields only if they are not null
+        if (fuelStationDTO.getStationLocation() != null && !fuelStationDTO.getStationLocation().isBlank()) {
+            existingStation.setStationLocation(fuelStationDTO.getStationLocation());
+        }
+        if (fuelStationDTO.getStationContact() != null && !fuelStationDTO.getStationContact().isBlank()) {
+            existingStation.setStationContact(fuelStationDTO.getStationContact());
+        }
 
         // Save updated entity
         FuelStation updatedStation = fuelStationRepository.save(existingStation);
