@@ -40,7 +40,7 @@ public class FuelStationController {
         return fuelStationService.updateFuelStation(fuelStationDTO);
     }
 
-    @DeleteMapping(path = "/delete")
+    @DeleteMapping(path = "/delete/{stationName}")
     public String deleteFuelStation(@PathVariable String stationName) throws FuelStationException {
         return fuelStationService.deleteFuelStation(stationName);
     }
