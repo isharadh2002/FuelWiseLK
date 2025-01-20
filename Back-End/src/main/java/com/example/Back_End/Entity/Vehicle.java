@@ -31,7 +31,7 @@ public class Vehicle {
 
     @Column(nullable = false) // Ensure not null
     @ToString.Include
-    private int vehicleFuelQuota;
+    private double vehicleFuelQuota;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
