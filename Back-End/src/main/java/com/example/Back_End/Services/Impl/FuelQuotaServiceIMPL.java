@@ -53,7 +53,8 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             fuelTransaction.setFuelType(fuelType);  // The type of fuel
             fuelTransaction.setPumpedLitres(String.valueOf(fuelUsedOrAdded));  // Amount added or used
             fuelTransaction.setRemainingQuota(String.valueOf(newFuelQuota));  // Updated fuel quota
-            fuelTransaction.setTransactionTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()));  // Transaction timestamp
+            //fuelTransaction.setTransactionTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()));  // Transaction timestamp
+            fuelTransaction.setTransactionTime(LocalDateTime.now());  // Transaction timestamp
             fuelTransaction.setVehicle(existingVehicle);  // Set the vehicle for the transaction
 
             // Save the transaction
