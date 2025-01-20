@@ -59,9 +59,9 @@ public class VehicleOwnerServiceIMPL implements VehicleOwnerService {
             boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
 
             if (isPwdRight) {
-                Optional<VehicleOwner> employee = vehicleOwnerRepository.findOneByEmailAndPassword(
+                Optional<VehicleOwner> newowner = vehicleOwnerRepository.findOneByEmailAndPassword(
                         loginDTO.getEmail(), encodedPassword);
-                if (employee.isPresent()) {
+                if (newowner.isPresent()) {
                     return new LoginResponse("Login Success", true);
                 } else {
                     return new LoginResponse("Login Failed", false);
