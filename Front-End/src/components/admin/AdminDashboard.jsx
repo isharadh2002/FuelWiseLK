@@ -35,8 +35,8 @@ function DashboardLayoutBasic() {
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <MenuButton className="group inline-flex w-full justify-center gap-x-1.5 rounded-full bg-green-300 px-3 py-2 text-sm font-semibold text-green-900   ring-green-300 hover:bg-green-50 ">
-                        <img className='inline-block size-10  rounded-full ring-2 ring-white group-hover:ring-green-300' src={pathToImage} alt="Avator"/>
-                        <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-white group-hover:text-green-300" />
+                        <img className='inline-block rounded-full size-10 ring-2 ring-white group-hover:ring-green-300' src={pathToImage} alt="Avator"/>
+                        <ChevronDownIcon aria-hidden="true" className="-mr-1 text-white size-5 group-hover:text-green-300" />
                     </MenuButton>
                 </div>
 
@@ -105,13 +105,13 @@ function DashboardLayoutBasic() {
 
     return (
 
-        <div className='m-5'>
+        <div className='m-5 mt-0'>
             <div className='rounded-2xl'>
                 <div
-                    className="w-screen h-24 bg-green-300 text-green-600 flex items-center text-center font-extrabold text-6xl ">
+                    className="flex items-center w-screen h-24 text-6xl font-extrabold text-center text-green-600 bg-green-300 ">
 
                     <div className='mx-auto'>DashBoard</div>
-                    <div className='mx-2 flex '>
+                    <div className='flex mx-2 '>
 
 
 
@@ -121,13 +121,13 @@ function DashboardLayoutBasic() {
                 </div>
 
 
-                <div className="min-h-screen w-screen bg-gray-100 text-gray-900 flex flex-col md:flex-row">
+                <div className="flex flex-col w-screen min-h-screen text-gray-900 bg-gray-100 md:flex-row">
                     {/* Sidebar */}
-                    <nav className="w-full md:w-64 shadow-md bg-green-100">
+                    <nav className="w-full bg-green-100 shadow-md md:w-64">
                         <div className="p-4">
                             <h1 className="text-lg font-semibold text-gray-600">Navigation</h1>
                         </div>
-                        <ul className="space-y-2 px-4">
+                        <ul className="px-4 space-y-2">
                             {NAVIGATION.map((item, index) => {
                                 if (item.kind === 'header') {
                                     return (
@@ -143,7 +143,7 @@ function DashboardLayoutBasic() {
                                     return (
                                         <li
                                             key={index}
-                                            className="flex items-center space-x-2 p-2 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+                                            className="flex items-center p-2 space-x-2 rounded-md cursor-pointer hover:bg-green-600 hover:text-white"
 
 
                                         >
@@ -158,7 +158,7 @@ function DashboardLayoutBasic() {
                                 return (
                                     <li
                                         key={index}
-                                        className="flex items-start mx-4 space-x-2 p-2 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+                                        className="flex items-start p-2 mx-4 space-x-2 rounded-md cursor-pointer hover:bg-green-600 hover:text-white"
 
 
                                     >
@@ -172,7 +172,7 @@ function DashboardLayoutBasic() {
 
                     {/* Main Content */}
                     <div className="flex-1 p-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                             <div className="col-span-5 md:col-span-1 ">
                                 <Skeleton height={14} />
                             </div>

@@ -1,8 +1,10 @@
 package com.example.Back_End.Controller;
 
 import com.example.Back_End.DTO.LoginDTO;
+import com.example.Back_End.DTO.UserDTO;
 import com.example.Back_End.DTO.VehicleOwnerDTO;
 import com.example.Back_End.Response.LoginResponse;
+import com.example.Back_End.Services.UserService;
 import com.example.Back_End.Services.VehicleOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,16 +12,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/v1/VehicleOwner")
-public class VehicleOwnerController {
+@RequestMapping("api/v1/User")
+public class UserController {
 
     @Autowired
-    private VehicleOwnerService vehicleOwnerService;
+    private UserService userService;
     @PostMapping(path = "/save")
-    public String saveVehicleOwner(@RequestBody VehicleOwnerDTO employeeDTO)
+    public String saveVehicleOwner(@RequestBody UserDTO userDTO)
 
     {
-        String id = vehicleOwnerService.addVehicleOwner(employeeDTO);
+        String id = userService.addUser(userDTO);
         return id;
     }
 
@@ -27,8 +29,7 @@ public class VehicleOwnerController {
     public ResponseEntity<?> loginEmployee(@RequestBody LoginDTO loginDTO)
 
     {
-        LoginResponse loginResponse = vehicleOwnerService.loginVehicleOwner(loginDTO);
+        LoginResponse loginResponse = userService.loginUser(loginDTO);
         return ResponseEntity.ok(loginResponse);
     }
-
 }
