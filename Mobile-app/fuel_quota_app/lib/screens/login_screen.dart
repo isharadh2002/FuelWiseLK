@@ -38,7 +38,6 @@ class LoginScreen extends StatelessWidget {
 
             TextField(
               controller: emailController,
-              obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(
