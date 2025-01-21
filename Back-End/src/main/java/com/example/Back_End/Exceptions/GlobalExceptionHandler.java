@@ -10,7 +10,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FuelStationException.class)
     public ResponseEntity<String> handleFuelStationException(FuelStationException ex) {
         // Return the exception message with a 404 status code
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("FuelStationException occurred! : "+ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FuelQuotaException.class)
+    public ResponseEntity<String> handleFuelStationException(FuelQuotaException ex) {
+        // Return the exception message with a 404 status code
+        return new ResponseEntity<>("FuelQuotaException occurred! : "+ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)

@@ -94,7 +94,7 @@ public class FuelStationServiceIMPL implements FuelStationService {
     public String deleteFuelStation(String stationName) throws FuelStationException {
         // Check if the fuel station exists
         FuelStation existingStation = fuelStationRepository.findOneByStationName(stationName)
-                .orElseThrow(() -> new FuelStationException("Fuel station not found with name: " + stationName));
+                .orElseThrow(() -> new FuelStationException("Fuel station not found with name : " + stationName));
 
         // Delete the station
         fuelStationRepository.delete(existingStation);
