@@ -3,6 +3,7 @@ package com.example.Back_End.Services.Impl;
 import com.example.Back_End.DTO.VehicleDTO;
 import com.example.Back_End.Entity.FuelTransaction;
 import com.example.Back_End.Entity.Vehicle;
+import com.example.Back_End.Exceptions.FuelQuotaException;
 import com.example.Back_End.Repository.FuelTransactionRepository;
 import com.example.Back_End.Repository.VehicleRepository;
 import com.example.Back_End.Services.FuelQuotaService;
@@ -25,7 +26,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
 
     // Get the remaining fuel quota for a vehicle
     @Override
-    public VehicleDTO getRemainingFuelQuota(int vehicleId) {
+    public VehicleDTO getRemainingFuelQuota(int vehicleId) throws FuelQuotaException {
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
         if (vehicle.isPresent()) {
             VehicleDTO vehicleDTO = new VehicleDTO();
@@ -33,13 +34,13 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             vehicleDTO.setVehicleFuelQuota(vehicle.get().getVehicleFuelQuota());
             return vehicleDTO;
         } else {
-            throw new RuntimeException("Vehicle not found");
+            throw new FuelQuotaException("Vehicle not found");
         }
     }
 
     // Update the remaining fuel quota for a vehicle and create a fuel transaction record
     @Override
-    public VehicleDTO updateFuelQuota(int vehicleId, double fuelUsedOrAdded, String fuelType) {
+    public VehicleDTO updateFuelQuota(int vehicleId, double fuelUsedOrAdded, String fuelType) throws FuelQuotaException {
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
         if (vehicle.isPresent()) {
             Vehicle existingVehicle = vehicle.get();
@@ -66,7 +67,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             vehicleDTO.setVehicleFuelQuota(existingVehicle.getVehicleFuelQuota());
             return vehicleDTO;
         } else {
-            throw new RuntimeException("Vehicle not found");
+            throw new FuelQuotaException("Vehicle not found");
         }
     }
 }
