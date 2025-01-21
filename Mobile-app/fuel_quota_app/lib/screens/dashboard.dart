@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_quota_app/screens/vehicle_details.dart';
 import 'qr_scanner_screen.dart';
+import 'profile_page.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -10,8 +10,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int _currentIndex = 0;
-
   // Enhanced color palette
   final primaryGreen = const Color(0xFF2E7D32);
   final secondaryGreen = const Color(0xFF81C784);
@@ -24,11 +22,6 @@ class _DashboardState extends State<Dashboard> {
     'Total Vehicles': '156',
     'Available Quota': '2500L'
   };
-
-  final List<Widget> _pages = [
-    const Center(child: Text('Home Page')),
-    const Center(child: Text('Settings Page')),
-  ];
 
   Widget _buildStatsCard() {
     return Container(
@@ -169,18 +162,19 @@ class _DashboardState extends State<Dashboard> {
             child: IconButton(
               icon: const Icon(Icons.person_outline),
               onPressed: () {
-                // Add profile action
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const Profile()),
-                // );
+                // Navigate to profile page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(userId: 'user123'), // Pass userId here
+                  ),
+                );
               },
             ),
           ),
         ],
       ),
-      body: _currentIndex == 0
-          ? SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,70 +268,17 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
               _buildOptionCard(
-                title: 'Vehicle Details',
-                icon: Icons.directions_car,
-                subtitle: 'View and manage vehicle information',
+                title: 'Profile',
+                icon: Icons.person,
+                subtitle: 'View and update your profile',
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const VehicleDetails(vehicleId: '0'),
+                      builder: (context) => ProfilePage(userId: 'user123'), // Pass userId here
                     ),
                   );
                 },
-              ),
-              _buildOptionCard(
-                title: 'Transaction History',
-                icon: Icons.history,
-                subtitle: 'View past fuel distributions',
-                onTap: () {
-                  // Add transaction history navigation
-                },
-              ),
-            ],
-          ),
-        ),
-      )
-          : _pages[_currentIndex],
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-          child: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            backgroundColor: Colors.white,
-            selectedItemColor: primaryGreen,
-            unselectedItemColor: Colors.grey,
-            selectedFontSize: 14,
-            unselectedFontSize: 14,
-            type: BottomNavigationBarType.fixed,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard_outlined),
-                activeIcon: Icon(Icons.dashboard),
-                label: 'Dashboard',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings_outlined),
-                activeIcon: Icon(Icons.settings),
-                label: 'Settings',
               ),
             ],
           ),
