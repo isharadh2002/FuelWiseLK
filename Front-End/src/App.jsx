@@ -4,6 +4,7 @@ import Footer from "./components/common/Footer";
 import {Global} from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
+import AdminLoginForm from './pages/AdminLoginPage';
 import RegistrationForm from "./pages/RegisterPage";
 import PageNotFound from "./pages/PageNotFound";
 import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
@@ -15,6 +16,8 @@ import VehicleForm from "./pages/VehicleForm";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import QRCodePage from "./pages/QRCodePage"; // Import the new QR Code page
 import CreateAdmins from "./components/admin/CreateAdmins";
+import ManageFuelStations from "./pages/ManageFuelStations.jsx";
+import ManageVehicles from "./pages/ManageVehicles.jsx";
 
 function App() {
     return (
@@ -37,6 +40,9 @@ function App() {
                     <Route path="/QRCode" element={<QRCodePage/>}/>
                     <Route path="*" element={<PageNotFound/>}/>
                     <Route path="/createAdmin" element={<CreateAdmins/>}/>
+                    <Route path="/admin/login" element={<AdminLoginForm />} />
+                    <Route path="/manage-vehicles" element={<ManageVehicles />} />
+                    <Route path="/manage-fuel-stations" element={<ManageFuelStations />} />
                 </Routes>
             </Router>
         </>
