@@ -17,7 +17,7 @@ class ProfilePage extends StatelessWidget {
             CircleAvatar(
               radius: 60,
               backgroundImage: CachedNetworkImageProvider(
-                'https://via.placeholder.com/150', // Replace with a valid profile image URL
+                'https://via.placeholder.com/150',
               ),
             ),
             SizedBox(height: 10),
@@ -42,11 +42,11 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 20),
             // Cards for additional information
             _buildInfoCard(
-                Icons.phone, 'Phone', '+123 456 7890', Colors.green[700]),
+                Icons.phone, 'Phone', '+123 456 7890', Colors.green[700]!),
             _buildInfoCard(Icons.location_on, 'Location', 'Seoul, South Korea',
-                Colors.green[700]),
+                Colors.green[700]!),
             _buildInfoCard(Icons.calendar_today, 'Date of Birth',
-                'January 1, 1990', Colors.green[700]),
+                'January 1, 1990', Colors.green[700]!),
             SizedBox(height: 20),
             // Logout Button
             Padding(
