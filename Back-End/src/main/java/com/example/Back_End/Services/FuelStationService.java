@@ -9,6 +9,7 @@ public interface FuelStationService {
 
     String addFuelStation(FuelStationDTO fuelStationDTO);
     FuelStationDTO getFuelStation(String stationName) throws Exception;
+    FuelStationDTO updateFuelStation(int stationID, FuelStationDTO fuelStationDTO) throws FuelStationException;
     FuelStationDTO updateFuelStation(FuelStationDTO fuelStationDTO) throws FuelStationException;
     String deleteFuelStation(String stationName) throws FuelStationException;
     List<FuelStationDTO> getAllFuelStations();

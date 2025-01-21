@@ -18,5 +18,8 @@ public interface FuelStationRepository extends JpaRepository<FuelStation, Intege
     Optional<FuelStation> findOneByStationNameAndStationLocation(String stationName, String stationLocation);
 
     @Query(value = "SELECT * FROM fuel_station WHERE stationID = ?1", nativeQuery = true)
+    Optional<FuelStation> findStationById(int StationID);
+
+    @Query(value = "SELECT * FROM fuel_station WHERE stationID = ?1", nativeQuery = true)
     FuelStation getStationById(int StationID);
 }
