@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import '../screens/dashboard.dart';
 
 class LoginController {
-  static const String baseUrl = 'http://10.0.2.2:8080/api/v1/VehicleOwner';
+  static const String baseUrl = 'http://192.168.1.112:8080/api/v1/VehicleOwner';
 
   Future<void> login(BuildContext context, String email, String password) async {
     if (email.isEmpty || password.isEmpty) {
