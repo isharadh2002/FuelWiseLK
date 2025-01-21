@@ -28,7 +28,7 @@ public class UserServiceIMPL implements UserService {
         User user = new User();
 
         user.setUsername(userDTO.getUserName());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEmail(userDTO.getEmail());
         user.setPhone(userDTO.getPhone());
         user.setRole(userDTO.getRole());
