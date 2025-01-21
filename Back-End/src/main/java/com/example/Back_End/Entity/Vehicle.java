@@ -10,6 +10,9 @@ import java.util.List;
 
 @Entity
 @Getter
+
+
+
 @Setter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
