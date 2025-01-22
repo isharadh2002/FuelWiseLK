@@ -6,6 +6,7 @@ class RegistrationScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
   RegistrationScreen({super.key});
@@ -94,6 +95,24 @@ class RegistrationScreen extends StatelessWidget {
 
                 const SizedBox(height: 20.0),
 
+                // Confirm Password field
+                TextField(
+                  controller: confirmPasswordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Confirm Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xFF22C55F), width: 2.0),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20.0),
+
                 // Phone field
                 TextField(
                   controller: phoneController,
@@ -114,6 +133,51 @@ class RegistrationScreen extends StatelessWidget {
                 // Register button
                 ElevatedButton(
                   onPressed: () {
+                    // Validate that password and confirm password match
+                    if (passwordController.text != confirmPasswordController.text) {
+                      // Show error dialog
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12), // Rounded corners
+                            ),
+                            title: const Text(
+                              'Error',
+                              style: TextStyle(
+                                color: Color(0xFF22C55F), // Using the same green color for the title
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: const Text(
+                              'Confirm password does not match with password.',
+                              style: TextStyle(
+                                color: Colors.black, // Default text color
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(
+                                  'OK',
+                                  style: TextStyle(
+                                    color: Color(0xFF22C55F), // Green color for the button text
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      return;
+                    }
+
+                    // Call LoginController register method
                     LoginController().register(
                       context,
                       nameController.text,
