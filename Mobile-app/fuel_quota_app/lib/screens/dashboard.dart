@@ -10,13 +10,11 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  // Enhanced color palette
   final primaryGreen = const Color(0xFF2E7D32);
   final secondaryGreen = const Color(0xFF81C784);
   final accentGreen = const Color(0xFF43A047);
   final backgroundColor = const Color(0xFFF5F9F5);
 
-  // Stats data
   final Map<String, String> stats = {
     'Today\'s Transactions': '24',
     'Total Vehicles': '156',
@@ -162,7 +160,6 @@ class _DashboardState extends State<Dashboard> {
             child: IconButton(
               icon: const Icon(Icons.person_outline),
               onPressed: () {
-                // Navigate to profile page
                 Navigator.push(
                   context,
                   MaterialPageRoute(
