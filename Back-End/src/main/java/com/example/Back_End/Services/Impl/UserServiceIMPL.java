@@ -32,7 +32,10 @@ public class UserServiceIMPL implements UserService {
         // Create and save the user in the User table
         User user = new User();
         user.setUsername(userDTO.getUserName());
+
         user.setPassword(passwordEncoder.encode(userDTO.getPassword())); // Encrypt the password
+
+
         user.setEmail(userDTO.getEmail());
         user.setPhone(userDTO.getPhone());
         user.setRole(userDTO.getRole());

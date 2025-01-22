@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_quota_app/screens/vehicle_details.dart';
 import 'qr_scanner_screen.dart';
+import 'profile_page.dart';
+import 'login_screen.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -10,25 +11,25 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int _currentIndex = 0;
-
-  // Enhanced color palette
   final primaryGreen = const Color(0xFF2E7D32);
   final secondaryGreen = const Color(0xFF81C784);
   final accentGreen = const Color(0xFF43A047);
   final backgroundColor = const Color(0xFFF5F9F5);
 
-  // Stats data
   final Map<String, String> stats = {
     'Today\'s Transactions': '24',
     'Total Vehicles': '156',
     'Available Quota': '2500L'
   };
 
-  final List<Widget> _pages = [
-    const Center(child: Text('Home Page')),
-    const Center(child: Text('Settings Page')),
-  ];
+  // Logout function
+  void _logout() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+          (Route<dynamic> route) => false,
+    );
+  }
 
   Widget _buildStatsCard() {
     return Container(
@@ -167,20 +168,13 @@ class _DashboardState extends State<Dashboard> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: IconButton(
-              icon: const Icon(Icons.person_outline),
-              onPressed: () {
-                // Add profile action
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const Profile()),
-                // );
-              },
+              icon: const Icon(Icons.logout),
+              onPressed: _logout, // Use the logout function
             ),
           ),
         ],
       ),
-      body: _currentIndex == 0
-          ? SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,31 +230,6 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 4,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: primaryGreen,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Quick Actions',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: primaryGreen,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(height: 16),
               _buildOptionCard(
                 title: 'Scan QR Code',
@@ -274,70 +243,17 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
               _buildOptionCard(
-                title: 'Vehicle Details',
-                icon: Icons.directions_car,
-                subtitle: 'View and manage vehicle information',
+                title: 'Profile',
+                icon: Icons.person,
+                subtitle: 'View and update your profile',
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const VehicleDetails(vehicleId: '0'),
+                      builder: (context) => ProfilePage(userId: 'user123'),
                     ),
                   );
                 },
-              ),
-              _buildOptionCard(
-                title: 'Transaction History',
-                icon: Icons.history,
-                subtitle: 'View past fuel distributions',
-                onTap: () {
-                  // Add transaction history navigation
-                },
-              ),
-            ],
-          ),
-        ),
-      )
-          : _pages[_currentIndex],
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-          child: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            backgroundColor: Colors.white,
-            selectedItemColor: primaryGreen,
-            unselectedItemColor: Colors.grey,
-            selectedFontSize: 14,
-            unselectedFontSize: 14,
-            type: BottomNavigationBarType.fixed,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard_outlined),
-                activeIcon: Icon(Icons.dashboard),
-                label: 'Dashboard',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings_outlined),
-                activeIcon: Icon(Icons.settings),
-                label: 'Settings',
               ),
             ],
           ),
