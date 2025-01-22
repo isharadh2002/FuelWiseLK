@@ -43,7 +43,7 @@ public class VehicleOwnerServiceIMPL implements VehicleOwnerService {
         // Save the VehicleOwner to the repository
         vehicleOwnerRepository.save(vehicleOwner);
 
-        return "Vehicle Owner added successfully!";
+        return "{\"message\" : \"Vehicle Owner added successfully!\"}";
     }
 
     @Override

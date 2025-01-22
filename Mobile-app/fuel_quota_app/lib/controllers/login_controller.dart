@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../screens/dashboard.dart';
+import '../screens/login_screen.dart';
 
 class LoginController {
   static const String baseUrl = 'http://10.0.2.2:8080/api/v1/VehicleOwner';
@@ -86,13 +87,19 @@ class LoginController {
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
 
-        if (responseBody != null) {
+        if (responseBody['message'] == 'Vehicle Owner added successfully!') {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Registration successful')),
           );
 
           // Navigate to the login screen after successful registration
           Navigator.pop(context);
+
+          // Navigate to the login screen after successful registration
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()), // Replace with your login page
+          );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Registration failed')),
