@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'qr_scanner_screen.dart';
 import 'profile_page.dart';
+import 'login_screen.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -20,6 +21,15 @@ class _DashboardState extends State<Dashboard> {
     'Total Vehicles': '156',
     'Available Quota': '2500L'
   };
+
+  // Logout function
+  void _logout() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+          (Route<dynamic> route) => false,
+    );
+  }
 
   Widget _buildStatsCard() {
     return Container(
@@ -158,15 +168,8 @@ class _DashboardState extends State<Dashboard> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: IconButton(
-              icon: const Icon(Icons.person_outline),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(userId: 'user123'), // Pass userId here
-                  ),
-                );
-              },
+              icon: const Icon(Icons.logout),
+              onPressed: _logout, // Use the logout function
             ),
           ),
         ],
@@ -227,31 +230,6 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 4,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: primaryGreen,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Quick Actions',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: primaryGreen,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(height: 16),
               _buildOptionCard(
                 title: 'Scan QR Code',
@@ -272,7 +250,7 @@ class _DashboardState extends State<Dashboard> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfilePage(userId: 'user123'), // Pass userId here
+                      builder: (context) => ProfilePage(userId: 'user123'),
                     ),
                   );
                 },
