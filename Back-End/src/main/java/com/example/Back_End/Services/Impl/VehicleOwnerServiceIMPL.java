@@ -43,7 +43,7 @@ public class VehicleOwnerServiceIMPL implements VehicleOwnerService {
         // Save the VehicleOwner to the repository
         vehicleOwnerRepository.save(vehicleOwner);
 
-        return "Vehicle Owner added successfully!";
+        return "{\"message\" : \"Vehicle Owner added successfully!\"}";
     }
 
     @Override
@@ -54,6 +54,7 @@ public class VehicleOwnerServiceIMPL implements VehicleOwnerService {
         if (vehicleOwnerOpt.isPresent()) {
 
             VehicleOwner vehicleOwner = vehicleOwnerOpt.get();
+            int ownerId = vehicleOwner.getOwnerID();
             String password = loginDTO.getPassword();
             String encodedPassword = vehicleOwner.getPassword();
             boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
@@ -62,15 +63,15 @@ public class VehicleOwnerServiceIMPL implements VehicleOwnerService {
                 Optional<VehicleOwner> newowner = vehicleOwnerRepository.findOneByEmailAndPassword(
                         loginDTO.getEmail(), encodedPassword);
                 if (newowner.isPresent()) {
-                    return new LoginResponse("Login Success", true);
+                    return new LoginResponse(ownerId,"Login Success", true);
                 } else {
-                    return new LoginResponse("Login Failed", false);
+                    return new LoginResponse(ownerId,"Login Failed", false);
                 }
             } else {
-                return new LoginResponse("Password does not match", false);
+                return new LoginResponse(ownerId,"Password does not match", false);
             }
         } else {
-            return new LoginResponse("Email does not exist", false);
+            return new LoginResponse(0,"Owner does not exist", false);
         }
     }
 }

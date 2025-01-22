@@ -37,4 +37,7 @@ public class FuelStation {
     @OneToMany(mappedBy = "station", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Fuel> fuels; // One-to-Many relationship with Fuel
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user; // Foreign key to User table
 }

@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/dashboard.dart';
+import '../screens/login_screen.dart';
 
 Future<void> storeUserId(String userId) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -66,6 +67,64 @@ class LoginController {
       // Handle errors (e.g., network error)
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Login failed, try again later')),
+      );
+    }
+  }
+
+
+  Future<void> register(
+      BuildContext context, String name, String email, String password, String phone) async {
+    if (name.isEmpty || email.isEmpty || password.isEmpty || phone.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all fields')),
+      );
+      return;
+    }
+
+    final Map<String, String> registrationData = {
+      'ownerName': name,
+      'ownerEmail': email,
+      'ownerPassword': password,
+      'ownerPhone': phone,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/save'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(registrationData),
+      );
+
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+
+        if (responseBody['message'] == 'Vehicle Owner added successfully!') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Registration successful')),
+          );
+
+          // Navigate to the login screen after successful registration
+          Navigator.pop(context);
+
+          // Navigate to the login screen after successful registration
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()), // Replace with your login page
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Registration failed')),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Registration failed')),
+        );
+      }
+    } catch (e) {
+      // Handle errors (e.g., network error)
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Registration failed, try again later')),
       );
     }
   }
