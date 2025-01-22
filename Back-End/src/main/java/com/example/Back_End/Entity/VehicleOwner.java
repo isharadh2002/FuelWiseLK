@@ -36,6 +36,8 @@ public class VehicleOwner {
     @OneToMany(mappedBy = "vehicleOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vehicle> vehicles; // Bidirectional relationship
 
-
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user; // Foreign key to User table
 
 }

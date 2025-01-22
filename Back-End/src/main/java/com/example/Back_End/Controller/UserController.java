@@ -17,13 +17,13 @@ public class UserController {
     private UserService userService;
     @PostMapping("/save")
     public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO) {
+
         try {
             String userId = userService.addUser(userDTO);
             return ResponseEntity.ok().body("User saved successfully with ID: " + userId);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error saving user: " + e.getMessage());
         }
-
 
     }
 

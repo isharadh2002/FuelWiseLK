@@ -11,4 +11,7 @@ public class UserDTO {
     private String phone;
     private String role;
 
+    private String stationName;      // For FuelStation
+    private String contact;        // For FuelStation
+    private String location;        // For FuelStation
 }
