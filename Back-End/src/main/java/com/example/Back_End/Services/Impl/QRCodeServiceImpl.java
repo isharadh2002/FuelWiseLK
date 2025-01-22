@@ -48,6 +48,7 @@ public class QRCodeServiceImpl implements QRCodeService {
         qrCodeDTO.setQrCodeData(qrCode.getQRCodeData());
         qrCodeDTO.setVehicleId(vehicle.getVehicleId());
         return qrCodeDTO;
+
     }
 
     @Override

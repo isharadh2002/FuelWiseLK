@@ -9,4 +9,5 @@ public interface UserService {
 
     String addUser(UserDTO userDTO);
     LoginResponse loginUser(LoginDTO loginDTO);
+
 }

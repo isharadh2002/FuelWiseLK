@@ -17,7 +17,6 @@ public class FuelStationServiceIMPL implements FuelStationService {
     @Autowired
     private FuelStationRepository fuelStationRepository;
 
-
     @Override
     public String addFuelStation(FuelStationDTO fuelStationDTO) {
 
