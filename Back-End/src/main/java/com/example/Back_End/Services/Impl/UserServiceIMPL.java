@@ -100,4 +100,56 @@ public class UserServiceIMPL implements UserService {
         }
     }
 
+
+        @Override
+        public String addMobileUser(UserDTO userDTO) {
+            if (!userDTO.getRole().equalsIgnoreCase("fuel_station")) {
+                throw new IllegalArgumentException("Only Fuel Station Owners can register");
+            }
+
+            // Create and save the user
+            User user = new User();
+            user.setUsername(userDTO.getUserName());
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword())); // Encode password
+            user.setEmail(userDTO.getEmail());
+            user.setPhone(userDTO.getPhone());
+            user.setRole(userDTO.getRole());
+            user = userRepository.save(user); // Save user and retrieve the persisted object
+
+            // Create and save the fuel station
+            FuelStation fuelStation = new FuelStation();
+            fuelStation.setUser(user); // Associate with the saved user
+            fuelStation.setStationName(userDTO.getStationName());
+            fuelStation.setStationLocation(userDTO.getLocation());
+            fuelStation.setStationContact(userDTO.getContact());
+            fuelStationRepository.save(fuelStation); // Save fuel station
+
+            return "Fuel Station Owner registered successfully";
+        }
+
+
+    @Override
+    public LoginResponse loginMobileUser(LoginDTO loginDTO) {
+
+        Optional<User> userOptional = userRepository.findByEmail(loginDTO.getEmail());
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            int userId = user.getId();
+
+            if (!user.getRole().equalsIgnoreCase("fuel_station")) {
+                return new LoginResponse(userId,"Unauthorized: Only Fuel Station Owners can log in", false);
+            }
+
+            boolean isPwdRight = passwordEncoder.matches(loginDTO.getPassword(), user.getPassword());
+            if (isPwdRight) {
+                return new LoginResponse(userId,"Login Success", true);
+            } else {
+                return new LoginResponse(userId,"Password does not match", false);
+            }
+        } else {
+            return new LoginResponse(0,"Email does not exist", false);
+        }
+    }
+
 }

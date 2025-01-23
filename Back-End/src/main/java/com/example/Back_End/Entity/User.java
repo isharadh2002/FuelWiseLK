@@ -46,5 +46,12 @@ public class User {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    // Bidirectional relationship with FuelStation
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private FuelStation fuelStation;
+
+    // Bidirectional relationship with VehicleOwner
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private VehicleOwner vehicleOwner;
 
 }
