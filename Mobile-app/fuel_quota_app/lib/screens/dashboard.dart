@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'qr_scanner_screen.dart';
 import 'profile_page.dart';
 import 'login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+Future<String?> getUserId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('userId');
+}
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -242,16 +248,33 @@ class _DashboardState extends State<Dashboard> {
                   );
                 },
               ),
-              _buildOptionCard(
-                title: 'Profile',
-                icon: Icons.person,
-                subtitle: 'View and update your profile',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfilePage(userId: 'user123'),
-                    ),
+              FutureBuilder<String?>(
+                future: getUserId(), // Fetch userId from SharedPreferences
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+
+                  String? userId = snapshot.data;
+
+                  return _buildOptionCard(
+                    title: 'Profile',
+                    icon: Icons.person,
+                    subtitle: 'View and update your profile',
+                    onTap: () {
+                      if (userId != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePage(userId: userId),
+                          ),
+                        );
+                      }
+                    },
                   );
                 },
               ),

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-
 import '../controllers/login_controller.dart';
 
 class RegistrationScreen extends StatelessWidget {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController roleController = TextEditingController();
+  final TextEditingController stationNameController = TextEditingController();
+  final TextEditingController contactController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
 
   RegistrationScreen({super.key});
 
-  // Method to validate email format using regex
   bool isValidEmail(String email) {
     String pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
     RegExp regex = RegExp(pattern);
@@ -23,12 +24,11 @@ class RegistrationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height, // Match the screen height
+        child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Shrink to fit content
+              mainAxisSize: MainAxisSize.min,
               children: [
                 // App logo
                 Image.asset(
@@ -36,7 +36,6 @@ class RegistrationScreen extends StatelessWidget {
                   width: 150,
                   height: 150,
                 ),
-
                 const SizedBox(height: 10.0),
 
                 // Title
@@ -48,103 +47,71 @@ class RegistrationScreen extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-
                 const SizedBox(height: 20.0),
 
-                // Name field
-                TextField(
-                  controller: nameController,
-                  decoration: InputDecoration(
-                    labelText: 'Name',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                          color: Color(0xFF22C55F), width: 2.0),
-                    ),
-                  ),
+                // UserName field
+                _buildTextField(
+                  controller: userNameController,
+                  label: 'User Name',
                 ),
-
                 const SizedBox(height: 20.0),
 
                 // Email field
-                TextField(
+                _buildTextField(
                   controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                          color: Color(0xFF22C55F), width: 2.0),
-                    ),
-                    errorText: !isValidEmail(emailController.text) &&
-                            emailController.text.isNotEmpty
-                        ? 'Please enter a valid email address.'
-                        : null,
-                  ),
+                  label: 'Email',
+                  errorText: !isValidEmail(emailController.text) &&
+                      emailController.text.isNotEmpty
+                      ? 'Please enter a valid email address.'
+                      : null,
                 ),
-
                 const SizedBox(height: 20.0),
 
                 // Password field
-                TextField(
+                _buildTextField(
                   controller: passwordController,
+                  label: 'Password',
                   obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                          color: Color(0xFF22C55F), width: 2.0),
-                    ),
-                  ),
                 ),
-
                 const SizedBox(height: 20.0),
 
                 // Confirm Password field
-                TextField(
+                _buildTextField(
                   controller: confirmPasswordController,
+                  label: 'Confirm Password',
                   obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Confirm Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                          color: Color(0xFF22C55F), width: 2.0),
-                    ),
-                  ),
                 ),
-
                 const SizedBox(height: 20.0),
 
                 // Phone field
-                TextField(
+                _buildTextField(
                   controller: phoneController,
-                  decoration: InputDecoration(
-                    labelText: 'Phone Number',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                          color: Color(0xFF22C55F), width: 2.0),
-                    ),
-                  ),
+                  label: 'Phone Number',
                 ),
+                const SizedBox(height: 20.0),
 
+                // Role field (Text Input instead of Dropdown)
+                _buildTextField(
+                  controller: roleController,
+                  label: 'Role',
+                ),
+                const SizedBox(height: 20.0),
+
+                // Additional fields for Fuel Station
+                _buildTextField(
+                  controller: stationNameController,
+                  label: 'Station Name',
+                ),
+                const SizedBox(height: 20.0),
+                _buildTextField(
+                  controller: contactController,
+                  label: 'Contact',
+                ),
+                const SizedBox(height: 20.0),
+                _buildTextField(
+                  controller: locationController,
+                  label: 'Location',
+                ),
                 const SizedBox(height: 20.0),
 
                 // Register button
@@ -152,122 +119,27 @@ class RegistrationScreen extends StatelessWidget {
                   onPressed: () {
                     // Validate email format
                     if (!isValidEmail(emailController.text)) {
-                      // Show error dialog for invalid email
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(12), // Rounded corners
-                            ),
-                            title: const Text(
-                              'Error',
-                              style: TextStyle(
-                                color: Color(0xFF22C55F),
-                                // Using the same green color for the title
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            content: const Text(
-                              'Please enter a valid email address.',
-                              style: TextStyle(
-                                color: Colors.black, // Default text color
-                                fontSize: 15,
-                              ),
-                            ),
-                            actions: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                // Center the button
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text(
-                                      'OK',
-                                      style: TextStyle(
-                                        color: Color(0xFF22C55F),
-                                        // Green color for the button text
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                      _showErrorDialog(context, 'Please enter a valid email address.');
                       return;
                     }
 
                     // Validate that password and confirm password match
-                    if (passwordController.text !=
-                        confirmPasswordController.text) {
-                      // Show error dialog
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(12), // Rounded corners
-                            ),
-                            title: const Text(
-                              'Error',
-                              style: TextStyle(
-                                color: Color(0xFF22C55F),
-                                // Using the same green color for the title
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            content: const Text(
-                              'Confirm password does not match with password.',
-                              style: TextStyle(
-                                color: Colors.black, // Default text color
-                                fontSize: 15,
-                              ),
-                            ),
-                            actions: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                // Center the button
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text(
-                                      'OK',
-                                      style: TextStyle(
-                                        color: Color(0xFF22C55F),
-                                        // Green color for the button text
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                    if (passwordController.text != confirmPasswordController.text) {
+                      _showErrorDialog(context, 'Confirm password does not match with password.');
                       return;
                     }
 
                     // Call LoginController register method
                     LoginController().register(
                       context,
-                      nameController.text,
+                      userNameController.text,
                       emailController.text,
                       passwordController.text,
                       phoneController.text,
+                      roleController.text,
+                      stationNameController.text,
+                      contactController.text,
+                      locationController.text,
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -301,13 +173,12 @@ class RegistrationScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 10.0),
 
                 // Already have an account
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context); // Navigate back to the login screen
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     'Already have an account? Login',
@@ -322,6 +193,77 @@ class RegistrationScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    bool obscureText = false,
+    String? errorText,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Color(0xFF22C55F), width: 2.0),
+        ),
+        errorText: errorText,
+      ),
+    );
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: const Text(
+            'Error',
+            style: TextStyle(
+              color: Color(0xFF22C55F),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Text(
+            message,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+            ),
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Color(0xFF22C55F),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }
