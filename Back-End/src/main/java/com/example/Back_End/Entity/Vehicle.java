@@ -40,9 +40,6 @@ public class Vehicle {
     @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
     private QRCode qrCode; // Bidirectional one-to-one with QRCode
 
-    @ManyToOne
-    @JoinColumn(name = "traffic_id")
-    private MotorTrafficDB motorTrafficDB; // Optional relationship
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FuelTransaction> fuelTransactions; // Bidirectional one-to-many with FuelTransaction
