@@ -7,6 +7,7 @@ import com.example.Back_End.Exceptions.FuelQuotaException;
 import com.example.Back_End.Repository.FuelTransactionRepository;
 import com.example.Back_End.Repository.VehicleRepository;
 import com.example.Back_End.Services.FuelQuotaService;
+import com.example.Back_End.Services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,9 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
 
     @Autowired
     private FuelTransactionRepository fuelTransactionRepository;
+
+    @Autowired
+    NotificationService notificationService;
 
     // Get the remaining fuel quota for a vehicle
     @Override
@@ -58,6 +62,12 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             fuelTransaction.setTransactionTime(LocalDateTime.now());  // Transaction timestamp
             fuelTransaction.setVehicle(existingVehicle);  // Set the vehicle for the transaction
 
+            //send sms
+            String message = String.format("Hello %s, your fuel quota has been updated. Remaining balance: %.2f liters. Date: %s.",
+                    existingVehicle.getVehicleOwner(), newFuelQuota, LocalDateTime.now().toString());
+            notificationService.sendSms(existingVehicle.getVehicleOwner().getOwnerPhone(), message);
+
+
             // Save the transaction
             fuelTransactionRepository.save(fuelTransaction);
 
@@ -66,6 +76,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             vehicleDTO.setVehicleId(existingVehicle.getVehicleId());
             vehicleDTO.setVehicleFuelQuota(existingVehicle.getVehicleFuelQuota());
             return vehicleDTO;
+
         } else {
             throw new FuelQuotaException("Vehicle not found");
         }
