@@ -13,6 +13,8 @@ import ContactUs from "./pages/Contact";
 import Home from "./pages/Home.jsx";
 import VehicleForm from "./pages/VehicleForm";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import Quota from "./pages/Quota.jsx";
+import "react";
 
 function App() {
     return (
@@ -26,6 +28,7 @@ function App() {
                     <Route path="/home" element={<Home/>}/>
                     <Route path="/register" element={<RegistrationForm/>}/>
                     <Route path="/about" element={<About/>}/>
+                    <Route path="/q" element={<Quota/>}/>
                     <Route path="/contact" element={<ContactUs/>}/>
                     <Route path="/" element={<VehicleRegistrationPage/>}/>
                     <Route path="/footer" element={<Footer/>}/>
