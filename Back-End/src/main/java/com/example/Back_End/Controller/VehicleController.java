@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/vehicles") // Ensure the controller has the correct mapping
+@RequestMapping("/api/v1/vehicles")
+@CrossOrigin
 public class VehicleController {
 
     @Autowired
@@ -27,7 +28,7 @@ public class VehicleController {
     }
 
     // Get vehicle by ID
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<VehicleDTO> getVehicleById(@PathVariable int id) {
         Optional<VehicleDTO> vehicleDTO = vehicleService.getVehicleById(id);
         return vehicleDTO.map(ResponseEntity::ok)
