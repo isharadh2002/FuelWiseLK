@@ -36,6 +36,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             VehicleDTO vehicleDTO = new VehicleDTO();
             vehicleDTO.setVehicleId(vehicle.get().getVehicleId());
             vehicleDTO.setVehicleFuelQuota(vehicle.get().getVehicleFuelQuota());
+            vehicleDTO.setRegistrationNumber(vehicle.get().getLicensePlate());
             return vehicleDTO;
         } else {
             throw new FuelQuotaException("Vehicle not found");
@@ -49,7 +50,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
         if (vehicle.isPresent()) {
             Vehicle existingVehicle = vehicle.get();
             // Update the remaining fuel quota
-            double newFuelQuota = existingVehicle.getVehicleFuelQuota() + fuelUsedOrAdded;
+            double newFuelQuota = existingVehicle.getVehicleFuelQuota() - fuelUsedOrAdded;
             existingVehicle.setVehicleFuelQuota(newFuelQuota);
             vehicleRepository.save(existingVehicle);
 
@@ -64,7 +65,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
 
             //send sms
             String message = String.format("Hello %s, your fuel quota has been updated. Remaining balance: %.2f liters. Date: %s.",
-                    existingVehicle.getVehicleOwner(), newFuelQuota, LocalDateTime.now().toString());
+                    existingVehicle.getVehicleOwner(), newFuelQuota, LocalDateTime.now());
             notificationService.sendSms(existingVehicle.getVehicleOwner().getOwnerPhone(), message);
 
 
