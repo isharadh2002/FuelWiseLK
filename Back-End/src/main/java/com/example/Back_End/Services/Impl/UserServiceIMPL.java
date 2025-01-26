@@ -29,44 +29,51 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public String addUser(UserDTO userDTO) {
-        // Create and save the user in the User table
-        User user = new User();
-        user.setUsername(userDTO.getUserName());
 
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword())); // Encrypt the password
+        if(userDTO.getRole().equals("vehicle_owner") || userDTO.getRole().equals("fuel_station")) {
+
+            // Create and save the user in the User table
+            User user = new User();
+            user.setUsername(userDTO.getUserName());
+
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword())); // Encrypt the password
 
 
-        user.setEmail(userDTO.getEmail());
-        user.setPhone(userDTO.getPhone());
-        user.setRole(userDTO.getRole());
-        userRepository.save(user);
+            user.setEmail(userDTO.getEmail());
+            user.setPhone(userDTO.getPhone());
+            user.setRole(userDTO.getRole());
+            userRepository.save(user);
 
-        // Save role-specific data
-        if (userDTO.getRole().equalsIgnoreCase("vehicle_owner")) {
+            // Save role-specific data
+            if (userDTO.getRole().equalsIgnoreCase("vehicle_owner")) {
 
-            VehicleOwner vehicleOwner = new VehicleOwner();
-            vehicleOwner.setUser(user); // Establish the relationship
-            vehicleOwner.setOwnerName(userDTO.getUserName());
-            vehicleOwner.setEmail(userDTO.getEmail());
-            vehicleOwner.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            vehicleOwner.setOwnerPhone(userDTO.getPhone());
-            vehicleOwner.setVehicles(null);
-            vehicleOwnerRepository.save(vehicleOwner);
+                VehicleOwner vehicleOwner = new VehicleOwner();
+                vehicleOwner.setUser(user); // Establish the relationship
+                vehicleOwner.setOwnerName(userDTO.getUserName());
+                vehicleOwner.setEmail(userDTO.getEmail());
+                vehicleOwner.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+                vehicleOwner.setOwnerPhone(userDTO.getPhone());
+                vehicleOwner.setVehicles(null);
+                vehicleOwnerRepository.save(vehicleOwner);
 
-        } else if (userDTO.getRole().equalsIgnoreCase("fuel_station")) {
+            } else if (userDTO.getRole().equalsIgnoreCase("fuel_station")) {
 
-            FuelStation fuelStation = new FuelStation();
-            fuelStation.setUser(user); // Establish the relationship
-            fuelStation.setStationName(userDTO.getStationName());
-            fuelStation.setStationLocation(userDTO.getLocation());
-            fuelStation.setStationContact(userDTO.getContact());
-            fuelStationRepository.save(fuelStation);
+                FuelStation fuelStation = new FuelStation();
+                fuelStation.setUser(user); // Establish the relationship
+                fuelStation.setStationName(userDTO.getStationName());
+                fuelStation.setStationLocation(userDTO.getLocation());
+                fuelStation.setStationContact(userDTO.getContact());
+                fuelStationRepository.save(fuelStation);
 
-        } else {
+            } else {
+                throw new IllegalArgumentException("Invalid role provided");
+            }
+
+            return "User registered successfully";
+        }
+        else{
             throw new IllegalArgumentException("Invalid role provided");
         }
-
-        return "User registered successfully";
     }
 
 
