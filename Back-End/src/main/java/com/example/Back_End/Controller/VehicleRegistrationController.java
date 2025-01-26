@@ -13,7 +13,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("api/v1/VehicleForm")
 
-public class VehicleReg{
+public class VehicleRegistrationController {
     /**
      *
      */
