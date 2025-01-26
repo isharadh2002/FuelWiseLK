@@ -31,6 +31,4 @@ public class VehicleOwnerController {
         return ResponseEntity.ok(loginResponse);
     }
 
-
-
 }

@@ -5,10 +5,45 @@ import axios from "axios";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
+
+  const validateFields = () => {
+    let isValid = true;
+
+    // Email validation
+    if (!email) {
+      setEmailError("Email is required.");
+      isValid = false;
+    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      setEmailError("Please enter a valid email address.");
+      isValid = false;
+    } else {
+      setEmailError("");
+    }
+
+    // Password validation
+    if (!password) {
+      setPasswordError("Password is required.");
+      isValid = false;
+    } else if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long.");
+      isValid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    return isValid;
+  };
 
   async function login(event) {
     event.preventDefault();
+
+    if (!validateFields()) {
+      return;
+    }
+
     try {
       await axios
         .post("http://localhost:8080/api/v1/VehicleOwner/login", {
@@ -64,6 +99,9 @@ const LoginForm = () => {
                 setEmail(event.target.value);
               }}
             />
+            {emailError && (
+              <p className="mt-2 text-sm text-red-600">{emailError}</p>
+            )}
           </div>
 
           {/* Password Input */}
@@ -85,6 +123,9 @@ const LoginForm = () => {
                 setPassword(event.target.value);
               }}
             />
+            {passwordError && (
+              <p className="mt-2 text-sm text-red-600">{passwordError}</p>
+            )}
           </div>
 
           {/* Remember Me and Forgot Password */}
