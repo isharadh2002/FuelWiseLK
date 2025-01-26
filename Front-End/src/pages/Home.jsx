@@ -103,7 +103,7 @@ const FuelManagementPlatform = () => {
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         {features.map((feature, index) => (
-                            <div key={index} className="p-6 bg-green-50 rounded-lg">
+                            <div key={index} className="p-6 bg-green-100 rounded-lg">
                                 <div className="mb-4">{feature.icon}</div>
                                 <h3 className="text-xl font-semibold mb-2 text-green-800">{feature.title}</h3>
                                 <p className="text-green-600">{feature.description}</p>

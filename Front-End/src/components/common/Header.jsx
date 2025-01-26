@@ -24,7 +24,7 @@ function Header() {
 
   return (
     <>
-      <header className="mx-4 my-2 w-screen rounded-md">
+      <header className="mx-4 my-2 w-full rounded-md">
         <div className="flex ml-4 flex-wrap flex-row items-center justify-between px-4">
           {/* Logo Section */}
           <div className="flex items-center">
