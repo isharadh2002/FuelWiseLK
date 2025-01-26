@@ -30,8 +30,8 @@ function App() {
                     <Route path="/VehicleRegister" element={<VehicleForm/>}/>
                     <Route path="/home" element={<Home/>}/>
                     <Route path="/register" element={<RegistrationForm/>}/>
-                    <Route path="/about" element={<About/>}/>
-                    <Route path="/contact" element={<ContactUs/>}/>
+                    <Route path="/aboutUs" element={<About/>}/>
+                    <Route path="/contactUs" element={<ContactUs/>}/>
                     <Route path="/" element={<VehicleRegistrationPage/>}/>
                     <Route path="/footer" element={<Footer/>}/>
                     <Route path="/login" element={<LoginForm/>}/>

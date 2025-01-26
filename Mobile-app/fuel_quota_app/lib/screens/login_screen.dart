@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_quota_app/screens/register_screen.dart';
 import '../widgets/forgot_password_popup.dart';
 import '../controllers/login_controller.dart';
 
@@ -38,7 +39,6 @@ class LoginScreen extends StatelessWidget {
 
             TextField(
               controller: emailController,
-              obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(
@@ -111,6 +111,51 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+
+            const SizedBox(height: 16.0),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegistrationScreen()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                // Transparent background to use gradient
+                backgroundColor: Colors.transparent,
+                elevation: 6, // Shadow for the button
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12), // Match rounded corners
+                ),
+                padding: EdgeInsets.zero, // Remove default padding to fit Ink
+              ),
+              child: Ink(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF22C55F), Color(0xFF14B8A5)], // Green to teal gradient
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12), // Rounded corners
+                ),
+                child: Container(
+                  height: 48, // Button height
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Register',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600, // Semi-bold text
+                      color: Colors.white, // White text color
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+
 
             const SizedBox(height: 10.0),
 

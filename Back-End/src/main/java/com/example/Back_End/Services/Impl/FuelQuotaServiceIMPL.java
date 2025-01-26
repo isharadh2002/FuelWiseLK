@@ -7,6 +7,7 @@ import com.example.Back_End.Exceptions.FuelQuotaException;
 import com.example.Back_End.Repository.FuelTransactionRepository;
 import com.example.Back_End.Repository.VehicleRepository;
 import com.example.Back_End.Services.FuelQuotaService;
+import com.example.Back_End.Services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
     @Autowired
     private FuelTransactionRepository fuelTransactionRepository;
 
+    @Autowired
+    NotificationService notificationService;
+
     // Get the remaining fuel quota for a vehicle
     @Override
     public VehicleDTO getRemainingFuelQuota(int vehicleId) throws FuelQuotaException {
@@ -32,6 +36,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             VehicleDTO vehicleDTO = new VehicleDTO();
             vehicleDTO.setVehicleId(vehicle.get().getVehicleId());
             vehicleDTO.setVehicleFuelQuota(vehicle.get().getVehicleFuelQuota());
+            vehicleDTO.setRegistrationNumber(vehicle.get().getLicensePlate());
             return vehicleDTO;
         } else {
             throw new FuelQuotaException("Vehicle not found");
@@ -45,7 +50,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
         if (vehicle.isPresent()) {
             Vehicle existingVehicle = vehicle.get();
             // Update the remaining fuel quota
-            double newFuelQuota = existingVehicle.getVehicleFuelQuota() + fuelUsedOrAdded;
+            double newFuelQuota = existingVehicle.getVehicleFuelQuota() - fuelUsedOrAdded;
             existingVehicle.setVehicleFuelQuota(newFuelQuota);
             vehicleRepository.save(existingVehicle);
 
@@ -58,6 +63,13 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             fuelTransaction.setTransactionTime(LocalDateTime.now());  // Transaction timestamp
             fuelTransaction.setVehicle(existingVehicle);  // Set the vehicle for the transaction
 
+
+            //send sms
+            String message = String.format("Hello %s, your fuel quota has been updated. Remaining balance: %.2f liters. Date: %s.",
+                    existingVehicle.getVehicleOwner(), newFuelQuota, LocalDateTime.now());
+            notificationService.sendSms(existingVehicle.getVehicleOwner().getOwnerPhone(), message);
+
+
             // Save the transaction
             fuelTransactionRepository.save(fuelTransaction);
 
@@ -66,6 +78,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             vehicleDTO.setVehicleId(existingVehicle.getVehicleId());
             vehicleDTO.setVehicleFuelQuota(existingVehicle.getVehicleFuelQuota());
             return vehicleDTO;
+
         } else {
             throw new FuelQuotaException("Vehicle not found");
         }

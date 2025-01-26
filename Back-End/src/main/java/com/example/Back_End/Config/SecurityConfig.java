@@ -21,13 +21,25 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())  // Disable CSRF if required
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/VehicleOwner/save/**").permitAll()
-                        .requestMatchers("/api/v1/VehicleOwner/login/**").permitAll()// Allow public access to this endpoint
+                        .requestMatchers("/api/v1/VehicleOwner/login/**").permitAll()
                         .requestMatchers("/api/v1/FuelStation/save/**").permitAll()
                         .requestMatchers("/api/v1/FuelStation/getStations/**").permitAll()
-                        .requestMatchers("/api/v1/FuelStation/get/**").permitAll()// Allow public access to this endpoint
+                        .requestMatchers("/api/v1/FuelStation/get/**").permitAll()
                         .requestMatchers("/api/v1/FuelStation/update/**").permitAll()
                         .requestMatchers("/api/v1/FuelStation/delete/**").permitAll()
-                        .requestMatchers("api/v1/FuelQuota/**").permitAll()
+                        .requestMatchers("/api/v1/FuelQuota/**").permitAll()
+
+                        .requestMatchers("/api/v1/User/save/**").permitAll()
+                        .requestMatchers("/api/v1/User/login/**").permitAll()
+                        .requestMatchers("/api/v1/User/RegMobileUser/**").permitAll()
+                        .requestMatchers("/api/v1/User/loginMobileUser/**").permitAll()
+
+                        .requestMatchers("/api/v1/qr/generate/**").permitAll()
+                        .requestMatchers("/api/v1/qr/**").permitAll()
+
+                        .requestMatchers("/api/v1/vehicles").permitAll()
+                        .requestMatchers("/api/v1/vehicles/**").permitAll()
+
                         .anyRequest().authenticated()  // All other endpoints require authentication
                 );
 

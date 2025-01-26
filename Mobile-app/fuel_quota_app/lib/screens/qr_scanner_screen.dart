@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'vehicle_details_page.dart'; // Assuming the VehicleDetailsPage is in the same folder
 
 class QRScannerScreen extends StatefulWidget {
   const QRScannerScreen({super.key});
@@ -32,6 +33,18 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                 setState(() {
                   result = barcode.rawValue ?? "Unknown code";
                 });
+
+                // Navigate to VehicleDetailsPage and pass the vehicle ID
+                if (barcode.rawValue != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VehicleDetailsPage(
+                        vehicleId: barcode.rawValue!, // Pass vehicle ID from QR code
+                      ),
+                    ),
+                  );
+                }
               },
             ),
           ),

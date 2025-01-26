@@ -36,7 +36,7 @@ const ManageFuelStations = () => {
         </div>
         <table className="w-full border-collapse border border-gray-300 text-black">
           <thead>
-            <tr className="bg-green-100">
+            <tr className="bg-green-200">
               <th className="border px-4 py-2">Station Name</th>
               <th className="border px-4 py-2">Location</th>
               <th className="border px-4 py-2">Status</th>

@@ -28,21 +28,17 @@ public class QRCodeServiceImpl implements QRCodeService {
 
     @Override
     public QRCodeDTO generateQRCodeForVehicle(int vehicleId) {
-        // Find vehicle
         Vehicle vehicle = vehicleRepository.findById(vehicleId)
                 .orElseThrow(() -> new RuntimeException("Vehicle not found with ID: " + vehicleId));
 
-        // Generate QR code data
         String qrData = "Vehicle ID: " + vehicleId + ", Registration: " + vehicle.getLicensePlate();
         String qrCodeBase64 = generateQRCodeBase64(qrData);
 
-        // Create and save QRCode entity
         QRCode qrCode = new QRCode();
         qrCode.setVehicle(vehicle);
         qrCode.setQRCodeData(qrCodeBase64);
         qrCode = qrCodeRepository.save(qrCode);
 
-        // Create and return DTO
         QRCodeDTO qrCodeDTO = new QRCodeDTO();
         qrCodeDTO.setQrCodeId(qrCode.getQRCodeID());
         qrCodeDTO.setQrCodeData(qrCode.getQRCodeData());
@@ -55,6 +51,20 @@ public class QRCodeServiceImpl implements QRCodeService {
         QRCode qrCode = qrCodeRepository.findByVehicle_VehicleId(vehicleId);
         if (qrCode == null) {
             throw new RuntimeException("No QR Code found for Vehicle ID: " + vehicleId);
+        }
+
+        QRCodeDTO qrCodeDTO = new QRCodeDTO();
+        qrCodeDTO.setQrCodeId(qrCode.getQRCodeID());
+        qrCodeDTO.setQrCodeData(qrCode.getQRCodeData());
+        qrCodeDTO.setVehicleId(qrCode.getVehicle().getVehicleId());
+        return qrCodeDTO;
+    }
+
+    @Override
+    public QRCodeDTO scanQRCode(String qrCodeData) {
+        QRCode qrCode = qrCodeRepository.findByQRCodeData(qrCodeData);
+        if (qrCode == null) {
+            throw new RuntimeException("No QR Code found with data: " + qrCodeData);
         }
 
         QRCodeDTO qrCodeDTO = new QRCodeDTO();

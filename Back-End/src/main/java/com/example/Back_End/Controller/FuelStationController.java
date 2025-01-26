@@ -35,8 +35,13 @@ public class FuelStationController {
     }
 
 
+    @PutMapping(path = "/update/{stationID}")
+    public FuelStationDTO updateStationOwner(@PathVariable int stationID, @RequestBody FuelStationDTO fuelStationDTO) throws FuelStationException {
+        return fuelStationService.updateFuelStation(stationID, fuelStationDTO);
+    }
+
     @PutMapping(path = "/update")
-    public FuelStationDTO updateStationOwner(@RequestBody FuelStationDTO fuelStationDTO) throws FuelStationException {
+    public FuelStationDTO updateStationOwnerByName(@RequestBody FuelStationDTO fuelStationDTO) throws FuelStationException {
         return fuelStationService.updateFuelStation(fuelStationDTO);
     }
 

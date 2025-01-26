@@ -17,7 +17,6 @@ public class FuelStationServiceIMPL implements FuelStationService {
     @Autowired
     private FuelStationRepository fuelStationRepository;
 
-
     @Override
     public String addFuelStation(FuelStationDTO fuelStationDTO) {
 
@@ -66,11 +65,46 @@ public class FuelStationServiceIMPL implements FuelStationService {
             throw new FuelStationException("Station name cannot be null or empty.");
         }
 
+
         // Check if the station exists
         FuelStation existingStation = fuelStationRepository.findOneByStationName(fuelStationDTO.getStationName())
                 .orElseThrow(() -> new FuelStationException("Fuel station not found with name: " + fuelStationDTO.getStationName()));
 
         // Update fields only if they are not null
+        if (fuelStationDTO.getStationLocation() != null && !fuelStationDTO.getStationLocation().isBlank()) {
+            existingStation.setStationLocation(fuelStationDTO.getStationLocation());
+        }
+        if (fuelStationDTO.getStationContact() != null && !fuelStationDTO.getStationContact().isBlank()) {
+            existingStation.setStationContact(fuelStationDTO.getStationContact());
+        }
+
+        // Save updated entity
+        FuelStation updatedStation = fuelStationRepository.save(existingStation);
+
+        // Map updated entity to DTO and return
+        FuelStationDTO updatedStationDTO = new FuelStationDTO();
+        updatedStationDTO.setStationName(updatedStation.getStationName());
+        updatedStationDTO.setStationLocation(updatedStation.getStationLocation());
+        updatedStationDTO.setStationContact(updatedStation.getStationContact());
+
+        return updatedStationDTO;
+    }
+
+    @Override
+    public FuelStationDTO updateFuelStation(int stationID, FuelStationDTO fuelStationDTO) throws FuelStationException {
+        // Validate stationID
+        if (stationID <= 0) {
+            throw new FuelStationException("Invalid station ID: " + stationID + ". ID must be a positive number.");
+        }
+
+        // Check if the station exists
+        FuelStation existingStation = fuelStationRepository.findStationById(stationID)
+                .orElseThrow(() -> new FuelStationException("Fuel station not found with stationID: " + stationID));
+
+        // Update fields only if they are not null
+        if (fuelStationDTO.getStationName() != null && !fuelStationDTO.getStationName().isBlank()) {
+            existingStation.setStationName(fuelStationDTO.getStationName());
+        }
         if (fuelStationDTO.getStationLocation() != null && !fuelStationDTO.getStationLocation().isBlank()) {
             existingStation.setStationLocation(fuelStationDTO.getStationLocation());
         }
