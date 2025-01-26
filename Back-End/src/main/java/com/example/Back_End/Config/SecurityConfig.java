@@ -37,6 +37,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/qr/generate/**").permitAll()
                         .requestMatchers("/api/v1/qr/**").permitAll()
 
+                        .requestMatchers("/api/v1/vehicles").permitAll()
+                        .requestMatchers("/api/v1/vehicles/**").permitAll()
+
                         .anyRequest().authenticated()  // All other endpoints require authentication
                 );
 
