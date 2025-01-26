@@ -25,4 +25,10 @@ public class QRCodeController {
         QRCodeDTO qrCodeDTO = qrCodeService.getQRCodeByVehicleId(vehicleId);
         return ResponseEntity.ok(qrCodeDTO);
     }
+
+    @GetMapping("/scan/{qrCodeData}")
+    public ResponseEntity<QRCodeDTO> scanQRCode(@PathVariable String qrCodeData) {
+        QRCodeDTO qrCodeDTO = qrCodeService.scanQRCode(qrCodeData);
+        return ResponseEntity.ok(qrCodeDTO);
+    }
 }
