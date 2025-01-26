@@ -1,4 +1,4 @@
-wpackage com.example.Back_End.Response;
+package com.example.Back_End.Response;
 
 import lombok.*;
 
