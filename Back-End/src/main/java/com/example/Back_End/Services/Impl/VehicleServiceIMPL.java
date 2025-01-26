@@ -1,64 +1,73 @@
 package com.example.Back_End.Services.Impl;
 
+import com.example.Back_End.DTO.VehicleDTO;
 import com.example.Back_End.Entity.Vehicle;
 import com.example.Back_End.Repository.VehicleRepository;
 import com.example.Back_End.Services.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class VehicleServiceIMPL implements VehicleService {
+@Service
+public class VehicleServiceImpl implements VehicleService {
 
-    VehicleRepository vehicleRepository;
-    @Override
-    public List<Vehicle> getAllVehicle(){
-
-
-    return  vehicleRepository.findAll();
-    }
+    @Autowired
+    private VehicleRepository vehicleRepository;
 
     @Override
-    public Vehicle saveVehicle(@RequestBody Vehicle vehicle) {
-
-        return vehicleRepository.save(vehicle);
-    }
-
-
-
-
-
-
-
-
-    @Override
-    public ResponseEntity<Object> updateVehicle(@RequestBody Vehicle vehicle,  int id) {
-
-        if (! vehicleRepository.equals(vehicle)){
-            return ResponseEntity.notFound().build();
+    public Optional<VehicleDTO> getVehicleById(int vehicleId) {
+        Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
+        if (vehicle.isPresent()) {
+            Vehicle vehicleEntity = vehicle.get();
+            VehicleDTO vehicleDTO = new VehicleDTO(
+                    vehicleEntity.getVehicleId(),
+                    vehicleEntity.getLicensePlate(),
+                    vehicleEntity.getVehicleOwner().getOwnerName(),
+                    vehicleEntity.getVehicleFuelQuota()
+            );
+            return Optional.of(vehicleDTO);
         }
-        vehicle.setVehicleId(id);
-        vehicleRepository.save(vehicle);
-        return ResponseEntity.noContent().build();
+        return Optional.empty();
     }
 
     @Override
-    public Vehicle deleteVehicle(@RequestBody Vehicle vehicle) {
-        vehicleRepository.delete(vehicle);
-        return vehicle;
+    public List<Vehicle> getAllVehicle() {
+        return List.of();
     }
 
     @Override
-    public void updateQuota(@RequestBody Vehicle vehicle, @PathVariable double remainings) throws Exception {
-       if(!vehicleRepository.equals(vehicle.getVehicleId())){
-           throw new Exception("There is not value like you entered!...");
+    public Vehicle saveVehicle(Vehicle vehicle) {
+        return null;
+    }
 
-       }
-       vehicle.setVehicleFuelQuota(remainings);
-       vehicleRepository.save(vehicle);
+    @Override
+    public ResponseEntity<Object> updateVehicle(Vehicle vehicle, int id) {
+        return null;
+    }
+
+    @Override
+    public Vehicle deleteVehicle(Vehicle vehicle) {
+        return null;
+    }
+
+    @Override
+    public void updateQuota(Vehicle vehicle, double remainings) throws Exception {
 
     }
 
-
+    @Override
+    public List<VehicleDTO> getAllVehicles() {
+        List<Vehicle> vehicles = vehicleRepository.findAll();
+        return vehicles.stream()
+                .map(vehicle -> new VehicleDTO(
+                        vehicle.getVehicleId(),
+                        vehicle.getLicensePlate(),
+                        vehicle.getVehicleOwner().getOwnerName(),
+                        vehicle.getVehicleFuelQuota()))
+                .collect(Collectors.toList());
+    }
 }

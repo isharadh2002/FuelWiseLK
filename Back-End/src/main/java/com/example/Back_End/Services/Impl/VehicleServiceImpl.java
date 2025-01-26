@@ -5,6 +5,7 @@ import com.example.Back_End.Entity.Vehicle;
 import com.example.Back_End.Repository.VehicleRepository;
 import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +32,31 @@ public class VehicleServiceImpl implements VehicleService {
             return Optional.of(vehicleDTO);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Vehicle> getAllVehicle() {
+        return List.of();
+    }
+
+    @Override
+    public Vehicle saveVehicle(Vehicle vehicle) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Object> updateVehicle(Vehicle vehicle, int id) {
+        return null;
+    }
+
+    @Override
+    public Vehicle deleteVehicle(Vehicle vehicle) {
+        return null;
+    }
+
+    @Override
+    public void updateQuota(Vehicle vehicle, double remainings) throws Exception {
+
     }
 
     @Override
