@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
 
 const AdminLoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
+  const [dialogTitle, setDialogTitle] = useState("");
+  const [dialogType, setDialogType] = useState(""); // To track the message type: success or error
   const navigate = useNavigate();
 
   const validateFields = () => {
     let isValid = true;
 
+    // Email validation
     if (!email) {
       setEmailError("Email is required.");
       isValid = false;
@@ -22,6 +28,7 @@ const AdminLoginForm = () => {
       setEmailError("");
     }
 
+    // Password validation
     if (!password) {
       setPasswordError("Password is required.");
       isValid = false;
@@ -51,21 +58,42 @@ const AdminLoginForm = () => {
         .then(
           (res) => {
             if (res.data.message === "Email not exists") {
-              alert("Email not exists");
+              setDialogMessage("Email does not exist.");
+              setDialogTitle("Login Failed");
+              setDialogType("error"); // Fail message
+              setDialogOpen(true);
             } else if (res.data.message === "Login Success") {
+              setDialogMessage("Successfully logged in!");
+              setDialogTitle("Login Success");
+              setDialogType("success"); // Success message
+              setDialogOpen(true);
               navigate("/admin/dashboard");
             } else {
-              alert("Incorrect Email and Password do not match");
+              setDialogMessage("Incorrect email or password.");
+              setDialogTitle("Login Failed");
+              setDialogType("error"); // Fail message
+              setDialogOpen(true);
             }
           },
           (fail) => {
             console.error(fail);
+            setDialogMessage("An error occurred. Please try again.");
+            setDialogTitle("Error");
+            setDialogType("error"); // Fail message
+            setDialogOpen(true);
           }
         );
     } catch (err) {
-      alert(err);
+      setDialogMessage("An error occurred. Please try again.");
+      setDialogTitle("Error");
+      setDialogType("error"); // Fail message
+      setDialogOpen(true);
     }
   }
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-blue-300 via-indigo-400 to-purple-500">
@@ -122,6 +150,39 @@ const AdminLoginForm = () => {
           </div>
         </form>
       </div>
+
+      {/* Dialog Popup */}
+      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+        <DialogTitle
+          style={{
+            textAlign: 'center', // Center align the text
+            fontSize: '1.8rem', // Increase the font size for the title
+            fontWeight: 'bold', // Make the title bold
+            color: dialogType === 'success' ? '#4caf50' : '#f44336', // Green for success, Red for error
+          }}
+        >
+          {dialogTitle}
+        </DialogTitle>
+        <DialogContent>
+          <Alert
+            severity={dialogType} // Dynamically set the severity
+            style={{
+              borderRadius: '20px', // Rounded corners for the alert box
+              padding: '20px', // Padding for the alert box
+              fontSize: '1rem', // Font size
+              fontWeight: '600', // Bold text
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Optional shadow
+            }}
+          >
+            {dialogMessage}
+          </Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
