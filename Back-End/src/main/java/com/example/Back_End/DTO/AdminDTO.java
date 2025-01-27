@@ -1,16 +1,25 @@
 package com.example.Back_End.DTO;
 
 import com.example.Back_End.Entity.Admin;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
+@NoArgsConstructor
 public class AdminDTO {
 
     private Long adminID;
-    private String adminName;
-    private String email;
 
-    // Getters and Setters
+    @NotNull(message = "Admin name cannot be null")  // Validation for non-null adminName
+    private String adminName;
+
+    @NotNull(message = "Email cannot be null")  // Validation for non-null email
+    @Email(message = "Email should be valid")  // Validation for valid email format
+    private String email;
 
     // Convert single Admin entity to AdminDTO
     public static AdminDTO convertToDTO(Admin admin) {
@@ -24,8 +33,8 @@ public class AdminDTO {
     // Convert a list of Admin entities to a list of AdminDTOs
     public static List<AdminDTO> convertToDTOs(List<Admin> admins) {
         return admins.stream()
-                .map(AdminDTO::convertToDTO)  // Convert each Admin to AdminDTO
-                .collect(Collectors.toList());  // Collect results into a List
+                .map(AdminDTO::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     // Convert AdminDTO to Admin entity
@@ -35,30 +44,5 @@ public class AdminDTO {
         admin.setAdminName(adminDTO.getAdminName());
         admin.setEmail(adminDTO.getEmail());
         return admin;
-    }
-
-    // Getters and Setters
-    public Long getAdminID() {
-        return adminID;
-    }
-
-    public void setAdminID(Long adminID) {
-        this.adminID = adminID;
-    }
-
-    public String getAdminName() {
-        return adminName;
-    }
-
-    public void setAdminName(String adminName) {
-        this.adminName = adminName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }
