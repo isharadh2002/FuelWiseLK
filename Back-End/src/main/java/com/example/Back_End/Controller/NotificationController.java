@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/User")
 public class NotificationController {
 
-    @Autowired
-    private FuelQuotaService fuelQuotaService;
+//    @Autowired
+//    private FuelQuotaService fuelQuotaService;
 
 //    @PostMapping("/update-quota")
 //    public ResponseEntity<String> updateFuelQuota(@RequestBody NotificationDTO notificationDTO) {
