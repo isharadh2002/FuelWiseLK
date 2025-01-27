@@ -67,7 +67,7 @@ const AdminLoginForm = () => {
               setDialogTitle("Login Success");
               setDialogType("success"); // Success message
               setDialogOpen(true);
-              navigate("/admin/dashboard");
+              navigate("/admin/dashboard"); // Redirect after success
             } else {
               setDialogMessage("Incorrect email or password.");
               setDialogTitle("Login Failed");
