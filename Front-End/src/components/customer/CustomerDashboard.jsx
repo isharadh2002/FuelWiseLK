@@ -1,99 +1,33 @@
-import { useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { ChevronDownIcon } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import ViewProfilePage from './ViewProfilePage'; // Assuming this is the correct path
 
 function DashboardLayoutBasic() {
+    const navigate = useNavigate();
+    const [currentPage, setCurrentPage] = useState(null); // Track current page
+    
     const NAVIGATION = [
-        { kind: "header", title: "Main Items", onclick: useDemoRouter("/") },
-        { kind: "segment", segment: "viewProfile", title: "View Profile", icon: "👤", onclick: useDemoRouter("/view-profile") },
-        { kind: "segment", segment: "manageProfile", title: "Manage Profile", icon: "⚙️", onclick: useDemoRouter("/manage-profile") },
-        { kind: "segment", segment: "viewVehicles", title: "View Vehicles", icon: "🚗", onclick: useDemoRouter("/view-vehicles") },
-        { kind: "segment", segment: "addVehicle", title: "Add New Vehicle", icon: "➕", onclick: useDemoRouter("/add-vehicle") },
+        { kind: "segment", segment: "viewProfile", title: "View Profile", icon: "👤", onclick: () => setCurrentPage('viewProfile') },
+        { kind: "segment", segment: "manageProfile", title: "Manage Profile", icon: "⚙️", onclick: () => setCurrentPage('manageProfile') },
+        { kind: "segment", segment: "viewVehicles", title: "View Vehicles", icon: "🚗", onclick: () => navigate("/view-vehicles") },
+        { kind: "segment", segment: "addVehicle", title: "Add New Vehicle", icon: "➕", onclick: () => navigate("/add-vehicle") },
     ];
-    
 
-    function useDemoRouter(initialPath) {
-        const [pathname, setPathname] = useState(initialPath);
-    
-        return useMemo(
-            () => ({
-                pathname,
-                searchParams: new URLSearchParams(),
-                navigate: (path) => {
-                    setPathname(String(path));
-                    window.history.pushState({}, "", path); // Navigate without reloading
-                },
-            }),
-            [pathname]
-        );
-    }
-
-    function DropDown({ pathToImage }) {
-        return (
-            <Menu as="div" className="relative inline-block text-left">
-                <div>
-                    <MenuButton className="group inline-flex w-full justify-center gap-x-1.5 rounded-full bg-green-300 px-3 py-2 text-sm font-semibold text-green-900   ring-green-300 hover:bg-green-50 ">
-                        <img
-                            className="inline-block rounded-full size-10 ring-2 ring-white group-hover:ring-green-300"
-                            src={pathToImage}
-                            alt="Avatar"
-                        />
-                        <ChevronDownIcon
-                            aria-hidden="true"
-                            className="-mr-1 text-white size-5 group-hover:text-green-300"
-                        />
-                    </MenuButton>
-                </div>
-
-                <MenuItems
-                    transition
-                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                >
-                    <div className="py-1">
-                        <MenuItem>
-                            <a
-                                href="#"
-                                className="block px-4 py-2 text-sm text-green-700 data-[focus]:bg-green-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-                            >
-                                Account settings
-                            </a>
-                        </MenuItem>
-                        <MenuItem>
-                            <a
-                                href="#"
-                                className="block px-4 py-2 text-sm text-green-700 data-[focus]:bg-green-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-                            >
-                                Support
-                            </a>
-                        </MenuItem>
-                        <MenuItem>
-                            <a
-                                href="#"
-                                className="block px-4 py-2 text-sm text-green-700 data-[focus]:bg-green-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-                            >
-                                License
-                            </a>
-                        </MenuItem>
-                        <form action="#" method="POST">
-                            <MenuItem>
-                                <button
-                                    type="submit"
-                                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-green-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-                                >
-                                    Sign out
-                                </button>
-                            </MenuItem>
-                        </form>
-                    </div>
-                </MenuItems>
-            </Menu>
-        );
-    }
-
-    DropDown.propTypes = {
-        pathToImage: PropTypes.string.isRequired,
+    const handleLogout = () => {
+        localStorage.removeItem("userId");
+        navigate("/login"); // Redirect to login page
     };
+
+    function SmoothButton() {
+        return (
+            <button
+                onClick={handleLogout}
+                className="w-full px-6 py-3 rounded-md bg-green-500 text-white font-semibold text-lg transition-all duration-200 ease-in-out hover:bg-green-600 hover:shadow-xl focus:outline-none"
+            >
+                Sign Out
+            </button>
+        );
+    }
 
     function Skeleton({ height }) {
         return (
@@ -101,17 +35,13 @@ function DashboardLayoutBasic() {
         );
     }
 
-    Skeleton.propTypes = {
-        height: PropTypes.number.isRequired,
-    };
-
     return (
         <div className="m-0 overflow-hidden">
             <div className="rounded-2xl">
                 <div className="flex items-center w-screen h-24 text-6xl font-extrabold text-center text-green-600 bg-green-300 ">
                     <div className="mx-auto">Dashboard</div>
                     <div className="flex mx-2">
-                        <DropDown pathToImage={'blabla'} />
+                        <SmoothButton />
                     </div>
                 </div>
 
@@ -123,17 +53,6 @@ function DashboardLayoutBasic() {
                         </div>
                         <ul className="px-4 space-y-2">
                             {NAVIGATION.map((item, index) => {
-                                if (item.kind === 'header') {
-                                    return (
-                                        <li
-                                            key={index}
-                                            className="mt-4 text-sm font-bold text-green-600"
-                                            onClick={item.onclick}
-                                        >
-                                            {item.title}
-                                        </li>
-                                    );
-                                }
                                 if (item.kind === 'segment') {
                                     return (
                                         <li
@@ -154,41 +73,56 @@ function DashboardLayoutBasic() {
                     {/* Main Content */}
                     <div className="flex-1 p-6">
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            <div className="col-span-5 md:col-span-1 ">
-                                <Skeleton height={14} />
-                            </div>
-                            <div className="col-span-12">
-                                <Skeleton height={14} />
-                            </div>
-                            <div className="col-span-12">
-                                <Skeleton height={14} />
-                            </div>
-                            <div className="col-span-4">
-                                <Skeleton height={100} />
-                            </div>
-                            <div className="col-span-8">
-                                <Skeleton height={100} />
-                            </div>
-                            <div className="col-span-12">
-                                <Skeleton height={150} />
-                            </div>
-                            <div className="col-span-12">
-                                <Skeleton height={14} />
-                            </div>
-                            <div className="grid grid-cols-4 gap-4">
-                                <div className="col-span-1">
-                                    <Skeleton height={100} />
+                            {/* Skeletons */}
+                            {!currentPage && (
+                                <>
+                                    <div className="col-span-5 md:col-span-1">
+                                        <Skeleton height={14} />
+                                    </div>
+                                    <div className="col-span-12">
+                                        <Skeleton height={14} />
+                                    </div>
+                                    <div className="col-span-12">
+                                        <Skeleton height={14} />
+                                    </div>
+                                    <div className="col-span-4">
+                                        <Skeleton height={100} />
+                                    </div>
+                                    <div className="col-span-8">
+                                        <Skeleton height={100} />
+                                    </div>
+                                    <div className="col-span-12">
+                                        <Skeleton height={150} />
+                                    </div>
+                                    <div className="col-span-12">
+                                        <Skeleton height={14} />
+                                    </div>
+                                    <div className="grid grid-cols-4 gap-4">
+                                        <div className="col-span-1">
+                                            <Skeleton height={100} />
+                                        </div>
+                                        <div className="col-span-1">
+                                            <Skeleton height={100} />
+                                        </div>
+                                        <div className="col-span-1">
+                                            <Skeleton height={100} />
+                                        </div>
+                                        <div className="col-span-1">
+                                            <Skeleton height={100} />
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+
+                            {/* Dynamic Content */}
+                            {currentPage === 'viewProfile' && <ViewProfilePage />}
+                            {currentPage === 'manageProfile' && (
+                                <div>
+                                    <h2 className="text-2xl font-bold text-gray-700">Manage Profile</h2>
+                                    {/* Manage Profile Content */}
+                                    <p className="text-lg text-gray-600">Manage your profile settings here.</p>
                                 </div>
-                                <div className="col-span-1">
-                                    <Skeleton height={100} />
-                                </div>
-                                <div className="col-span-1">
-                                    <Skeleton height={100} />
-                                </div>
-                                <div className="col-span-1">
-                                    <Skeleton height={100} />
-                                </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>

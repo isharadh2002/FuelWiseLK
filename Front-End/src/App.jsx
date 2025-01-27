@@ -20,8 +20,9 @@ import ManageFuelStations from "./pages/ManageFuelStations.jsx";
 import ManageVehicles from "./pages/ManageVehicles.jsx";
 import VehicleListpage from "./pages/VehicleListPage.jsx";
 import SingleVehiclePage from './pages/SingleVehiclePage.jsx';
-
 import CustomerDashboard from "./components/customer/CustomerDashboard";
+import ViewProfilePage from "./components/customer/ViewProfilePage";
+import ManageProfilePage from "./components/customer/ManageProfilePage";
 
 function App() {
     return (
@@ -39,10 +40,8 @@ function App() {
 
                     {/* Customer Routes */}
                     <Route path="/dashboard" element={<CustomerDashboard />} />
-                    {/* <Route path="/createAdmin" element={<CreateAdmins />} />
-                    <Route path="/admin/login" element={<AdminLoginForm />} />
-                    <Route path="/manage-vehicles" element={<ManageVehicles />} />
-                    <Route path="/manage-fuel-stations" element={<ManageFuelStations />} /> */}
+                    <Route path="/view-profile" element={<ViewProfilePage />} /> {/* View Profile Route */}
+                    <Route path="/manage-profile" element={<ManageProfilePage />} /> {/* Manage Profile Route */}
 
                     {/* General Routes */}
                     <Route path="/VehicleRegister" element={<VehicleForm />} />
