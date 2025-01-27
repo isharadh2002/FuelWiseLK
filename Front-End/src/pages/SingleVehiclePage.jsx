@@ -76,7 +76,7 @@ const SingleVehiclePage = () => {
                     <p className="text-lg text-green-600 mb-4">License Plate: {vehicle.registrationNumber}</p>
                     <p className="text-lg text-green-600 mb-2">Fuel Quota: {vehicle.vehicleFuelQuota}</p>
 
-                    {/* QR Code Section */}
+                    {/* QR Code and Manage Vehicle Section */}
                     <div className="mt-6 flex space-x-4">
                         {!isQrGenerated ? (
                             <button
@@ -87,12 +87,19 @@ const SingleVehiclePage = () => {
                             </button>
                         ) : (
                             <Link
-                                to={`http://localhost:8080/vehicle/${vehicleId}/qr`}
+                                to={`/vehicle/${vehicleId}/qr`}
                                 className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition duration-300 ease-in-out transform hover:scale-105"
                             >
                                 View QR Code
                             </Link>
                         )}
+
+                        <Link
+                            to={`/manage-vehicle/${vehicleId}`}
+                            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
+                        >
+                            Manage Vehicle
+                        </Link>
                     </div>
                 </div>
             </div>
