@@ -11,8 +11,17 @@ function Header() {
   const location = useLocation();
 
   useEffect(() => {
-    const currentPath = location.pathname.replace("/", "");
-    setActiveTab(currentPath || 'home');
+    // Map pathname to corresponding page name
+    const pathToPage = {
+      '/home': 'Home',
+      '/AboutUs': 'About Us',
+      '/Resources': 'Resources',
+      '/Services': 'Services',
+      '/ContactUs': 'Contact Us',
+    };
+
+    const currentPage = pathToPage[location.pathname] || 'Home';
+    setActiveTab(currentPage);
   }, [location]);
 
   const handleTabClick = (page) => {
@@ -40,7 +49,7 @@ function Header() {
                       key={index}
                       to={`/${page.replace(/\s+/g, '')}`}
                       className={`px-3 py-2 mx-1 font-bold transition-colors ${
-                          activeTab === page.toLowerCase()
+                          activeTab === page
                               ? 'border-b-4 border-green-600 text-green-700 bg-white rounded-t-lg hover:text-green-800'
                               : 'text-green-600 hover:border-b-2 hover:border-green-600 hover:bg-green-50 hover:text-green-600'
                       }`}
@@ -86,7 +95,11 @@ function Header() {
                       <Link
                           key={index}
                           to={`/${page.replace(/\s+/g, '')}`}
-                          className="py-2 px-4 text-green-600 hover:bg-green-50 rounded-lg"
+                          className={`py-2 px-4 rounded-lg ${
+                              activeTab === page
+                                  ? 'bg-green-50 text-green-700'
+                                  : 'text-green-600 hover:bg-green-50'
+                          }`}
                           onClick={() => {
                             handleTabClick(page);
                             setShowMobileMenu(false);
