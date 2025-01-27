@@ -45,30 +45,34 @@ const LoginForm = () => {
     }
 
     try {
-      await axios
-        .post("http://localhost:8080/api/v1/VehicleOwner/login", {
-          email: email,
-          password: password,
-        })
-        .then(
-          (res) => {
-            console.log(res.data);
-
-            if (res.data.message === "Email not exists") {
-              alert("Email not exists");
-            } else if (res.data.message === "Login Success") {
-              navigate("/home");
-            } else {
-              alert("Incorrect Email and Password do not match");
-            }
-          },
-          (fail) => {
-            console.error(fail); // Error!
-          }
-        );
+      const response = await axios.post("http://localhost:8080/api/v1/User/login", {
+        email: email,
+        password: password,
+      });
+    
+      const res = response.data;
+    
+      console.log(res);
+    
+      if (res.message === "Email not exists") {
+        alert("Email not exists");
+      } else if (res.message === "Login Success") {
+        const userId = res.id;
+    
+        if (userId) {
+          localStorage.setItem("userId", userId);
+          navigate("/home");
+        } else {
+          alert("Login Success, but userId not provided by the server.");
+        }
+      } else {
+        alert("Incorrect Email and Password do not match");
+      }
     } catch (err) {
-      alert(err);
+      console.error(err);
+      alert("An error occurred during login. Please try again.");
     }
+    
   }
 
   return (
