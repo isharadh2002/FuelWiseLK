@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
+  const [dialogTitle, setDialogTitle] = useState("");
+  const [dialogType, setDialogType] = useState(""); // Track success or error
   const navigate = useNavigate();
 
   const validateFields = () => {
@@ -45,31 +50,52 @@ const LoginForm = () => {
     }
 
     try {
-      await axios
-        .post("http://localhost:8080/api/v1/VehicleOwner/login", {
-          email: email,
-          password: password,
-        })
-        .then(
-          (res) => {
-            console.log(res.data);
+      const response = await axios.post("http://localhost:8080/api/v1/User/login", {
+        email: email,
+        password: password,
+      });
 
-            if (res.data.message === "Email not exists") {
-              alert("Email not exists");
-            } else if (res.data.message === "Login Success") {
-              navigate("/home");
-            } else {
-              alert("Incorrect Email and Password do not match");
-            }
-          },
-          (fail) => {
-            console.error(fail); // Error!
-          }
-        );
+      const res = response.data;
+
+      if (res.message === "Email not exists") {
+        setDialogTitle("Login Failed");
+        setDialogMessage("Email does not exist.");
+        setDialogType("error");
+        setDialogOpen(true);
+      } else if (res.message === "Login Success") {
+        const userId = res.id;
+
+        if (userId) {
+          localStorage.setItem("userId", userId);
+          setDialogTitle("Login Success");
+          setDialogMessage("Successfully logged in!");
+          setDialogType("success");
+          setDialogOpen(true);
+          setTimeout(() => navigate("/home"), 1500); // Redirect after 1.5 seconds
+        } else {
+          setDialogTitle("Login Success");
+          setDialogMessage("Login Success, but userId not provided by the server.");
+          setDialogType("success");
+          setDialogOpen(true);
+        }
+      } else {
+        setDialogTitle("Login Failed");
+        setDialogMessage("Incorrect Email or Password.");
+        setDialogType("error");
+        setDialogOpen(true);
+      }
     } catch (err) {
-      alert(err);
+      console.error(err);
+      setDialogTitle("Error");
+      setDialogMessage("An error occurred during login. Please try again.");
+      setDialogType("error");
+      setDialogOpen(true);
     }
   }
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-br from-green-100 via-green-300 to-green-500">
@@ -82,10 +108,7 @@ const LoginForm = () => {
         <form onSubmit={login}>
           {/* Email Input */}
           <div className="mb-6">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-semibold text-gray-700"
-            >
+            <label htmlFor="email" className="block mb-2 text-sm font-semibold text-gray-700">
               Username
             </label>
             <input
@@ -95,21 +118,14 @@ const LoginForm = () => {
               placeholder="Enter your email"
               className="w-full px-4 py-3 text-gray-700 transition-all duration-300 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-green-400 focus:outline-none focus:ring-opacity-50 hover:shadow-md"
               value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
+              onChange={(event) => setEmail(event.target.value)}
             />
-            {emailError && (
-              <p className="mt-2 text-sm text-red-600">{emailError}</p>
-            )}
+            {emailError && <p className="mt-2 text-sm text-red-600">{emailError}</p>}
           </div>
 
           {/* Password Input */}
           <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-semibold text-gray-700"
-            >
+            <label htmlFor="password" className="block mb-2 text-sm font-semibold text-gray-700">
               Password
             </label>
             <input
@@ -119,30 +135,9 @@ const LoginForm = () => {
               placeholder="Enter your password"
               className="w-full px-4 py-3 text-gray-700 transition-all duration-300 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-green-400 focus:outline-none focus:ring-opacity-50 hover:shadow-md"
               value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
+              onChange={(event) => setPassword(event.target.value)}
             />
-            {passwordError && (
-              <p className="mt-2 text-sm text-red-600">{passwordError}</p>
-            )}
-          </div>
-
-          {/* Remember Me and Forgot Password */}
-          <div className="flex items-center justify-between mb-6">
-            <label className="flex items-center text-sm text-gray-600">
-              <input
-                type="checkbox"
-                className="w-4 h-4 text-green-500 border-gray-300 rounded focus:ring-green-400"
-              />
-              <span className="ml-2">Remember me</span>
-            </label>
-            <a
-              href="/forgot-password"
-              className="text-sm font-semibold text-green-600 transition-colors duration-300 hover:text-green-700"
-            >
-              Forgot password?
-            </a>
+            {passwordError && <p className="mt-2 text-sm text-red-600">{passwordError}</p>}
           </div>
 
           {/* Login Button */}
@@ -152,19 +147,41 @@ const LoginForm = () => {
           >
             Login
           </button>
-
-          {/* Register Link */}
-          <div className="mt-8 text-sm text-center text-gray-600">
-            Don’t have an account?{" "}
-            <a
-              href="/register"
-              className="font-semibold text-green-600 transition-colors duration-300 hover:text-green-700"
-            >
-              Register
-            </a>
-          </div>
         </form>
       </div>
+
+      {/* Dialog Popup */}
+      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+        <DialogTitle
+          style={{
+            textAlign: "center",
+            fontSize: "1.8rem",
+            fontWeight: "bold",
+            color: dialogType === "success" ? "#4caf50" : "#f44336",
+          }}
+        >
+          {dialogTitle}
+        </DialogTitle>
+        <DialogContent>
+          <Alert
+            severity={dialogType}
+            style={{
+              borderRadius: "20px",
+              padding: "20px",
+              fontSize: "1rem",
+              fontWeight: "600",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            {dialogMessage}
+          </Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

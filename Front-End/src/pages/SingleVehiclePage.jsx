@@ -13,19 +13,21 @@ const SingleVehiclePage = () => {
     useEffect(() => {
         const fetchVehicleData = async () => {
             try {
-                console.log("Fetching vehicle data for vehicleId:", vehicleId);
                 setLoading(true);
+                console.log("Fetching vehicle data for vehicleId:", vehicleId);
 
                 // Fetch vehicle details
                 const vehicleResponse = await axios.get(`http://localhost:8080/api/v1/vehicles/${vehicleId}`);
                 console.log("Vehicle data response:", vehicleResponse.data);
                 setVehicle(vehicleResponse.data);
 
-                // Fetch QR code details if available
-                const qrResponse = await axios.get(`http://localhost:8080/api/v1/qr/${vehicleId}`);
-                console.log("QR code data response:", qrResponse.data);
-                setQrCode(qrResponse.data);
-                setIsQrGenerated(!!qrResponse.data);
+                // Fetch QR code for the vehicle if it exists
+                const qrResponse = await fetch(`http://localhost:8080/api/v1/qr/${vehicleId}`);
+                if (qrResponse.ok) {
+                    const qrData = await qrResponse.json();
+                    setQrCode(qrData); // Set the QR code data
+                    setIsQrGenerated(true); // QR code exists, set isQrGenerated to true
+                }
             } catch (err) {
                 setError("Error loading vehicle details or QR code.");
                 console.error("Error fetching data:", err);
@@ -43,7 +45,7 @@ const SingleVehiclePage = () => {
             const response = await axios.post(`http://localhost:8080/api/v1/qr/generate/${vehicleId}`);
             console.log("QR code generated:", response.data);
             setQrCode(response.data);
-            setIsQrGenerated(true);
+            setIsQrGenerated(true); // QR code generated successfully
         } catch (error) {
             console.error("Error generating the QR code!", error);
         }
@@ -76,7 +78,7 @@ const SingleVehiclePage = () => {
                     <p className="text-lg text-green-600 mb-4">License Plate: {vehicle.registrationNumber}</p>
                     <p className="text-lg text-green-600 mb-2">Fuel Quota: {vehicle.vehicleFuelQuota}</p>
 
-                    {/* QR Code Section */}
+                    {/* QR Code and Manage Vehicle Section */}
                     <div className="mt-6 flex space-x-4">
                         {!isQrGenerated ? (
                             <button
@@ -87,12 +89,19 @@ const SingleVehiclePage = () => {
                             </button>
                         ) : (
                             <Link
-                                to={`http://localhost:8080/vehicle/${vehicleId}/qr`}
+                                to={`/vehicle/${vehicleId}/qr`}
                                 className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition duration-300 ease-in-out transform hover:scale-105"
                             >
                                 View QR Code
                             </Link>
                         )}
+
+                        <Link
+                            to={`/manage-vehicle/${vehicleId}`}
+                            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
+                        >
+                            Manage Vehicle
+                        </Link>
                     </div>
                 </div>
             </div>
