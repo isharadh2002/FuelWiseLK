@@ -1,66 +1,80 @@
 import React from "react";
-import { Globe, Lock, BarChart3 } from "lucide-react";
+import {Globe, Lock, BarChart3} from "lucide-react";
 import Header from "../components/common/Header.jsx";
 import Footer from "../components/common/Footer.jsx";
+import {Swiper, SwiperSlide} from "swiper/react";
+import "swiper/css"; // Import Swiper styles
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import {Pagination, Navigation, Autoplay} from "swiper/modules";
 
 const FuelManagementPlatform = () => {
-  // Custom green color palette
-  const features = [
-    {
-      title: "Smart Fuel Tracking",
-      description: "Track and manage fuel usage efficiently",
-      icon: <BarChart3 className="w-8 h-8 text-green-600" />,
-    },
-    {
-      title: "Weekly QR Code",
-      description: "Seamless fuel access with weekly generated codes",
-      icon: <Lock className="w-8 h-8 text-green-600" />,
-    },
-    {
-      title: "Live Usage Tracking",
-      description: "Monitor fuel usage in real-time",
-      icon: <Globe className="w-8 h-8 text-green-600" />,
-    },
-  ];
 
-  const steps = [
-    {
-      number: 1,
-      title: "Sign up for our platform and Get Your Weekly QR Code",
-      team: "FuelSmart Team",
-    },
-    {
-      number: 2,
-      title: "Scan the QR code at the fuel station and start refueling",
-      team: "FuelSmart Team",
-    },
-    {
-      number: 3,
-      title: "Track your fuel usage and manage your quota efficiently",
-      team: "FuelSmart Team",
-    },
-  ];
+    // Sliding images (replace with your own image URLs)
+    const slidingImages = [
+        "/HomePage/SlidingImages/Image1.jpg",
+        "/HomePage/SlidingImages/Image2.jpg",
+        "/HomePage/SlidingImages/Image3.jpeg",
+        "/HomePage/SlidingImages/Image4.jpeg",
+    ];
 
-  const testimonials = [
-    {
-      name: "Ronald S.",
-      comment:
-        "It's so convenient! I never have to worry about running out of fuel unexpectedly.",
-      rating: 5,
-    },
-    {
-      name: "Henry D.",
-      comment:
-        "The weekly QR code system is fast and secure. No more waiting in long queues.",
-      rating: 5,
-    },
-    {
-      name: "Karen P.",
-      comment:
-        "Knowing how much fuel I have left has made me more conscious of my usage.",
-      rating: 5,
-    },
-  ];
+    // Custom green color palette
+    const features = [
+        {
+            title: "Smart Fuel Tracking",
+            description: "Track and manage fuel usage efficiently",
+            icon: <BarChart3 className="w-8 h-8 text-green-600"/>,
+        },
+        {
+            title: "Weekly QR Code",
+            description: "Seamless fuel access with weekly generated codes",
+            icon: <Lock className="w-8 h-8 text-green-600"/>,
+        },
+        {
+            title: "Live Usage Tracking",
+            description: "Monitor fuel usage in real-time",
+            icon: <Globe className="w-8 h-8 text-green-600"/>,
+        },
+    ];
+
+    const steps = [
+        {
+            number: 1,
+            title: "Sign up for our platform and Get Your Weekly QR Code",
+            team: "FuelSmart Team",
+        },
+        {
+            number: 2,
+            title: "Scan the QR code at the fuel station and start refueling",
+            team: "FuelSmart Team",
+        },
+        {
+            number: 3,
+            title: "Track your fuel usage and manage your quota efficiently",
+            team: "FuelSmart Team",
+        },
+    ];
+
+    const testimonials = [
+        {
+            name: "Ronald S.",
+            comment:
+                "It's so convenient! I never have to worry about running out of fuel unexpectedly.",
+            rating: 5,
+        },
+        {
+            name: "Henry D.",
+            comment:
+                "The weekly QR code system is fast and secure. No more waiting in long queues.",
+            rating: 5,
+        },
+        {
+            name: "Karen P.",
+            comment:
+                "Knowing how much fuel I have left has made me more conscious of my usage.",
+            rating: 5,
+        },
+    ];
 
 
     return (
@@ -83,8 +97,50 @@ const FuelManagementPlatform = () => {
             </nav>
             */}
 
+                {/* Sliding Images with Hero Section */}
+                <div className="relative">
+                    <Swiper
+                        pagination={{clickable: true}}
+                        navigation
+                        loop
+                        autoplay={{delay: 5000}} // Enable auto-slide with a 5-second interval
+                        speed={2000} // Adjust the animation speed (1000ms = 1 second)
+                        modules={[Pagination, Navigation, Autoplay]} // Add Autoplay module
+                        className="h-[90vh]"
+                    >
+                        {slidingImages.map((image, index) => (
+                            <SwiperSlide key={index}>
+                                <div
+                                    className="h-full bg-cover bg-center"
+                                    style={{backgroundImage: `url(${image})`}}
+                                ></div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+
+                    {/* Hero Section Overlay */}
+                    <div
+                        className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 pointer-events-none">
+                        <div className="text-center text-white z-20 pointer-events-auto">
+                            <h1 className="text-5xl font-bold mb-6">
+                                Fuel Smarter, Not Harder —
+                                <br/>
+                                Your Weekly QR Code Awaits.
+                            </h1>
+                            <p className="mb-8 text-lg">
+                                Access Fuel Seamlessly with a Secure Weekly QR Code System.
+                            </p>
+                            <button
+                                className="bg-green-600 px-8 py-4 rounded-lg text-white font-semibold text-lg hover:bg-green-700">
+                                Get Your QR Code Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
 
                 {/* Hero Section */}
+                {/*
                 <div className="text-center py-20 bg-green-50">
                     <h1 className="text-4xl font-bold mb-4 text-green-900">
                         Fuel Smarter, Not Harder —<br/>
@@ -95,6 +151,7 @@ const FuelManagementPlatform = () => {
                         Get Your QR Code Now
                     </button>
                 </div>
+                */}
 
                 {/* Features Section */}
                 <div className="py-16 px-4">
