@@ -155,7 +155,7 @@ const FuelManagementPlatform = () => {
 
                 {/* Features Section */}
                 <div className="py-16 px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12 text-green-900">
+                    <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
                         Why Choose Our Fuel Management System?
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -171,7 +171,7 @@ const FuelManagementPlatform = () => {
 
                 {/* How It Works Section */}
                 <div className="py-16 bg-green-50 px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12 text-green-900">
+                    <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
                         How It Works — Simple Steps to Fuel Up
                     </h2>
                     <div className="max-w-4xl mx-auto">
@@ -192,7 +192,7 @@ const FuelManagementPlatform = () => {
 
                 {/* Testimonials Section */}
                 <div className="py-16 px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12 text-green-900">
+                    <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
                         See What Users Are Saying
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -215,7 +215,7 @@ const FuelManagementPlatform = () => {
 
                 {/* CTA Section */}
                 <div className="py-16 bg-green-50 px-4 text-center">
-                    <h2 className="text-3xl font-bold mb-4 text-green-900">
+                    <h2 className="text-3xl font-bold mb-4 text-green-800">
                         Fueling Has Never Been This Simple!
                     </h2>
                     <p className="mb-8 text-green-700">Get Your Weekly QR Code and Start Saving Time and Energy.</p>
