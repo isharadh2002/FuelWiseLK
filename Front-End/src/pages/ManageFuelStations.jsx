@@ -8,7 +8,7 @@ const ManageFuelStations = () => {
   useEffect(() => {
     const fetchStations = async () => {
       try {
-        const response = await fetch("http://your-backend-api.com/stations"); // Replace with your API URL
+        const response = await fetch("http://backend-api.com/stations"); // Replace with your API URL
         const data = await response.json();
         setStations(data);
       } catch (error) {
@@ -24,7 +24,7 @@ const ManageFuelStations = () => {
 
   const handleApprove = async (id) => {
     try {
-      await fetch(`http://your-backend-api.com/stations/${id}/approve`, {
+      await fetch(`http://backend-api.com/stations/${id}/approve`, {
         method: "POST",
       });
       setStations((prevStations) =>
@@ -39,7 +39,7 @@ const ManageFuelStations = () => {
 
   const handleReject = async (id) => {
     try {
-      await fetch(`http://your-backend-api.com/stations/${id}/reject`, {
+      await fetch(`http://backend-api.com/stations/${id}/reject`, {
         method: "POST",
       });
       setStations((prevStations) =>
