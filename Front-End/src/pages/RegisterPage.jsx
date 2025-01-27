@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import TermsPopup from "./Terms";
+import { Contact } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
   const [isTermsOpen, setIsTermsOpen] = useState(false);
@@ -12,6 +14,7 @@ const RegistrationForm = () => {
     confirmPassword: "",
     termsAccepted: false,
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -37,13 +40,18 @@ const RegistrationForm = () => {
     }
 
     try {
-      await axios.post("http://localhost:8080/api/v1/VehicleOwner/save", {
-        ownerName: formData.ownerName,
-        ownerPhone: formData.ownerPhone,
-        ownerEmail: formData.email,
-        ownerPassword: formData.password,
+      await axios.post("http://localhost:8080/api/v1/User/save", {
+        userName: formData.ownerName,
+        phone: formData.ownerPhone,
+        email: formData.email,
+        password: formData.password,
+        role: "vehicle_owner",
+        stationName: "",
+        Contact: "",
+        location: "",
       });
       alert("Vehicle Registration Successfully");
+      navigate("/login");
     } catch (err) {
       alert("Registration failed: " + err.message);
     }
