@@ -10,19 +10,27 @@
   /* Remove background-color and color to prevent overriding Tailwind styles */
 }
 
+#root {
+  width: 100%;
+  height: auto;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  margin: 3px;
-  display: flex
-;
-  place-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
   min-width: 320px;
   min-height: 100vh;
-  flex-direction: row;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align items to the top */
+  align-items: center; /* Center horizontally */
 }
 
 

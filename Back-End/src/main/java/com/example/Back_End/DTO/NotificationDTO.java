@@ -8,4 +8,5 @@ public class NotificationDTO {
 
     private String vehicleId;
     private double pumpedLiters;
+
 }

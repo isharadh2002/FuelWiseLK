@@ -40,7 +40,7 @@ public class FuelTransaction {
     private Vehicle vehicle; // Many transactions can be linked to one vehicle
 
     @ManyToOne
-    @JoinColumn(name = "station_id", nullable = false) // Foreign key in FuelTransaction table
+    @JoinColumn(name = "station_id") // Foreign key in FuelTransaction table
     private FuelStation fuelStation; // Many transactions can occur at one fuel station
 
     @PrePersist

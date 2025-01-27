@@ -15,5 +15,7 @@ export default VehicleRegistrationPage;
 
 const divStyles = {
     color: '#000',
-    fontSize: '1.2rem'
+    fontSize: '1.2rem',
+    flexGrow: 1,
+    flexShrink: 1
 }
