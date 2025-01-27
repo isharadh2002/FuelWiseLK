@@ -5,21 +5,25 @@ import { ChevronDownIcon } from 'lucide-react';
 
 function DashboardLayoutBasic() {
     const NAVIGATION = [
-        { kind: 'header', title: 'Customer Dashboard' },
-        { kind: 'segment', segment: 'viewProfile', title: 'View Profile', icon: '👤', onclick: useDemoRouter('/view-profile') },
-        { kind: 'segment', segment: 'manageProfile', title: 'Manage Profile', icon: '🛠️', onclick: useDemoRouter('/manage-profile') },
-        { kind: 'segment', segment: 'viewVehicles', title: 'View Vehicles', icon: '🚗', onclick: useDemoRouter('/view-vehicles') },
-        { kind: 'segment', segment: 'addVehicle', title: 'Add New Vehicle', icon: '➕', onclick: useDemoRouter('/add-vehicle') },
+        { kind: "header", title: "Main Items", onclick: useDemoRouter("/") },
+        { kind: "segment", segment: "viewProfile", title: "View Profile", icon: "👤", onclick: useDemoRouter("/view-profile") },
+        { kind: "segment", segment: "manageProfile", title: "Manage Profile", icon: "⚙️", onclick: useDemoRouter("/manage-profile") },
+        { kind: "segment", segment: "viewVehicles", title: "View Vehicles", icon: "🚗", onclick: useDemoRouter("/view-vehicles") },
+        { kind: "segment", segment: "addVehicle", title: "Add New Vehicle", icon: "➕", onclick: useDemoRouter("/add-vehicle") },
     ];
+    
 
     function useDemoRouter(initialPath) {
         const [pathname, setPathname] = useState(initialPath);
-
+    
         return useMemo(
             () => ({
                 pathname,
                 searchParams: new URLSearchParams(),
-                navigate: (path) => setPathname(String(path)),
+                navigate: (path) => {
+                    setPathname(String(path));
+                    window.history.pushState({}, "", path); // Navigate without reloading
+                },
             }),
             [pathname]
         );
