@@ -1,15 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const ManageFuelStations = () => {
   const [search, setSearch] = useState("");
-  const [stations, setStations] = useState([
-    { id: 1, name: "Station A", location: "Colombo", status: "Pending" },
-    { id: 2, name: "Station B", location: "Kandy", status: "Approved" },
-    { id: 3, name: "Station C", location: "Galle", status: "Rejected" },
-  ]);
+  const [stations, setStations] = useState([]);
+
+  // Fetch stations data from backend
+  useEffect(() => {
+    const fetchStations = async () => {
+      try {
+        const response = await fetch("http://your-backend-api.com/stations"); // Replace with your API URL
+        const data = await response.json();
+        setStations(data);
+      } catch (error) {
+        console.error("Error fetching stations:", error);
+      }
+    };
+    fetchStations();
+  }, []);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
+  };
+
+  const handleApprove = async (id) => {
+    try {
+      await fetch(`http://your-backend-api.com/stations/${id}/approve`, {
+        method: "POST",
+      });
+      setStations((prevStations) =>
+        prevStations.map((station) =>
+          station.id === id ? { ...station, status: "Approved" } : station
+        )
+      );
+    } catch (error) {
+      console.error("Error approving station:", error);
+    }
+  };
+
+  const handleReject = async (id) => {
+    try {
+      await fetch(`http://your-backend-api.com/stations/${id}/reject`, {
+        method: "POST",
+      });
+      setStations((prevStations) =>
+        prevStations.map((station) =>
+          station.id === id ? { ...station, status: "Rejected" } : station
+        )
+      );
+    } catch (error) {
+      console.error("Error rejecting station:", error);
+    }
   };
 
   const filteredStations = stations.filter(
@@ -36,7 +76,7 @@ const ManageFuelStations = () => {
         </div>
         <table className="w-full border-collapse border border-gray-300 text-black">
           <thead>
-            <tr className="bg-green-100">
+            <tr className="bg-green-200">
               <th className="border px-4 py-2">Station Name</th>
               <th className="border px-4 py-2">Location</th>
               <th className="border px-4 py-2">Status</th>
@@ -52,10 +92,16 @@ const ManageFuelStations = () => {
                 <td className="border px-4 py-2 text-center">
                   {station.status === "Pending" && (
                     <>
-                      <button className="text-green-700 hover:underline mx-2">
+                      <button
+                        onClick={() => handleApprove(station.id)}
+                        className="text-green-700 hover:underline mx-2"
+                      >
                         Approve
                       </button>
-                      <button className="text-red-600 hover:underline mx-2">
+                      <button
+                        onClick={() => handleReject(station.id)}
+                        className="text-red-600 hover:underline mx-2"
+                      >
                         Reject
                       </button>
                     </>
