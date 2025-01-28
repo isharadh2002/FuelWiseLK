@@ -12,4 +12,6 @@ public interface UserService {
 
     String addMobileUser(UserDTO userDTO);
     LoginResponse loginMobileUser(LoginDTO loginDTO);
+
+    String updateUser(int userId, UserDTO userDTO);
 }

@@ -106,6 +106,66 @@ public class UserServiceIMPL implements UserService {
             return new LoginResponse(0,"Email does not exist", false);
         }
     }
+    @Override
+public String updateUser(int userId, UserDTO userDTO) {
+    Optional<User> userOptional = userRepository.findById(userId);
+
+    if (userOptional.isPresent()) {
+        User user = userOptional.get();
+        if (userDTO.getUserName() != null && !userDTO.getUserName().isEmpty()) {
+            user.setUsername(userDTO.getUserName());
+        }
+        if (userDTO.getEmail() != null && !userDTO.getEmail().isEmpty()) {
+            user.setEmail(userDTO.getEmail());
+        }
+        if (userDTO.getPhone() != null && !userDTO.getPhone().isEmpty()) {
+            user.setPhone(userDTO.getPhone());
+        }
+        if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
+        userRepository.save(user);
+
+        if (user.getRole().equalsIgnoreCase("vehicle_owner")) {
+            Optional<VehicleOwner> vehicleOwnerOptional = vehicleOwnerRepository.findById(userId);
+            if (vehicleOwnerOptional.isPresent()) {
+                VehicleOwner vehicleOwner = vehicleOwnerOptional.get();
+                if (userDTO.getUserName() != null && !userDTO.getUserName().isEmpty()) {
+                    vehicleOwner.setOwnerName(userDTO.getUserName());
+                }
+                if (userDTO.getEmail() != null && !userDTO.getEmail().isEmpty()) {
+                    vehicleOwner.setEmail(userDTO.getEmail());
+                }
+                if (userDTO.getPhone() != null && !userDTO.getPhone().isEmpty()) {
+                    vehicleOwner.setOwnerPhone(userDTO.getPhone());
+                }
+                if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
+                    vehicleOwner.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+                }
+                vehicleOwnerRepository.save(vehicleOwner);
+            }
+        } else if (user.getRole().equalsIgnoreCase("fuel_station")) {
+            Optional<FuelStation> fuelStationOptional = fuelStationRepository.findStationById(userId);
+            if (fuelStationOptional.isPresent()) {
+                FuelStation fuelStation = fuelStationOptional.get();
+                if (userDTO.getStationName() != null && !userDTO.getStationName().isEmpty()) {
+                    fuelStation.setStationName(userDTO.getStationName());
+                }
+                if (userDTO.getLocation() != null && !userDTO.getLocation().isEmpty()) {
+                    fuelStation.setStationLocation(userDTO.getLocation());
+                }
+                if (userDTO.getContact() != null && !userDTO.getContact().isEmpty()) {
+                    fuelStation.setStationContact(userDTO.getContact());
+                }
+                fuelStationRepository.save(fuelStation);
+            }
+        }
+
+        return "User updated successfully";
+    } else {
+        throw new IllegalArgumentException("User not found");
+    }
+}
 
 
         @Override
