@@ -35,6 +35,35 @@ public class UserController {
         return ResponseEntity.ok(loginResponse);
     }
 
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<?> updateUser(@PathVariable int userId, @RequestBody UserDTO userDTO) {
+
+        try {
+            String updatedUserId = userService.updateUser(userId, userDTO);
+            return ResponseEntity.ok().body("User updated successfully with ID: " + updatedUserId);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error updating user: " + e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/get/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable int userId) {
+
+        try {
+            UserDTO userDTO = userService.getUser(userId);
+            return ResponseEntity.ok().body(userDTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error getting user: " + e.getMessage());
+        }
+
+    }
+
+
+
+    //Mobile User
+
+
     @PostMapping("/RegMobileUser")
     public ResponseEntity<?> saveMobileUser(@RequestBody UserDTO userDTO) {
 
@@ -53,6 +82,30 @@ public class UserController {
     {
         LoginResponse loginResponse = userService.loginMobileUser(loginDTO);
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @PutMapping("/updateMobileUser/{userId}")
+    public ResponseEntity<?> updateMobileUser(@PathVariable int userId, @RequestBody UserDTO userDTO) {
+
+        try {
+            String updatedUserId = userService.updateMobileUser(userId, userDTO);
+            return ResponseEntity.ok().body("User updated successfully with ID: " + updatedUserId);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error updating user: " + e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/getMobileUser/{userId}")
+    public ResponseEntity<?> getMobileUser(@PathVariable int userId) {
+
+        try {
+            UserDTO userDTO = userService.getMobileUser(userId);
+            return ResponseEntity.ok().body(userDTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error getting user: " + e.getMessage());
+        }
+
     }
 
 
