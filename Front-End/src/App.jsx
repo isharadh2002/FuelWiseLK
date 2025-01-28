@@ -25,6 +25,9 @@ import CustomerDashboard from "./components/customer/CustomerDashboard";
 import ViewProfilePage from "./components/customer/ViewProfilePage";
 import ManageProfilePage from "./components/customer/ManageProfilePage";
 import ViewAdmins from "./components/admin/ViewAdmins"; // Import the ViewAdmins component
+<<<<<<< HEAD
+>>>>>>> 63a865ad0130436e718343fb8de2d9b609be1f37
+=======
 >>>>>>> 63a865ad0130436e718343fb8de2d9b609be1f37
 
 function App() {
@@ -34,6 +37,7 @@ function App() {
             <Router>
               <Global styles={globalStyles} />
 
+<<<<<<< HEAD
 <<<<<<< HEAD
                 <Routes>
                     <Route path="/m" element={<AdminDashboard/>}/>
@@ -53,6 +57,8 @@ function App() {
                     <Route path="*" element={<PageNotFound/>}/>
                 </Routes>
 =======
+=======
+>>>>>>> 63a865ad0130436e718343fb8de2d9b609be1f37
               <Routes>
                 {/* Admin Routes */}
                 <Route path="/m" element={<AdminDashboard />} />
@@ -106,6 +112,9 @@ function App() {
                 {/* Catch-All Route for 404 */}
                 <Route path="*" element={<PageNotFound />} />
               </Routes>
+<<<<<<< HEAD
+>>>>>>> 63a865ad0130436e718343fb8de2d9b609be1f37
+=======
 >>>>>>> 63a865ad0130436e718343fb8de2d9b609be1f37
             </Router>
           </>
