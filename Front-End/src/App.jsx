@@ -4,6 +4,7 @@ import Footer from "./components/common/Footer";
 import { Global } from '@emotion/react';
 import globalStyles from './styles/global';
 import LoginForm from './pages/LoginPage';
+import AdminLoginForm from './pages/AdminLoginPage';
 import RegistrationForm from "./pages/RegisterPage";
 import PageNotFound from "./pages/PageNotFound";
 import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
@@ -13,8 +14,6 @@ import ContactUs from "./pages/Contact";
 import Home from "./pages/Home.jsx";
 import VehicleForm from "./pages/VehicleForm";
 import AdminDashboard from "./components/admin/AdminDashboard";
-<<<<<<< HEAD
-=======
 import QRCodePage from "./pages/QRCodePage"; // Import the new QR Code page
 import CreateAdmins from "./components/admin/CreateAdmins";
 import ManageFuelStations from "./pages/ManageFuelStations.jsx";
@@ -24,11 +23,8 @@ import SingleVehiclePage from './pages/SingleVehiclePage.jsx';
 import CustomerDashboard from "./components/customer/CustomerDashboard";
 import ViewProfilePage from "./components/customer/ViewProfilePage";
 import ManageProfilePage from "./components/customer/ManageProfilePage";
-import ViewAdmins from "./components/admin/ViewAdmins"; // Import the ViewAdmins component
-<<<<<<< HEAD
->>>>>>> 63a865ad0130436e718343fb8de2d9b609be1f37
-=======
->>>>>>> 63a865ad0130436e718343fb8de2d9b609be1f37
+import ViewAdmins from "./components/admin/ViewAdmins";
+import QTY from "./pages/QTY.jsx"; // Import the ViewAdmins component
 
 function App() {
     return (
@@ -37,28 +33,6 @@ function App() {
             <Router>
               <Global styles={globalStyles} />
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <Routes>
-                    <Route path="/m" element={<AdminDashboard/>}/>
-                    <Route path="/VehicleRegister" element={<VehicleForm/>}/>
-                    <Route path="/home" element={<Home/>}/>
-                    <Route path="/register" element={<RegistrationForm/>}/>
-                    <Route path="/aboutUs" element={<About/>}/>
-                    <Route path="/contactUs" element={<ContactUs/>}/>
-                    <Route path="/" element={<VehicleRegistrationPage/>}/>
-                    <Route path="/footer" element={<Footer/>}/>
-                    <Route path="/login" element={<LoginForm/>}/>
-                    <Route path="/terms" element={<Terms/>}/>
-                    <Route
-                        path="/FuelStation"
-                        element={<FuelStationRegistrationPage/>}
-                    />
-                    <Route path="*" element={<PageNotFound/>}/>
-                </Routes>
-=======
-=======
->>>>>>> 63a865ad0130436e718343fb8de2d9b609be1f37
               <Routes>
                 {/* Admin Routes */}
                 <Route path="/m" element={<AdminDashboard />} />
@@ -70,7 +44,7 @@ function App() {
                   element={<ManageFuelStations />}
                 />
                 <Route path="/Viewadmins" element={<ViewAdmins />} />
-                
+                <Route path={"/qa"} element={<QTY/>}/>
                 {/* Customer Routes */}
                 <Route path="/dashboard" element={<CustomerDashboard />} />
                 <Route
@@ -112,16 +86,11 @@ function App() {
                 {/* Catch-All Route for 404 */}
                 <Route path="*" element={<PageNotFound />} />
               </Routes>
-<<<<<<< HEAD
->>>>>>> 63a865ad0130436e718343fb8de2d9b609be1f37
-=======
->>>>>>> 63a865ad0130436e718343fb8de2d9b609be1f37
             </Router>
           </>
           
 
     );
 }
-
 
 export default App;
