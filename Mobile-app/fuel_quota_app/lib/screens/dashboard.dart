@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_quota_app/screens/fuel_quota.dart';
 import 'qr_scanner_screen.dart';
 import 'profile_page.dart';
 import 'login_screen.dart';
@@ -271,6 +272,45 @@ class _DashboardState extends State<Dashboard> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => ProfilePage(userId: userId),
+                          ),
+                        );
+                      }
+                    },
+                  );
+                },
+              ),
+              FutureBuilder<String?>(
+                future: getUserId(), // Fetch userId from SharedPreferences
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+
+                  String? userId = snapshot.data;
+
+                  //This one is added temporarily to view the fuel quota page
+                  //TODO: Pass data to this page after scanning the QR Code
+                  return _buildOptionCard(
+                    title: 'View Fuel Quota',
+                    icon: Icons.local_gas_station,
+                    subtitle: 'View and update the remaining fuel quota',
+                    onTap: () {
+                      if (userId != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FuelQuotaPage(
+                              ownerName: 'John Doe',
+                              ownerEmail: 'william.henry.harrison@gmail.com',
+                              vehicleModel: 'Toyota Camry',
+                              vehicleNumber: 'ABC123',
+                              totalQuota: 50.0,
+                              initialRemainingQuota: 45.0,
+                            ),
                           ),
                         );
                       }

@@ -7,7 +7,6 @@ class RegistrationScreen extends StatelessWidget {
   final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController roleController = TextEditingController();
   final TextEditingController stationNameController = TextEditingController();
   final TextEditingController contactController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
@@ -88,13 +87,7 @@ class RegistrationScreen extends StatelessWidget {
                   controller: phoneController,
                   label: 'Phone Number',
                 ),
-                const SizedBox(height: 20.0),
 
-                // Role field (Text Input instead of Dropdown)
-                _buildTextField(
-                  controller: roleController,
-                  label: 'Role',
-                ),
                 const SizedBox(height: 20.0),
 
                 // Additional fields for Fuel Station
@@ -136,7 +129,6 @@ class RegistrationScreen extends StatelessWidget {
                       emailController.text,
                       passwordController.text,
                       phoneController.text,
-                      roleController.text,
                       stationNameController.text,
                       contactController.text,
                       locationController.text,

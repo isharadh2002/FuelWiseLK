@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'vehicle_details_page.dart'; // Assuming the VehicleDetailsPage is in the same folder
+import 'package:fuel_quota_app/controllers/vehicle_details_controller.dart';
+import 'package:fuel_quota_app/screens/fuel_quota.dart';
 
 class QRScannerScreen extends StatefulWidget {
   const QRScannerScreen({super.key});
@@ -11,53 +12,91 @@ class QRScannerScreen extends StatefulWidget {
 
 class _QRScannerScreenState extends State<QRScannerScreen> {
   String result = "Scan a QR code";
-
-  // Create a controller for MobileScanner
   final MobileScannerController cameraController = MobileScannerController();
+  final VehicleDetailsController vehicleDetailsController = VehicleDetailsController();
+
+  bool isProcessing = false; // To prevent multiple API calls
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('QR Code Scanner'),
-      ),
-      body: Column(
-        children: [
-          // QR Scanner widget
-          Expanded(
-            child: MobileScanner(
-              controller: cameraController,
-              onDetect: (BarcodeCapture barcodeCapture) {
-                // Access the scanned barcode
-                final barcode = barcodeCapture.barcodes.first;
-                setState(() {
-                  result = barcode.rawValue ?? "Unknown code";
-                });
-
-                // Navigate to VehicleDetailsPage and pass the vehicle ID
-                if (barcode.rawValue != null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => VehicleDetailsPage(
-                        vehicleId: barcode.rawValue!, // Pass vehicle ID from QR code
-                      ),
-                    ),
-                  );
-                }
-              },
-            ),
-          ),
-          // Display the result
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'Scan Result: $result',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
+        actions: [
+          IconButton(
+            icon: Icon(cameraController.torchEnabled ? Icons.flash_on : Icons.flash_off),
+            onPressed: () => cameraController.toggleTorch(),
           ),
         ],
       ),
+      body: Stack(
+        children: [
+          MobileScanner(
+            controller: cameraController,
+            onDetect: (BarcodeCapture barcodeCapture) async {
+              if (isProcessing) return;
+              setState(() => isProcessing = true);
+
+              final barcode = barcodeCapture.barcodes.first;
+              if (barcode.rawValue != null && barcode.rawValue!.isNotEmpty) {
+                final vehicleId = _parseVehicleId(barcode.rawValue!);
+
+                if (vehicleId != null) {
+                  final vehicleDetails = await vehicleDetailsController.fetchVehicleDetails(vehicleId);
+
+                  if (vehicleDetails != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FuelQuotaPage(
+                          ownerName: vehicleDetails['ownerName'] ?? 'Unknown',
+                          ownerEmail: vehicleDetails['ownerEmail'] ?? 'N/A',
+                          vehicleModel: vehicleDetails['vehicleModel'] ?? 'Unknown',
+                          vehicleNumber: vehicleDetails['vehicleNumber'] ?? 'N/A',
+                          totalQuota: (vehicleDetails['totalQuota'] as num?)?.toDouble() ?? 0.0,
+                          initialRemainingQuota: (vehicleDetails['remainingQuota'] as num?)?.toDouble() ?? 0.0,
+                        ),
+                      ),
+                    );
+                  } else {
+                    _showSnackBar('Vehicle details not found!');
+                  }
+                } else {
+                  _showSnackBar('Invalid QR Code format!');
+                }
+              } else {
+                _showSnackBar('No QR Code detected!');
+              }
+
+              setState(() => isProcessing = false);
+            },
+          ),
+          if (isProcessing)
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+        ],
+      ),
+    );
+  }
+
+  String? _parseVehicleId(String rawValue) {
+    try {
+      final parts = rawValue.split(',');
+      for (var part in parts) {
+        if (part.trim().startsWith("Vehicle ID:")) {
+          return part.split(':')[1].trim();
+        }
+      }
+    } catch (e) {
+      debugPrint("Error parsing QR code: $e");
+    }
+    return null;
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
     );
   }
 }
