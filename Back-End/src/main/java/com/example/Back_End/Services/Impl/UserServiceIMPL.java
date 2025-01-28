@@ -76,7 +76,23 @@ public class UserServiceIMPL implements UserService {
         }
     }
 
+@Override
+public UserDTO getUser(int userId) {
+    Optional<User> userOptional = userRepository.findById(userId);
 
+    if (userOptional.isPresent()) {
+        User user = userOptional.get();
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserName(user.getUsername());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setPhone(user.getPhone());
+        userDTO.setRole(user.getRole());
+
+        return userDTO;
+    } else {
+        throw new IllegalArgumentException("User not found");
+    }
+}
 
     @Override
     public LoginResponse loginUser(LoginDTO loginDTO) {
@@ -167,6 +183,7 @@ public String updateUser(int userId, UserDTO userDTO) {
     }
 }
 
+        //Mobile User
 
         @Override
         public String addMobileUser(UserDTO userDTO) {
@@ -194,6 +211,81 @@ public String updateUser(int userId, UserDTO userDTO) {
             return "Fuel Station Owner registered successfully";
         }
 
+    @Override
+    public UserDTO getMobileUser(int userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (!user.getRole().equalsIgnoreCase("fuel_station")) {
+                throw new IllegalArgumentException("Only Fuel Station Owners can be retrieved");
+            }
+
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUserName(user.getUsername());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setPhone(user.getPhone());
+            userDTO.setRole(user.getRole());
+
+            Optional<FuelStation> fuelStationOptional = fuelStationRepository.findStationById(userId);
+            if (fuelStationOptional.isPresent()) {
+                FuelStation fuelStation = fuelStationOptional.get();
+                userDTO.setStationName(fuelStation.getStationName());
+                userDTO.setLocation(fuelStation.getStationLocation());
+                userDTO.setContact(fuelStation.getStationContact());
+            }
+
+            return userDTO;
+        } else {
+            throw new IllegalArgumentException("User not found");
+        }
+    }
+
+
+        @Override
+        public String updateMobileUser(int userId, UserDTO userDTO) {
+            Optional<User> userOptional = userRepository.findById(userId);
+
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                if (!user.getRole().equalsIgnoreCase("fuel_station")) {
+                    throw new IllegalArgumentException("Only Fuel Station Owners can update their details");
+                }
+
+                if (userDTO.getUserName() != null && !userDTO.getUserName().isEmpty()) {
+                    user.setUsername(userDTO.getUserName());
+                }
+                if (userDTO.getEmail() != null && !userDTO.getEmail().isEmpty()) {
+                    user.setEmail(userDTO.getEmail());
+                }
+                if (userDTO.getPhone() != null && !userDTO.getPhone().isEmpty()) {
+                    user.setPhone(userDTO.getPhone());
+                }
+                if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
+                    user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+                }
+                userRepository.save(user);
+
+                Optional<FuelStation> fuelStationOptional = fuelStationRepository.findStationById(userId);
+                if (fuelStationOptional.isPresent()) {
+                    FuelStation fuelStation = fuelStationOptional.get();
+                    if (userDTO.getStationName() != null && !userDTO.getStationName().isEmpty()) {
+                        fuelStation.setStationName(userDTO.getStationName());
+                    }
+                    if (userDTO.getLocation() != null && !userDTO.getLocation().isEmpty()) {
+                        fuelStation.setStationLocation(userDTO.getLocation());
+                    }
+                    if (userDTO.getContact() != null && !userDTO.getContact().isEmpty()) {
+                        fuelStation.setStationContact(userDTO.getContact());
+                    }
+                    fuelStationRepository.save(fuelStation);
+                }
+
+                return "Mobile user updated successfully";
+            } else {
+                throw new IllegalArgumentException("User not found");
+            }
+        }
 
     @Override
     public LoginResponse loginMobileUser(LoginDTO loginDTO) {

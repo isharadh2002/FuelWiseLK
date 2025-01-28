@@ -14,4 +14,8 @@ public interface UserService {
     LoginResponse loginMobileUser(LoginDTO loginDTO);
 
     String updateUser(int userId, UserDTO userDTO);
+    String updateMobileUser(int userId, UserDTO userDTO);
+
+    UserDTO getUser(int userId);
+    UserDTO getMobileUser(int userId);
 }
