@@ -34,4 +34,14 @@ public class VehicleController {
         return vehicleDTO.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PutMapping("update-fuel-quota/{id}/")
+    public ResponseEntity<String> updateFuelQuota(@PathVariable int id, @RequestBody double fuelQuota) {
+        try {
+            vehicleService.updateFuelQuota(id, fuelQuota);
+            return ResponseEntity.ok("Fuel quota updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body("Vehicle not found with ID: " + id);
+        }
+    }
 }
