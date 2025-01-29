@@ -23,7 +23,8 @@ import SingleVehiclePage from './pages/SingleVehiclePage.jsx';
 import CustomerDashboard from "./components/customer/CustomerDashboard";
 import ViewProfilePage from "./components/customer/ViewProfilePage";
 import ManageProfilePage from "./components/customer/ManageProfilePage";
-import ViewAdmins from "./components/admin/ViewAdmins"; // Import the ViewAdmins component
+import ViewAdmins from "./components/admin/ViewAdmins";
+import QTY from "./pages/QTY.jsx"; // Import the ViewAdmins component
 
 function App() {
     return (
@@ -43,7 +44,7 @@ function App() {
                   element={<ManageFuelStations />}
                 />
                 <Route path="/Viewadmins" element={<ViewAdmins />} />
-                
+                <Route path={"/qa"} element={<QTY/>}/>
                 {/* Customer Routes */}
                 <Route path="/dashboard" element={<CustomerDashboard />} />
                 <Route
