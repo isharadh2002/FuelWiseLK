@@ -46,13 +46,21 @@ public class AdminServiceIMPL implements AdminService {
     }
 
     // Update an existing admin
-    @Override
+   @Override
     public Optional<AdminDTO> updateAdmin(Long id, AdminDTO adminDTO) {
-        if (adminRepository.existsById(id)) {
-            Admin admin = AdminDTO.convertToEntity(adminDTO);
-            admin.setAdminID(id);  // Set the ID for update
-            Admin updatedAdmin = adminRepository.save(admin);
-            return Optional.of(AdminDTO.convertToDTO(updatedAdmin));  // Return the updated admin DTO
+        Optional<Admin> existingAdminOptional = adminRepository.findById(id);
+        if (existingAdminOptional.isPresent()) {
+            Admin existingAdmin = existingAdminOptional.get();
+
+            if (adminDTO.getAdminName() != null) {
+                existingAdmin.setAdminName(adminDTO.getAdminName());
+            }
+            if (adminDTO.getEmail() != null) {
+                existingAdmin.setEmail(adminDTO.getEmail());
+            }
+
+            Admin updatedAdmin = adminRepository.save(existingAdmin);
+            return Optional.of(AdminDTO.convertToDTO(updatedAdmin));
         }
         throw new AdminException("Admin with ID " + id + " not found.");
     }
