@@ -49,12 +49,10 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => FuelQuotaPage(
+                          vehicleId: vehicleId,
                           ownerName: vehicleDetails['ownerName'] ?? 'Unknown',
-                          ownerEmail: vehicleDetails['ownerEmail'] ?? 'N/A',
-                          vehicleModel: vehicleDetails['vehicleModel'] ?? 'Unknown',
-                          vehicleNumber: vehicleDetails['vehicleNumber'] ?? 'N/A',
-                          totalQuota: (vehicleDetails['totalQuota'] as num?)?.toDouble() ?? 0.0,
-                          initialRemainingQuota: (vehicleDetails['remainingQuota'] as num?)?.toDouble() ?? 0.0,
+                          registrationNumber: vehicleDetails['registrationNumber'] ?? 'N/A',
+                          vehicleFuelQuota: (vehicleDetails['vehicleFuelQuota'] as num?)?.toDouble() ?? 0.0,
                         ),
                       ),
                     );

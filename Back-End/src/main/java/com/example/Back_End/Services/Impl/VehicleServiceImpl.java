@@ -70,4 +70,26 @@ public class VehicleServiceImpl implements VehicleService {
                         vehicle.getVehicleFuelQuota()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void updateFuelQuota(int id, double fuelQuota) throws Exception {
+        // Fetch the vehicle by ID
+        Optional<Vehicle> existingVehicle = vehicleRepository.findById(id);
+
+        if (existingVehicle.isPresent()) {
+            Vehicle vehicle = existingVehicle.get();
+
+            // Update the fuel quota
+            vehicle.setVehicleFuelQuota(fuelQuota);
+
+            // Save the updated vehicle to the repository
+            vehicleRepository.save(vehicle);
+        } else {
+            // Throw an exception if the vehicle is not found
+            throw new Exception("Vehicle not found with ID: " + id);
+        }
+    }
+
+
+
 }

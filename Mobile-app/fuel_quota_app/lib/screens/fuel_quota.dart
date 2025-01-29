@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:fuel_quota_app/controllers/vehicle_details_controller.dart';
+
+import 'dashboard.dart';
 
 class FuelQuotaPage extends StatefulWidget {
+  final String vehicleId;
   final String ownerName;
-  final String ownerEmail;
-  final String vehicleModel;
-  final String vehicleNumber;
-  final double totalQuota;
-  final double initialRemainingQuota;
+  final String registrationNumber;
+  final double vehicleFuelQuota;
 
   const FuelQuotaPage({
     super.key,
+    required this.vehicleId,
     required this.ownerName,
-    required this.ownerEmail,
-    required this.vehicleModel,
-    required this.vehicleNumber,
-    required this.totalQuota,
-    required this.initialRemainingQuota,
+    required this.registrationNumber,
+    required this.vehicleFuelQuota,
   });
 
   @override
@@ -27,25 +26,53 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
   TextEditingController _fuelController = TextEditingController();
   late double _remainingFuelQuota;
   double _pumpedFuel = 0.0;
+  final VehicleDetailsController _vehicleDetailsController = VehicleDetailsController();
 
   @override
   void initState() {
     super.initState();
-    _remainingFuelQuota = widget.initialRemainingQuota;
+    _remainingFuelQuota = 50.0 - widget.vehicleFuelQuota;
+    print(widget.vehicleFuelQuota);
+    print(_remainingFuelQuota);
   }
 
-  void _updateFuelQuota() {
+  void _updateFuelQuota() async {
+    double enteredFuel = double.tryParse(_fuelController.text) ?? 0.0;
+    double currentFuelQuota = widget.vehicleFuelQuota;
+
+    // Add pumped fuel to current quota and ensure it doesn't exceed max limit
+    double newFuelQuota = currentFuelQuota + enteredFuel;
+
+    // Clamp the new fuel quota to ensure it doesn't exceed 50L or go below 0L
+    newFuelQuota = newFuelQuota.clamp(0.0, 50.0);
+
     setState(() {
-      double enteredFuel = double.tryParse(_fuelController.text) ?? 0.0;
-      _pumpedFuel = enteredFuel;
-      _remainingFuelQuota = (_remainingFuelQuota - enteredFuel).clamp(0.0, widget.totalQuota);
-      _fuelController.clear();
+      _remainingFuelQuota = 50.0 - newFuelQuota; // Update remaining fuel
     });
+
+    _fuelController.clear();
+
+    // Update the vehicle's fuel quota using the API
+    bool success = await _vehicleDetailsController.updateFuelQuota(widget.vehicleId, newFuelQuota);
+    if (success) {
+      _showSnackBar('Fuel quota updated successfully!');
+    } else {
+      _showSnackBar('Failed to update fuel quota. Please check the remaining quota.');
+    }
+  }
+
+
+
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    double percentageRemaining = (_remainingFuelQuota / widget.totalQuota);
+    double percentageRemaining = (_remainingFuelQuota / 50.0);
     final primaryGreen = Color(0xFF2E7D32);
 
     return Scaffold(
@@ -95,17 +122,11 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
                         color: primaryGreen,
                       ),
                     ),
-                    Text(
-                      widget.ownerEmail,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[600]!,
-                      ),
-                    ),
+
                     Divider(thickness: 1, height: 24, color: Colors.grey[300]!),
 
                     Text(
-                      '${widget.vehicleModel} - ${widget.vehicleNumber}',
+                      widget.registrationNumber,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
