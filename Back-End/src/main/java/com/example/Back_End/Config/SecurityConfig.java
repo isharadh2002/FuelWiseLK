@@ -37,6 +37,7 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/v1/vehicles").permitAll()
                         .requestMatchers("/api/v1/vehicles/**").permitAll()
+                        .requestMatchers("/api/v1/vehicles/update-fuel-quota/**").permitAll()
 
                         .anyRequest().authenticated()  // All other endpoints require authentication
                 );
