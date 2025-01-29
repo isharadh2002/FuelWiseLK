@@ -8,12 +8,19 @@ class ProfileController {
   Future<Map<String, dynamic>> fetchProfile(String userId) async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/profile/$userId'),
+        Uri.parse('$baseUrl/getMobileUser/$userId'),
         headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        // Only return the necessary fields
+        return {
+          'name': data['userName'],
+          'email': data['email'],
+          'phone': data['phone'],
+          'password': '', // Leave it empty initially
+        };
       } else {
         throw Exception('Failed to fetch profile');
       }
@@ -25,9 +32,14 @@ class ProfileController {
   Future<void> updateProfile(BuildContext context, String userId, Map<String, dynamic> data) async {
     try {
       final response = await http.put(
-        Uri.parse('$baseUrl/profile/$userId'),
+        Uri.parse('$baseUrl/updateMobileUser/$userId'),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(data),
+        body: jsonEncode({
+          'userName': data['name'],
+          'email': data['email'],
+          'phone': data['phone'],
+          'password': data['password'], // Update password if needed
+        }),
       );
 
       if (response.statusCode == 200) {
