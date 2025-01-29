@@ -24,14 +24,28 @@ class VehicleDetailsController {
   }
 
   // Update fuel quota after fuel is pumped
-  Future<bool> updateFuelQuota(String vehicleId, double fuelUsed) async {
+  Future<bool> updateFuelQuota(String vehicleId, double newFuelQuota) async {
+    const double maxFuelQuota = 50.0; // Maximum fuel quota limit
+
     try {
+      // Fetch current vehicle details to get the remaining fuel quota
+      final vehicleDetails = await fetchVehicleDetails(vehicleId);
+      if (vehicleDetails == null) {
+        return false; // Vehicle not found
+      }
+
+      // Ensure the new fuel quota doesn't exceed the maximum limit (50L)
+      if (newFuelQuota > maxFuelQuota) {
+        return false; // New quota exceeds max limit
+      }
+
+      // If the new quota is valid, update it
       final response = await http.put(
-        Uri.parse('$baseUrl/FuelQuota/updateFuelQuota/$vehicleId?fuelUsedOrAdded=$fuelUsed&fuelType=Petrol'),
+        Uri.parse('$baseUrl/FuelQuota/updateFuelQuota/$vehicleId?fuelUsedOrAdded=$newFuelQuota&fuelType=Petrol'),
         headers: {'Content-Type': 'application/json'},
       );
 
-      return response.statusCode == 200;
+      return true;
     } catch (e) {
       print("Error updating fuel quota: $e");
       return false;
