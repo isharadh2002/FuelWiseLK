@@ -1,104 +1,95 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { User, Mail, Lock } from "lucide-react";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
 
-const CreateAdminForm = () => {
+const CreateAdmins = () => {
+  const [adminName, setAdminName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); // New state for confirm password
+  const [errors, setErrors] = useState({});
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogType, setDialogType] = useState(""); // success or error
-  const navigate = useNavigate();
 
-  const validateFields = () => {
-    let isValid = true;
-
-    // Email validation
-    if (!email) {
-      setEmailError("Email is required.");
-      isValid = false;
-    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setEmailError("Please enter a valid email address.");
-      isValid = false;
-    } else {
-      setEmailError("");
-    }
-
-    // Password validation
-    if (!password) {
-      setPasswordError("Password is required.");
-      isValid = false;
-    } else if (password.length < 8) {
-      setPasswordError("Password must be at least 8 characters long.");
-      isValid = false;
-    } else {
-      setPasswordError("");
-    }
-
-    // Confirm password validation
-    if (!confirmPassword) {
-      setConfirmPasswordError("Confirm password is required.");
-      isValid = false;
-    } else if (confirmPassword !== password) {
-      setConfirmPasswordError("Passwords do not match.");
-      isValid = false;
-    } else {
-      setConfirmPasswordError("");
-    }
-
-    return isValid;
+  // Validate password match
+  const validate = () => {
+    const errors = {};
+    if (!adminName) errors.adminName = "Admin Name is required";
+    if (!email) errors.email = "Email is required";
+    if (!password) errors.password = "Password is required";
+    if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match"; // Confirm password validation
+    return errors;
   };
 
-  async function createAdmin(event) {
-    event.preventDefault();
+  // Validate password match on every change to confirm password or password fields
+  const handlePasswordChange = (e) => {
+    const { value } = e.target;
+    setPassword(value);
 
-    if (!validateFields()) {
+    // Check if passwords match immediately after the password is typed
+    if (confirmPassword && value !== confirmPassword) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "Passwords do not match"
+      }));
+    } else {
+      setErrors((prevErrors) => {
+        const { confirmPassword, ...rest } = prevErrors; // Remove confirmPassword error
+        return rest;
+      });
+    }
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const { value } = e.target;
+    setConfirmPassword(value);
+
+    // Check if passwords match immediately after confirm password is typed
+    if (password && value !== password) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "Passwords do not match"
+      }));
+    } else {
+      setErrors((prevErrors) => {
+        const { confirmPassword, ...rest } = prevErrors; // Remove confirmPassword error
+        return rest;
+      });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
     try {
-      await axios
-        .post("http://localhost:8080/api/v1/Admin/create", {
-          email: email,
-          password: password,
-        })
-        .then(
-          (res) => {
-            if (res.data.message === "Admin created successfully") {
-              setDialogMessage("Admin account created successfully!");
-              setDialogTitle("Creation Success");
-              setDialogType("success"); // success message
-              setDialogOpen(true);
-              // Redirect to login page after successful creation
-              setTimeout(() => navigate("/admin/login"), 2000);
-            } else {
-              setDialogMessage("Failed to create admin account.");
-              setDialogTitle("Creation Failed");
-              setDialogType("error"); // error message
-              setDialogOpen(true);
-            }
-          },
-          (fail) => {
-            console.error(fail);
-            setDialogMessage("An error occurred. Please try again.");
-            setDialogTitle("Error");
-            setDialogType("error"); // error message
-            setDialogOpen(true);
-          }
-        );
-    } catch (err) {
-      setDialogMessage("An error occurred. Please try again.");
+      // Simulated API call
+      console.log("Form submitted");
+
+      // Simulate a successful submission
+      setDialogTitle("Success");
+      setDialogMessage("Admin account created successfully.");
+      setDialogType("success");
+      setDialogOpen(true);
+
+      // Reset form after successful submission
+      setAdminName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+    } catch (error) {
       setDialogTitle("Error");
-      setDialogType("error"); // error message
+      setDialogMessage("An error occurred while creating the admin account.");
+      setDialogType("error");
       setDialogOpen(true);
     }
-  }
+  };
 
   const handleCloseDialog = () => {
     setDialogOpen(false);
@@ -106,84 +97,89 @@ const CreateAdminForm = () => {
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-blue-300 via-indigo-400 to-purple-500">
-      <div className="w-full max-w-lg p-10 bg-white bg-opacity-90 rounded-lg shadow-xl">
-        <h2 className="mb-8 text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 drop-shadow-md">
-          Create Admin Account
-        </h2>
+      <div className="overflow-hidden bg-white bg-opacity-90 shadow-lg w-96 rounded-2xl">
+        <div className="p-6 bg-gradient-to-r from-indigo-500 to-purple-500">
+          <h2 className="text-2xl font-bold text-white">Create Admin Account</h2>
+          <p className="mt-1 text-indigo-100">Add a new administrator to the system</p>
+        </div>
 
-        <form onSubmit={createAdmin}>
-          <div className="mb-6">
-            <label htmlFor="email" className="block mb-2 text-sm font-semibold text-gray-700">
-              Admin Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Enter your admin email"
-              className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-indigo-400 focus:outline-none"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-            {emailError && <p className="mt-2 text-sm text-red-600">{emailError}</p>}
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <div className="space-y-2">
+            <label className="block text-gray-700">Admin Name</label>
+            <div className="relative">
+              <User className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+              <input
+                type="text"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                value={adminName}
+                onChange={(e) => setAdminName(e.target.value)}
+                placeholder="Enter admin name"
+              />
+            </div>
+            {errors.adminName && <p className="text-sm text-red-500">{errors.adminName}</p>}
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="password" className="block mb-2 text-sm font-semibold text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Enter your password"
-              className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-indigo-400 focus:outline-none"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-            {passwordError && <p className="mt-2 text-sm text-red-600">{passwordError}</p>}
+          <div className="space-y-2">
+            <label className="block text-gray-700">Email Address</label>
+            <div className="relative">
+              <Mail className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+              <input
+                type="email"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@company.com"
+              />
+            </div>
+            {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block mb-2 text-sm font-semibold text-gray-700">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirm your password"
-              className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-indigo-400 focus:outline-none"
-              value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
-            />
-            {confirmPasswordError && <p className="mt-2 text-sm text-red-600">{confirmPasswordError}</p>}
+          <div className="space-y-2">
+            <label className="block text-gray-700">Password</label>
+            <div className="relative">
+              <Lock className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+              <input
+                type="password"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                value={password}
+                onChange={handlePasswordChange}
+                placeholder="Enter secure password"
+              />
+            </div>
+            {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-gray-700">Confirm Password</label>
+            <div className="relative">
+              <Lock className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+              <input
+                type="password"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+                placeholder="Confirm your password"
+              />
+            </div>
+            {errors.confirmPassword && <p className="text-sm text-red-500">{errors.confirmPassword}</p>}
           </div>
 
           <button
             type="submit"
-            className="w-full px-4 py-3 text-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-indigo-400"
+            className="w-full py-2 mt-6 text-white transition-all rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600"
           >
-            Create Account
+            Create Admin Account
           </button>
-
-          <div className="mt-8 text-sm text-center text-gray-600">
-            Already have an account?{" "}
-            <a href="/admin/login" className="font-semibold text-indigo-600 hover:text-indigo-700">
-              Login here
-            </a>
-          </div>
         </form>
       </div>
 
-      {/* Dialog Popup */}
       <Dialog open={dialogOpen} onClose={handleCloseDialog}>
         <DialogTitle
           style={{
-            textAlign: 'center',
-            fontSize: '1.8rem',
-            fontWeight: 'bold',
-            color: dialogType === 'success' ? '#4caf50' : '#f44336',
+            textAlign: "center",
+            fontSize: "1.8rem",
+            fontWeight: "bold",
+            color: dialogType === "success" ? "#4caf50" : "#f44336",
           }}
         >
           {dialogTitle}
@@ -192,11 +188,11 @@ const CreateAdminForm = () => {
           <Alert
             severity={dialogType}
             style={{
-              borderRadius: '20px',
-              padding: '20px',
-              fontSize: '1rem',
-              fontWeight: '600',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              borderRadius: "20px",
+              padding: "20px",
+              fontSize: "1rem",
+              fontWeight: "600",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             }}
           >
             {dialogMessage}
@@ -212,4 +208,4 @@ const CreateAdminForm = () => {
   );
 };
 
-export default CreateAdminForm;
+export default CreateAdmins;

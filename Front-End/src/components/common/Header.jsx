@@ -14,10 +14,10 @@ function Header() {
     // Map pathname to corresponding page name
     const pathToPage = {
       '/home': 'Home',
-      '/AboutUs': 'About Us',
+      '/About': 'About Us',
       '/Resources': 'Resources',
       '/Services': 'Services',
-      '/ContactUs': 'Contact Us',
+      '/contact': 'Contact Us',
     };
 
     const currentPage = pathToPage[location.pathname] || 'Home';

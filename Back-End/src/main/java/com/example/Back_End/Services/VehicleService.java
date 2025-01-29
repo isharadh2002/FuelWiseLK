@@ -31,4 +31,7 @@ public interface VehicleService {
     void updateQuota(@RequestBody Vehicle vehicle, @PathVariable double remainings) throws Exception;
 
     List<VehicleDTO> getAllVehicles();
+
+    void updateFuelQuota(int id, double fuelQuota) throws Exception;
+
 }

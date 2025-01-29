@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-// Base URL of the Spring Boot backend API
-const String baseUrl = 'http://10.0.2.2:8080/api/v1/VehicleOwner';
+const String baseUrl = 'http://10.0.2.2:8080/api/v1/vehicles';
 
 class VehicleDetailsController {
   // Fetch vehicle details by vehicle ID
@@ -14,9 +13,9 @@ class VehicleDetailsController {
       );
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body); // Return vehicle details as a map
+        return jsonDecode(response.body) as Map<String, dynamic>;
       } else {
-        return null; // Vehicle not found or error occurred
+        return null;
       }
     } catch (e) {
       print("Error fetching vehicle details: $e");
@@ -24,23 +23,29 @@ class VehicleDetailsController {
     }
   }
 
-  // Update fuel quota after fuel is pumped
-  Future<bool> updateFuelQuota(String vehicleId, double fuelUsed) async {
-    final Map<String, dynamic> fuelUpdateRequest = {
-      'fuelUsed': fuelUsed,
-    };
+  Future<bool> updateFuelQuota(String vehicleId, double newFuelQuota) async {
+    const double maxFuelQuota = 50.0;
 
     try {
+      // Ensure the new fuel quota doesn't exceed the maximum limit (50L)
+      if (newFuelQuota > maxFuelQuota) {
+        print("New fuel quota exceeds maximum limit.");
+        return false;
+      }
+
+      // API expects JSON in the body, so we send it correctly
       final response = await http.put(
-        Uri.parse('$baseUrl/$vehicleId/fuel'),
+        Uri.parse('$baseUrl/update-fuel-quota/$vehicleId'),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(fuelUpdateRequest),
+        body: jsonEncode(newFuelQuota), // Sending newFuelQuota as a JSON body
       );
 
       if (response.statusCode == 200) {
-        return true; // Fuel quota updated successfully
+        print("Fuel quota updated successfully.");
+        return true;
       } else {
-        return false; // Failed to update fuel quota
+        print("Failed to update fuel quota: ${response.body}");
+        return false;
       }
     } catch (e) {
       print("Error updating fuel quota: $e");
