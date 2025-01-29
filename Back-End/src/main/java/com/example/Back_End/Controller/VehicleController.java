@@ -35,7 +35,7 @@ public class VehicleController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping("update-fuel-quota/{id}/")
+    @PutMapping("update-fuel-quota/{id}")
     public ResponseEntity<String> updateFuelQuota(@PathVariable int id, @RequestBody double fuelQuota) {
         try {
             vehicleService.updateFuelQuota(id, fuelQuota);
