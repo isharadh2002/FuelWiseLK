@@ -11,71 +11,93 @@ class QRScannerScreen extends StatefulWidget {
 }
 
 class _QRScannerScreenState extends State<QRScannerScreen> {
-  String result = "Scan a QR code";
   final MobileScannerController cameraController = MobileScannerController();
   final VehicleDetailsController vehicleDetailsController = VehicleDetailsController();
+  bool isProcessing = false; // Prevent multiple API calls
 
-  bool isProcessing = false; // To prevent multiple API calls
+  @override
+  void initState() {
+    super.initState();
+    cameraController.start(); // Start the camera initially
+  }
+
+  @override
+  void dispose() {
+    cameraController.dispose(); // Properly dispose of camera when leaving screen
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('QR Code Scanner'),
-        actions: [
-          IconButton(
-            icon: Icon(cameraController.torchEnabled ? Icons.flash_on : Icons.flash_off),
-            onPressed: () => cameraController.toggleTorch(),
-          ),
-        ],
-      ),
-      body: Stack(
-        children: [
-          MobileScanner(
-            controller: cameraController,
-            onDetect: (BarcodeCapture barcodeCapture) async {
-              if (isProcessing) return;
-              setState(() => isProcessing = true);
+    return WillPopScope(
+      onWillPop: () async {
+        cameraController.stop(); // Stop camera before leaving
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('QR Code Scanner'),
+          actions: [
+            IconButton(
+              icon: Icon(cameraController.torchEnabled ? Icons.flash_on : Icons.flash_off),
+              onPressed: () => cameraController.toggleTorch(),
+            ),
+          ],
+        ),
+        body: Stack(
+          children: [
+            MobileScanner(
+              controller: cameraController,
+              onDetect: (BarcodeCapture barcodeCapture) async {
+                if (isProcessing) return;
+                setState(() => isProcessing = true);
 
-              final barcode = barcodeCapture.barcodes.first;
-              if (barcode.rawValue != null && barcode.rawValue!.isNotEmpty) {
-                final vehicleId = _parseVehicleId(barcode.rawValue!);
+                final barcode = barcodeCapture.barcodes.first;
+                if (barcode.rawValue != null && barcode.rawValue!.isNotEmpty) {
+                  final vehicleId = _parseVehicleId(barcode.rawValue!);
 
-                if (vehicleId != null) {
-                  final vehicleDetails = await vehicleDetailsController.fetchVehicleDetails(vehicleId);
+                  if (vehicleId != null) {
+                    final vehicleDetails = await vehicleDetailsController.fetchVehicleDetails(vehicleId);
 
-                  if (vehicleDetails != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FuelQuotaPage(
-                          ownerName: vehicleDetails['ownerName'] ?? 'Unknown',
-                          ownerEmail: vehicleDetails['ownerEmail'] ?? 'N/A',
-                          vehicleModel: vehicleDetails['vehicleModel'] ?? 'Unknown',
-                          vehicleNumber: vehicleDetails['vehicleNumber'] ?? 'N/A',
-                          totalQuota: (vehicleDetails['totalQuota'] as num?)?.toDouble() ?? 0.0,
-                          initialRemainingQuota: (vehicleDetails['remainingQuota'] as num?)?.toDouble() ?? 0.0,
+                    if (vehicleDetails != null) {
+                      cameraController.stop(); // Stop camera before navigation
+
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FuelQuotaPage(
+                            vehicleId: vehicleId,
+                            ownerName: vehicleDetails['ownerName'] ?? 'Unknown',
+                            registrationNumber: vehicleDetails['registrationNumber'] ?? 'N/A',
+                            vehicleFuelQuota: (vehicleDetails['vehicleFuelQuota'] as num?)?.toDouble() ?? 0.0,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+
+                      // Restart camera when coming back
+                      setState(() {
+                        isProcessing = false;
+                      });
+                      cameraController.start();
+                    } else {
+                      _showSnackBar('Vehicle details not found!');
+                    }
                   } else {
-                    _showSnackBar('Vehicle details not found!');
+                    _showSnackBar('Invalid QR Code format!');
                   }
                 } else {
-                  _showSnackBar('Invalid QR Code format!');
+                  _showSnackBar('No QR Code detected!');
                 }
-              } else {
-                _showSnackBar('No QR Code detected!');
-              }
 
-              setState(() => isProcessing = false);
-            },
-          ),
-          if (isProcessing)
-            const Center(
-              child: CircularProgressIndicator(),
+                setState(() => isProcessing = false);
+              },
             ),
-        ],
+            if (isProcessing)
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
+          ],
+        ),
       ),
     );
   }

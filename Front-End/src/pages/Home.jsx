@@ -123,7 +123,7 @@ const FuelManagementPlatform = () => {
                         className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 pointer-events-none">
                         <div className="text-center text-white z-20 pointer-events-auto">
                             <h1 className="text-5xl font-bold mb-6">
-                                Fuel Smarter, Not Harder —
+                                Fuel Smarter, Not Harder
                                 <br/>
                                 Your Weekly QR Code Awaits.
                             </h1>

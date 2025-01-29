@@ -4,6 +4,7 @@ import com.example.Back_End.DTO.UserDTO;
 import com.example.Back_End.Entity.FuelStation;
 import com.example.Back_End.Entity.User;
 import com.example.Back_End.Entity.VehicleOwner;
+import com.example.Back_End.Exceptions.UserException;
 import com.example.Back_End.Repository.FuelStationRepository;
 import com.example.Back_End.Repository.UserRepository;
 import com.example.Back_End.Repository.VehicleOwnerRepository;
@@ -28,7 +29,7 @@ public class UserServiceIMPL implements UserService {
     private FuelStationRepository fuelStationRepository;
 
     @Override
-    public String addUser(UserDTO userDTO) {
+    public String addUser(UserDTO userDTO) throws UserException {
 
         if(userDTO.getRole().equals("vehicle_owner") || userDTO.getRole().equals("fuel_station")) {
 
@@ -66,18 +67,18 @@ public class UserServiceIMPL implements UserService {
                 fuelStationRepository.save(fuelStation);
 
             } else {
-                throw new IllegalArgumentException("Invalid role provided");
+                throw new UserException("Invalid role provided");
             }
 
             return "User registered successfully";
         }
         else{
-            throw new IllegalArgumentException("Invalid role provided");
+            throw new UserException("Invalid role provided");
         }
     }
 
 @Override
-public UserDTO getUser(int userId) {
+public UserDTO getUser(int userId) throws UserException {
     Optional<User> userOptional = userRepository.findById(userId);
 
     if (userOptional.isPresent()) {
@@ -90,7 +91,7 @@ public UserDTO getUser(int userId) {
 
         return userDTO;
     } else {
-        throw new IllegalArgumentException("User not found");
+        throw new UserException("User not found");
     }
 }
 
@@ -123,7 +124,7 @@ public UserDTO getUser(int userId) {
         }
     }
     @Override
-public String updateUser(int userId, UserDTO userDTO) {
+public String updateUser(int userId, UserDTO userDTO) throws UserException {
     Optional<User> userOptional = userRepository.findById(userId);
 
     if (userOptional.isPresent()) {
@@ -179,16 +180,16 @@ public String updateUser(int userId, UserDTO userDTO) {
 
         return "User updated successfully";
     } else {
-        throw new IllegalArgumentException("User not found");
+        throw new UserException("User not found");
     }
 }
 
         //Mobile User
 
         @Override
-        public String addMobileUser(UserDTO userDTO) {
+        public String addMobileUser(UserDTO userDTO) throws UserException {
             if (!userDTO.getRole().equalsIgnoreCase("fuel_station")) {
-                throw new IllegalArgumentException("Only Fuel Station Owners can register");
+                throw new UserException("Only Fuel Station Owners can register");
             }
 
             // Create and save the user
@@ -212,13 +213,13 @@ public String updateUser(int userId, UserDTO userDTO) {
         }
 
     @Override
-    public UserDTO getMobileUser(int userId) {
+    public UserDTO getMobileUser(int userId) throws UserException {
         Optional<User> userOptional = userRepository.findById(userId);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (!user.getRole().equalsIgnoreCase("fuel_station")) {
-                throw new IllegalArgumentException("Only Fuel Station Owners can be retrieved");
+                throw new UserException("Only Fuel Station Owners can be retrieved");
             }
 
             UserDTO userDTO = new UserDTO();
@@ -237,19 +238,19 @@ public String updateUser(int userId, UserDTO userDTO) {
 
             return userDTO;
         } else {
-            throw new IllegalArgumentException("User not found");
+            throw new UserException("User not found");
         }
     }
 
 
         @Override
-        public String updateMobileUser(int userId, UserDTO userDTO) {
+        public String updateMobileUser(int userId, UserDTO userDTO) throws UserException {
             Optional<User> userOptional = userRepository.findById(userId);
 
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
                 if (!user.getRole().equalsIgnoreCase("fuel_station")) {
-                    throw new IllegalArgumentException("Only Fuel Station Owners can update their details");
+                    throw new UserException("Only Fuel Station Owners can update their details");
                 }
 
                 if (userDTO.getUserName() != null && !userDTO.getUserName().isEmpty()) {
@@ -283,7 +284,7 @@ public String updateUser(int userId, UserDTO userDTO) {
 
                 return "Mobile user updated successfully";
             } else {
-                throw new IllegalArgumentException("User not found");
+                throw new UserException("User not found");
             }
         }
 

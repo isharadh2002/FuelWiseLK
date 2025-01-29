@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:fuel_quota_app/controllers/vehicle_details_controller.dart';
+
+import 'dashboard.dart';
 
 class FuelQuotaPage extends StatefulWidget {
+  final String vehicleId;
   final String ownerName;
-  final String ownerEmail;
-  final String vehicleModel;
-  final String vehicleNumber;
-  final double totalQuota;
-  final double initialRemainingQuota;
+  final String registrationNumber;
+  final double vehicleFuelQuota;
 
   const FuelQuotaPage({
     super.key,
+    required this.vehicleId,
     required this.ownerName,
-    required this.ownerEmail,
-    required this.vehicleModel,
-    required this.vehicleNumber,
-    required this.totalQuota,
-    required this.initialRemainingQuota,
+    required this.registrationNumber,
+    required this.vehicleFuelQuota,
   });
 
   @override
@@ -24,28 +23,62 @@ class FuelQuotaPage extends StatefulWidget {
 }
 
 class _FuelQuotaPageState extends State<FuelQuotaPage> {
-  TextEditingController _fuelController = TextEditingController();
-  late double _remainingFuelQuota;
-  double _pumpedFuel = 0.0;
+  TextEditingController fuelController = TextEditingController();
+  late double currentFuelQuota;
+  late double remainingFuelQuota;
+  final VehicleDetailsController vehicleDetailsController = VehicleDetailsController();
+  static const double maxFuelQuota = 50.0;
 
   @override
   void initState() {
     super.initState();
-    _remainingFuelQuota = widget.initialRemainingQuota;
+    currentFuelQuota = widget.vehicleFuelQuota;
+    remainingFuelQuota = maxFuelQuota - currentFuelQuota;
   }
 
-  void _updateFuelQuota() {
+  void _updateFuelQuota() async {
+    double enteredFuel = double.tryParse(fuelController.text) ?? 0.0;
+
+    if (enteredFuel <= 0) {
+      _showSnackBar('Enter a valid fuel amount.');
+      return;
+    }
+
+    double newFuelQuota = currentFuelQuota + enteredFuel;
+
+    if (newFuelQuota > maxFuelQuota) {
+      _showSnackBar('Exceeds maximum quota. Adjust your input.');
+      return;
+    }
+
+    // Update UI optimistically
     setState(() {
-      double enteredFuel = double.tryParse(_fuelController.text) ?? 0.0;
-      _pumpedFuel = enteredFuel;
-      _remainingFuelQuota = (_remainingFuelQuota - enteredFuel).clamp(0.0, widget.totalQuota);
-      _fuelController.clear();
+      currentFuelQuota = newFuelQuota;
+      remainingFuelQuota = maxFuelQuota - currentFuelQuota;
     });
+
+    fuelController.clear();
+
+    // Call API to update fuel quota
+    bool success = await vehicleDetailsController.updateFuelQuota(widget.vehicleId, newFuelQuota);
+
+    if (success) {
+      _showSnackBar('Fuel quota updated successfully!');
+    } else {
+      _showSnackBar('Failed to update fuel quota. Please try again.');
+    }
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    double percentageRemaining = (_remainingFuelQuota / widget.totalQuota);
+    // Ensure percentage is between 0.0 and 1.0
+    double percentageRemaining = (remainingFuelQuota / maxFuelQuota).clamp(0.0, 1.0);
     final primaryGreen = Color(0xFF2E7D32);
 
     return Scaffold(
@@ -61,12 +94,6 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.share, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Column(
         children: [
@@ -83,10 +110,8 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Owner Information
                     Text(
                       widget.ownerName,
                       style: TextStyle(
@@ -95,24 +120,15 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
                         color: primaryGreen,
                       ),
                     ),
-                    Text(
-                      widget.ownerEmail,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[600]!,
-                      ),
-                    ),
                     Divider(thickness: 1, height: 24, color: Colors.grey[300]!),
-
                     Text(
-                      '${widget.vehicleModel} - ${widget.vehicleNumber}',
+                      widget.registrationNumber,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                         color: primaryGreen,
                       ),
                     ),
-
                     SizedBox(height: 24),
 
                     // Circular Progress Indicator
@@ -124,7 +140,7 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "${_remainingFuelQuota.toStringAsFixed(1)} L",
+                            "${remainingFuelQuota.toStringAsFixed(1)} L",
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
@@ -149,7 +165,7 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
 
                     // Fuel Input
                     TextField(
-                      controller: _fuelController,
+                      controller: fuelController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: 'Enter Pumped Fuel (L)',
@@ -168,6 +184,7 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
                         ),
                       ),
                     ),
+
                     SizedBox(height: 16),
 
                     // Update Button
@@ -193,6 +210,38 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
                         ),
                       ),
                     ),
+
+                    SizedBox(height: 16),
+
+                    // Dashboard Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Dashboard()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryGreen,
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: Text(
+                          'Go to Dashboard',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+
                   ],
                 ),
               ),

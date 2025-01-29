@@ -43,29 +43,55 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   _buildProfileField('Name', profile['name']),
                   _buildProfileField('Email', profile['email']),
-                  _buildProfileField('Fuel Station', profile['fuelStation']),
+                  _buildProfileField('Phone', profile['phone']),
                   const Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProfileEditPage(
-                            userId: widget.userId,
-                            name: profile['name'],
-                            email: profile['email'],
-                            fuelStation: profile['fuelStation'],
+                  Center(  // Centering the button
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileEditPage(
+                              userId: widget.userId,
+                              name: profile['name'],
+                              email: profile['email'],
+                              phone: profile['phone'],
+                            ),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        // Transparent background to use gradient
+                        backgroundColor: Colors.transparent,
+                        elevation: 6, // Shadow for the button
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12), // Match rounded corners
+                        ),
+                        padding: EdgeInsets.zero, // Remove default padding to fit Ink
+                      ),
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF22C55F), Color(0xFF14B8A5)], // Green to teal gradient
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12), // Rounded corners
+                        ),
+                        child: Container(
+                          height: 48, // Button height
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Edit Profile',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600, // Semi-bold text
+                              color: Colors.white, // White text color
+                            ),
                           ),
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF22C55F),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text('Edit Profile'),
                   ),
                 ],
               ),

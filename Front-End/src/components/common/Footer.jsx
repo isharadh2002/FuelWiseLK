@@ -41,7 +41,7 @@ function Footer() {
 
             <div className="footer-bottom">
                 <p>
-                    &copy; {new Date().getFullYear()} Fuel Quota Management. All rights reserved.
+                    &copy; {new Date().getFullYear()} FuelWise.lk. All rights reserved.
                 </p>
             </div>
         </footer>
