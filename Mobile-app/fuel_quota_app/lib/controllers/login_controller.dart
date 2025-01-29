@@ -82,14 +82,13 @@ class LoginController {
       String email,
       String password,
       String phone,
-      String role,
       String stationName,
       String contact,
       String location,
       ) async {
 
     // Check if required fields are filled
-    if (userName.isEmpty || email.isEmpty || password.isEmpty || phone.isEmpty || role.isEmpty) {
+    if (userName.isEmpty || email.isEmpty || password.isEmpty || phone.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill in all required fields')),
       );
@@ -101,7 +100,7 @@ class LoginController {
       'email': email,
       'password': password,
       'phone': phone,
-      'role': role,
+      'role': "fuel_station",
       'stationName': stationName,
       'contact': contact,
       'location': location,
