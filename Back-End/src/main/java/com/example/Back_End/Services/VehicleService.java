@@ -1,7 +1,9 @@
 package com.example.Back_End.Services;
 
 import com.example.Back_End.DTO.VehicleDTO;
+import com.example.Back_End.DTO.VehicleRegistrationDTO;
 import com.example.Back_End.Entity.Vehicle;
+import com.example.Back_End.Exceptions.VehicleRegistrationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,18 +16,12 @@ public interface VehicleService {
     //Update the remaining Quota of the vehicle
 
     Optional<VehicleDTO> getVehicleById(int vehicleId);
-    List<Vehicle> getAllVehicle();
+    List<VehicleRegistrationDTO> getAllVehicle();
 
-    Vehicle saveVehicle(Vehicle vehicle);
+    VehicleRegistrationDTO saveVehicle(VehicleRegistrationDTO vehicleDTO);
 
-
-    ResponseEntity<Object> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable int id);
-
-    Vehicle deleteVehicle(Vehicle vehicle);
-
-
-
-
+    ResponseEntity<String> deleteVehicle(@PathVariable int vehicleId);
+    ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle,@PathVariable int id);
 
 
     void updateQuota(@RequestBody Vehicle vehicle, @PathVariable double remainings) throws Exception;

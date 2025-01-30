@@ -15,15 +15,15 @@ import VehicleForm from "./pages/VehicleForm";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import QRCodePage from "./pages/QRCodePage"; // Import the new QR Code page
 import CreateAdmins from "./components/admin/CreateAdmins";
-import ManageFuelStations from "./pages/ManageFuelStations.jsx";
-import ManageVehicles from "./pages/ManageVehicles.jsx";
+import ManageFuelStations from "./components/admin/ManageFuelStations.jsx";
+import ManageVehicles from "./components/admin/ManageVehicles.jsx";
 import VehicleListpage from "./pages/VehicleListPage.jsx";
 import SingleVehiclePage from './pages/SingleVehiclePage.jsx';
 import CustomerDashboard from "./components/customer/CustomerDashboard";
 import ViewProfilePage from "./components/customer/ViewProfilePage";
 import ManageProfilePage from "./components/customer/ManageProfilePage";
 import ViewAdmins from "./components/admin/ViewAdmins";
-import QTY from "./pages/QTY.jsx"; // Import the ViewAdmins component
+// import QTY from "./pages/QTY.jsx"; 
 
 function App() {
     return (
@@ -41,7 +41,7 @@ function App() {
                   element={<ManageFuelStations />}
                 />
                 <Route path="/Viewadmins" element={<ViewAdmins />} />
-                <Route path={"/qa"} element={<QTY/>}/>
+                {/* <Route path={"/qa"} element={<QTY/>}/> */}
                 {/* Customer Routes */}
                 <Route path="/dashboard" element={<CustomerDashboard />} />
                 <Route

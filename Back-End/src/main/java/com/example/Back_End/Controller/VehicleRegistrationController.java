@@ -1,5 +1,6 @@
 package com.example.Back_End.Controller;
 
+import com.example.Back_End.DTO.VehicleRegistrationDTO;
 import com.example.Back_End.Entity.Vehicle;
 import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,24 +25,23 @@ public class VehicleRegistrationController {
 
 
    @GetMapping("/getAllVehicles")
-    public List<Vehicle> getAllVehicle(){
+    public List<VehicleRegistrationDTO> getAllVehicle(){
        return vehicleService.getAllVehicle();
 
    }
    @PostMapping("/addVehicle")
-    public Vehicle saveVehicle(@RequestBody Vehicle vehicle){
-     return vehicleService.saveVehicle(vehicle);
+    public VehicleRegistrationDTO saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO){
+     return vehicleService.saveVehicle(vehicleRegistrationDTO);
    }
-   @PutMapping("/updateVehicle?id={id}")
-    public void updateVehicle(@RequestBody Vehicle vehicle,@PathVariable int id){
-       ResponseEntity<Object> newvehicle=vehicleService.updateVehicle(vehicle,id);
-       vehicleService.updateVehicle(vehicle,id);
-       return;
-   }
-   @DeleteMapping("/deleteData?id={id}")
-    public Vehicle deleteVehicle(@RequestBody Vehicle vehicle, @PathVariable int id){
-       return vehicleService.deleteVehicle(vehicle);
-   }
+    @PutMapping("/updateVehicle?id={id}")
+    public ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable int id) {
+        return vehicleService.updateVehicle(vehicle, id);
+    }
+
+    @DeleteMapping("/deleteData/{id}")
+    public ResponseEntity<String> deleteVehicle(@PathVariable int id) {
+        return vehicleService.deleteVehicle(id);
+    }
    @PutMapping("/query?id={quata}")
     public void updateQuots(@RequestBody Vehicle vehicle,@PathVariable double quoata) throws Exception {
        vehicleService.updateQuota(vehicle, quoata);

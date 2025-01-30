@@ -6,16 +6,18 @@ import com.example.Back_End.Exceptions.AdminException;  // Custom exception for 
 import com.example.Back_End.Repository.AdminRepository;
 import com.example.Back_End.Services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminServiceIMPL implements AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
+
 
     // Get all admins
     @Override

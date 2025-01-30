@@ -5,6 +5,7 @@ import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.Back_End.Entity.Vehicle;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,4 +45,15 @@ public class VehicleController {
             return ResponseEntity.status(404).body("Vehicle not found with ID: " + id);
         }
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Vehicle> updateVehicle(@PathVariable int id, @RequestBody Vehicle vehicle) {
+        return vehicleService.updateVehicle(vehicle, id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteVehicle(@PathVariable int id) {
+        return vehicleService.deleteVehicle(id);
+    }
+
 }

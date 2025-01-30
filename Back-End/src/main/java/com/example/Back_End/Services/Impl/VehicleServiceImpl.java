@@ -1,22 +1,32 @@
 package com.example.Back_End.Services.Impl;
 
 import com.example.Back_End.DTO.VehicleDTO;
+import com.example.Back_End.DTO.VehicleRegistrationDTO;
 import com.example.Back_End.Entity.Vehicle;
+import com.example.Back_End.Entity.VehicleOwner;
+import com.example.Back_End.Exceptions.VehicleRegistrationException;
+import com.example.Back_End.Repository.VehicleOwnerRepository;
 import com.example.Back_End.Repository.VehicleRepository;
 import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
-
     @Autowired
     private VehicleRepository vehicleRepository;
+
+    @Autowired
+    private VehicleOwnerRepository vehicleOwnerRepository;
 
     @Override
     public Optional<VehicleDTO> getVehicleById(int vehicleId) {
@@ -35,23 +45,85 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public List<Vehicle> getAllVehicle() {
-        return List.of();
+    public List<VehicleRegistrationDTO> getAllVehicle() {
+        List<Vehicle> vehicles = vehicleRepository.findAll();
+        List<VehicleRegistrationDTO> vehicleRegistrationDTOS = new LinkedList<>();
+
+        for(Vehicle vehicle : vehicles) {
+            VehicleRegistrationDTO vehicleRegistrationDTO = new VehicleRegistrationDTO();
+            vehicleRegistrationDTO.setVehicleId(vehicle.getVehicleId());
+            vehicleRegistrationDTO.setLicensePlate(vehicle.getLicensePlate());
+            vehicleRegistrationDTO.setVehicleModel(vehicle.getVehicleModel());
+            vehicleRegistrationDTO.setVehicleFuelQuota(vehicle.getVehicleFuelQuota());
+            vehicleRegistrationDTO.setOwnerId(vehicle.getVehicleOwner().getOwnerID());
+            vehicleRegistrationDTOS.add(vehicleRegistrationDTO);
+        }
+
+        return vehicleRegistrationDTOS;
     }
 
     @Override
-    public Vehicle saveVehicle(Vehicle vehicle) {
-        return null;
+    public VehicleRegistrationDTO saveVehicle(VehicleRegistrationDTO vehicleRegistrationDTO) throws VehicleRegistrationException {
+
+        VehicleOwner owner = vehicleOwnerRepository.findById(vehicleRegistrationDTO.getOwnerId())
+                .orElseThrow(() -> new VehicleRegistrationException("Vehicle owner not found by ID : " + vehicleRegistrationDTO.getOwnerId()));
+
+        try {
+            Vehicle vehicle = new Vehicle();
+            vehicle.setLicensePlate(vehicleRegistrationDTO.getLicensePlate());
+            vehicle.setVehicleModel(vehicleRegistrationDTO.getVehicleModel());
+            vehicle.setVehicleFuelQuota(0);
+            vehicle.setVehicleOwner(owner);
+
+            Vehicle savedVehicle =  vehicleRepository.save(vehicle);
+
+            VehicleRegistrationDTO savedVehicleRegistrationDTO = new VehicleRegistrationDTO();
+            savedVehicleRegistrationDTO.setVehicleId(savedVehicle.getVehicleId());
+            savedVehicleRegistrationDTO.setLicensePlate(vehicleRegistrationDTO.getLicensePlate());
+            savedVehicleRegistrationDTO.setVehicleModel(savedVehicle.getVehicleModel());
+            savedVehicleRegistrationDTO.setVehicleFuelQuota(savedVehicle.getVehicleFuelQuota());
+            savedVehicleRegistrationDTO.setOwnerId(savedVehicle.getVehicleOwner().getOwnerID());
+
+            return savedVehicleRegistrationDTO;
+
+        }
+        catch (Exception e) {
+            throw new VehicleRegistrationException(e.getMessage());
+        }
     }
 
     @Override
-    public ResponseEntity<Object> updateVehicle(Vehicle vehicle, int id) {
-        return null;
+    public ResponseEntity<Vehicle> updateVehicle(Vehicle vehicle, int id) {
+        Optional<Vehicle> existingVehicleOpt = vehicleRepository.findById(id);
+        if (existingVehicleOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Vehicle existingVehicle = existingVehicleOpt.get();
+
+        if (vehicle.getLicensePlate() != null && !vehicle.getLicensePlate().isBlank()) {
+            existingVehicle.setLicensePlate(vehicle.getLicensePlate());
+        }
+        if (vehicle.getVehicleModel() != null && !vehicle.getVehicleModel().isBlank()) {
+            existingVehicle.setVehicleModel(vehicle.getVehicleModel());
+        }
+        if (vehicle.getVehicleFuelQuota() > 0) {
+            existingVehicle.setVehicleFuelQuota(vehicle.getVehicleFuelQuota());
+        }
+
+        Vehicle updatedVehicle = vehicleRepository.save(existingVehicle);
+        return ResponseEntity.ok(updatedVehicle);
     }
 
     @Override
-    public Vehicle deleteVehicle(Vehicle vehicle) {
-        return null;
+    public ResponseEntity<String> deleteVehicle(int vehicleId) {
+        Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
+        if (vehicle.isPresent()) {
+            vehicleRepository.delete(vehicle.get());
+            return ResponseEntity.ok("Vehicle deleted successfully.");
+        } else {
+            return ResponseEntity.status(404).body("Vehicle not found.");
+        }
     }
 
     @Override
@@ -89,7 +161,5 @@ public class VehicleServiceImpl implements VehicleService {
             throw new Exception("Vehicle not found with ID: " + id);
         }
     }
-
-
 
 }

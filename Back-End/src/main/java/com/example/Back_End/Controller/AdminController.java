@@ -19,7 +19,7 @@ public class AdminController {
     private AdminService adminService;
 
     // Get all admins
-    @GetMapping("/get")
+    @GetMapping("/getAll")
     public ResponseEntity<List<AdminDTO>> getAllAdmins() {
         List<AdminDTO> admins = adminService.getAllAdmins();
         if (admins.isEmpty()) {
