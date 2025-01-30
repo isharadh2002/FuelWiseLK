@@ -1,5 +1,6 @@
 package com.example.Back_End.Controller;
 
+import com.example.Back_End.DTO.VehicleRegistrationDTO;
 import com.example.Back_End.Entity.Vehicle;
 import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class VehicleRegistrationController {
 
    }
    @PostMapping("/addVehicle")
-    public Vehicle saveVehicle(@RequestBody Vehicle vehicle){
-     return vehicleService.saveVehicle(vehicle);
+    public Vehicle saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO){
+     return vehicleService.saveVehicle(vehicleRegistrationDTO);
    }
     @PutMapping("/updateVehicle?id={id}")
     public ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable int id) {

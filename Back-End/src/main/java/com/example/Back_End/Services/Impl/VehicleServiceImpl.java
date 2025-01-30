@@ -1,7 +1,11 @@
 package com.example.Back_End.Services.Impl;
 
 import com.example.Back_End.DTO.VehicleDTO;
+import com.example.Back_End.DTO.VehicleRegistrationDTO;
 import com.example.Back_End.Entity.Vehicle;
+import com.example.Back_End.Entity.VehicleOwner;
+import com.example.Back_End.Exceptions.VehicleRegistrationException;
+import com.example.Back_End.Repository.VehicleOwnerRepository;
 import com.example.Back_End.Repository.VehicleRepository;
 import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,9 @@ import java.util.stream.Collectors;
 public class VehicleServiceImpl implements VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
+
+    @Autowired
+    private VehicleOwnerRepository vehicleOwnerRepository;
 
     @Override
     public Optional<VehicleDTO> getVehicleById(int vehicleId) {
@@ -41,8 +48,24 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle saveVehicle(Vehicle vehicle) {
-        return null;
+    public Vehicle saveVehicle(VehicleRegistrationDTO vehicleRegistrationDTO) throws VehicleRegistrationException {
+
+        VehicleOwner owner = vehicleOwnerRepository.findById(vehicleRegistrationDTO.getOwnerId())
+                .orElseThrow(() -> new VehicleRegistrationException("Vehicle owner not found by ID : " + vehicleRegistrationDTO.getOwnerId()
+                + " Other details : "+ vehicleRegistrationDTO.getLicensePlate()+vehicleRegistrationDTO.getVehicleModel()));
+
+        try {
+            Vehicle vehicle = new Vehicle();
+            vehicle.setLicensePlate(vehicleRegistrationDTO.getLicensePlate());
+            vehicle.setVehicleModel(vehicleRegistrationDTO.getVehicleModel());
+            vehicle.setVehicleFuelQuota(0);
+            vehicle.setVehicleOwner(owner);
+
+            return vehicleRepository.save(vehicle);
+        }
+        catch (Exception e) {
+            throw new VehicleRegistrationException(e.getMessage());
+        }
     }
 
     @Override
