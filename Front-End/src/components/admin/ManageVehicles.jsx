@@ -58,9 +58,9 @@ const ManageVehicles = () => {
   );
 
   return (
-    <div className="min-h-screen bg-green-50 p-8">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
-        <h1 className="text-2xl font-bold text-green-700 mb-4 text-center">
+    <div className="min-h-screen p-8 bg-green-50">
+      <div className="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-lg">
+        <h1 className="mb-4 text-2xl font-bold text-center text-green-700">
           Manage Vehicles
         </h1>
         <div className="mb-6">
@@ -69,7 +69,7 @@ const ManageVehicles = () => {
             placeholder="Search by vehicle number, owner, or model"
             value={search}
             onChange={handleSearch}
-            className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none text-black"
+            className="w-full px-4 py-2 text-black border rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none"
           />
         </div>
         {loading ? (
@@ -77,31 +77,31 @@ const ManageVehicles = () => {
         ) : error ? (
           <p className="text-center text-red-600">{error}</p>
         ) : (
-          <table className="w-full border-collapse border border-gray-300 text-black">
+          <table className="w-full text-black border border-collapse border-gray-300">
             <thead>
               <tr className="bg-green-100">
-                <th className="border px-4 py-2">Vehicle Number</th>
-                <th className="border px-4 py-2">Owner</th>
-                <th className="border px-4 py-2">Model</th>
-                <th className="border px-4 py-2">Actions</th>
+                <th className="px-4 py-2 border">Vehicle Number</th>
+                <th className="px-4 py-2 border">Owner</th>
+                <th className="px-4 py-2 border">Model</th>
+                <th className="px-4 py-2 border">Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredVehicles.map((vehicle) => (
                 <tr key={vehicle.id} className="odd:bg-white even:bg-green-50">
-                  <td className="border px-4 py-2">{vehicle.number}</td>
-                  <td className="border px-4 py-2">{vehicle.owner}</td>
-                  <td className="border px-4 py-2">{vehicle.model}</td>
-                  <td className="border px-4 py-2 text-center">
+                  <td className="px-4 py-2 border">{vehicle.number}</td>
+                  <td className="px-4 py-2 border">{vehicle.owner}</td>
+                  <td className="px-4 py-2 border">{vehicle.model}</td>
+                  <td className="px-4 py-2 text-center border">
                     <button
                       onClick={() => handleEdit(vehicle.id)}
-                      className="text-green-700 hover:underline mx-2"
+                      className="mx-2 text-green-700 hover:underline"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(vehicle.id)}
-                      className="text-red-600 hover:underline mx-2"
+                      className="mx-2 text-red-600 hover:underline"
                     >
                       Delete
                     </button>

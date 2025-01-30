@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +23,10 @@ public class AdminDTO {
     @NotNull(message = "Email cannot be null")  // Validation for non-null email
     @Email(message = "Email should be valid")  // Validation for valid email format
     private String email;
+
+    private String password;
+
+    private static PasswordEncoder passwordEncoder;
 
     // Convert single Admin entity to AdminDTO
     public static AdminDTO convertToDTO(Admin admin) {
@@ -43,6 +50,7 @@ public class AdminDTO {
         admin.setAdminID(adminDTO.getAdminID());
         admin.setAdminName(adminDTO.getAdminName());
         admin.setEmail(adminDTO.getEmail());
+        admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
         return admin;
     }
 
