@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ViewAdmins = () => {
   const [admins, setAdmins] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch admins data from an API or a static source
-    fetch("/api/admins")
-      .then((response) => response.json())
-      .then((data) => setAdmins(data))
-      .catch((error) => console.error("Error fetching admins:", error));
+    const fetchAdmins = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/admins/getAll"
+        );
+        setAdmins(response.data);
+      } catch (err) {
+        console.error("Error fetching admins:", err);
+        setError("Failed to load admin data.");
+      }
+    };
+
+    fetchAdmins();
   }, []);
 
   return (
@@ -16,6 +26,7 @@ const ViewAdmins = () => {
       <h1 className="mb-8 text-3xl font-bold text-emerald-800">
         Administrator Management
       </h1>
+      {error && <p className="text-red-500">{error}</p>}
       <div className="overflow-hidden bg-white border rounded-lg shadow-lg border-emerald-100">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-emerald-200">
@@ -30,30 +41,25 @@ const ViewAdmins = () => {
                 <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left uppercase text-emerald-700">
                   Email
                 </th>
-                <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left uppercase text-emerald-700">
+                {/* <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left uppercase text-emerald-700">
                   Role
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody className="divide-y divide-emerald-200">
               {admins.map((admin, index) => (
                 <tr
                   key={admin.id}
-                  className={`
-                                        hover:bg-emerald-50 transition-colors duration-150 ease-in-out
-                                        ${
-                                          index % 2 === 0
-                                            ? "bg-white"
-                                            : "bg-emerald-50/50"
-                                        }
-                                    `}
+                  className={`hover:bg-emerald-50 transition-colors duration-150 ease-in-out ${
+                    index % 2 === 0 ? "bg-white" : "bg-emerald-50/50"
+                  }`}
                 >
                   <td className="px-6 py-4 text-sm whitespace-nowrap text-emerald-600">
-                    {admin.id}
+                    {admin.adminid}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-emerald-900">
-                      {admin.name}
+                      {admin.admin_name}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -61,11 +67,11 @@ const ViewAdmins = () => {
                       {admin.email}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  {/* <td className="px-6 py-4 whitespace-nowrap">
                     <span className="px-3 py-1 text-sm font-medium rounded-full bg-emerald-100 text-emerald-800">
                       {admin.role}
                     </span>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
