@@ -1,6 +1,7 @@
 package com.example.Back_End.Services;
 
 import com.example.Back_End.DTO.VehicleDTO;
+import com.example.Back_End.DTO.VehicleRegistrationDTO;
 import com.example.Back_End.Entity.Vehicle;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,7 @@ public interface VehicleService {
     Optional<VehicleDTO> getVehicleById(int vehicleId);
     List<Vehicle> getAllVehicle();
 
-    Vehicle saveVehicle(Vehicle vehicle);
+    Vehicle saveVehicle(VehicleRegistrationDTO vehicleDTO);
 
     ResponseEntity<String> deleteVehicle(@PathVariable int vehicleId);
     ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle,@PathVariable int id);
