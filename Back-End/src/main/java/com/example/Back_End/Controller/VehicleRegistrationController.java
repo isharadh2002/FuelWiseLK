@@ -25,12 +25,12 @@ public class VehicleRegistrationController {
 
 
    @GetMapping("/getAllVehicles")
-    public List<Vehicle> getAllVehicle(){
+    public List<VehicleRegistrationDTO> getAllVehicle(){
        return vehicleService.getAllVehicle();
 
    }
    @PostMapping("/addVehicle")
-    public Vehicle saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO){
+    public VehicleRegistrationDTO saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO){
      return vehicleService.saveVehicle(vehicleRegistrationDTO);
    }
     @PutMapping("/updateVehicle?id={id}")
