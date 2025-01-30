@@ -32,16 +32,15 @@ public class VehicleRegistrationController {
     public Vehicle saveVehicle(@RequestBody Vehicle vehicle){
      return vehicleService.saveVehicle(vehicle);
    }
-   @PutMapping("/updateVehicle?id={id}")
-    public void updateVehicle(@RequestBody Vehicle vehicle,@PathVariable int id){
-       ResponseEntity<Object> newvehicle=vehicleService.updateVehicle(vehicle,id);
-       vehicleService.updateVehicle(vehicle,id);
-       return;
-   }
-   @DeleteMapping("/deleteData?id={id}")
-    public Vehicle deleteVehicle(@RequestBody Vehicle vehicle, @PathVariable int id){
-       return vehicleService.deleteVehicle(vehicle);
-   }
+    @PutMapping("/updateVehicle?id={id}")
+    public ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable int id) {
+        return vehicleService.updateVehicle(vehicle, id);
+    }
+
+    @DeleteMapping("/deleteData/{id}")
+    public ResponseEntity<String> deleteVehicle(@PathVariable int id) {
+        return vehicleService.deleteVehicle(id);
+    }
    @PutMapping("/query?id={quata}")
     public void updateQuots(@RequestBody Vehicle vehicle,@PathVariable double quoata) throws Exception {
        vehicleService.updateQuota(vehicle, quoata);

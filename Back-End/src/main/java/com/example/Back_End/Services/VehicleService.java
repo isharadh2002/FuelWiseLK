@@ -18,14 +18,8 @@ public interface VehicleService {
 
     Vehicle saveVehicle(Vehicle vehicle);
 
-
-    ResponseEntity<Object> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable int id);
-
-    Vehicle deleteVehicle(Vehicle vehicle);
-
-
-
-
+    ResponseEntity<String> deleteVehicle(@PathVariable int vehicleId);
+    ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle,@PathVariable int id);
 
 
     void updateQuota(@RequestBody Vehicle vehicle, @PathVariable double remainings) throws Exception;
