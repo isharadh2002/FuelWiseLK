@@ -30,7 +30,7 @@ public class VehicleRegistrationController {
 
    }
    @PostMapping("/addVehicle")
-    public Vehicle saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO){
+    public VehicleRegistrationDTO saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO){
      return vehicleService.saveVehicle(vehicleRegistrationDTO);
    }
     @PutMapping("/updateVehicle?id={id}")

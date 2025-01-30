@@ -63,7 +63,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle saveVehicle(VehicleRegistrationDTO vehicleRegistrationDTO) throws VehicleRegistrationException {
+    public VehicleRegistrationDTO saveVehicle(VehicleRegistrationDTO vehicleRegistrationDTO) throws VehicleRegistrationException {
 
         VehicleOwner owner = vehicleOwnerRepository.findById(vehicleRegistrationDTO.getOwnerId())
                 .orElseThrow(() -> new VehicleRegistrationException("Vehicle owner not found by ID : " + vehicleRegistrationDTO.getOwnerId()));
@@ -75,7 +75,17 @@ public class VehicleServiceImpl implements VehicleService {
             vehicle.setVehicleFuelQuota(0);
             vehicle.setVehicleOwner(owner);
 
-            return vehicleRepository.save(vehicle);
+            Vehicle savedVehicle =  vehicleRepository.save(vehicle);
+
+            VehicleRegistrationDTO savedVehicleRegistrationDTO = new VehicleRegistrationDTO();
+            savedVehicleRegistrationDTO.setVehicleId(savedVehicle.getVehicleId());
+            savedVehicleRegistrationDTO.setLicensePlate(vehicleRegistrationDTO.getLicensePlate());
+            savedVehicleRegistrationDTO.setVehicleModel(savedVehicle.getVehicleModel());
+            savedVehicleRegistrationDTO.setVehicleFuelQuota(savedVehicle.getVehicleFuelQuota());
+            savedVehicleRegistrationDTO.setOwnerId(savedVehicle.getVehicleOwner().getOwnerID());
+
+            return savedVehicleRegistrationDTO;
+
         }
         catch (Exception e) {
             throw new VehicleRegistrationException(e.getMessage());

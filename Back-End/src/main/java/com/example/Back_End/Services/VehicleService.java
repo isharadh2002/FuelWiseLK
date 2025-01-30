@@ -3,6 +3,7 @@ package com.example.Back_End.Services;
 import com.example.Back_End.DTO.VehicleDTO;
 import com.example.Back_End.DTO.VehicleRegistrationDTO;
 import com.example.Back_End.Entity.Vehicle;
+import com.example.Back_End.Exceptions.VehicleRegistrationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ public interface VehicleService {
     Optional<VehicleDTO> getVehicleById(int vehicleId);
     List<VehicleRegistrationDTO> getAllVehicle();
 
-    Vehicle saveVehicle(VehicleRegistrationDTO vehicleDTO);
+    VehicleRegistrationDTO saveVehicle(VehicleRegistrationDTO vehicleDTO);
 
     ResponseEntity<String> deleteVehicle(@PathVariable int vehicleId);
     ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle,@PathVariable int id);
