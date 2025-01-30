@@ -15,7 +15,7 @@ public interface VehicleService {
     //Update the remaining Quota of the vehicle
 
     Optional<VehicleDTO> getVehicleById(int vehicleId);
-    List<Vehicle> getAllVehicle();
+    List<VehicleRegistrationDTO> getAllVehicle();
 
     Vehicle saveVehicle(VehicleRegistrationDTO vehicleDTO);
 

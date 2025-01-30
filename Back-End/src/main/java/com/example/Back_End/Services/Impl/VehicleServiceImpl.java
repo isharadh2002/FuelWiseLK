@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,16 +45,28 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public List<Vehicle> getAllVehicle() {
-        return vehicleRepository.findAll();
+    public List<VehicleRegistrationDTO> getAllVehicle() {
+        List<Vehicle> vehicles = vehicleRepository.findAll();
+        List<VehicleRegistrationDTO> vehicleRegistrationDTOS = new LinkedList<>();
+
+        for(Vehicle vehicle : vehicles) {
+            VehicleRegistrationDTO vehicleRegistrationDTO = new VehicleRegistrationDTO();
+            vehicleRegistrationDTO.setVehicleId(vehicle.getVehicleId());
+            vehicleRegistrationDTO.setLicensePlate(vehicle.getLicensePlate());
+            vehicleRegistrationDTO.setVehicleModel(vehicle.getVehicleModel());
+            vehicleRegistrationDTO.setVehicleFuelQuota(vehicle.getVehicleFuelQuota());
+            vehicleRegistrationDTO.setOwnerId(vehicle.getVehicleOwner().getOwnerID());
+            vehicleRegistrationDTOS.add(vehicleRegistrationDTO);
+        }
+
+        return vehicleRegistrationDTOS;
     }
 
     @Override
     public Vehicle saveVehicle(VehicleRegistrationDTO vehicleRegistrationDTO) throws VehicleRegistrationException {
 
         VehicleOwner owner = vehicleOwnerRepository.findById(vehicleRegistrationDTO.getOwnerId())
-                .orElseThrow(() -> new VehicleRegistrationException("Vehicle owner not found by ID : " + vehicleRegistrationDTO.getOwnerId()
-                + " Other details : "+ vehicleRegistrationDTO.getLicensePlate()+vehicleRegistrationDTO.getVehicleModel()));
+                .orElseThrow(() -> new VehicleRegistrationException("Vehicle owner not found by ID : " + vehicleRegistrationDTO.getOwnerId()));
 
         try {
             Vehicle vehicle = new Vehicle();
