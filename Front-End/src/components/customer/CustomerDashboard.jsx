@@ -6,6 +6,7 @@ import ViewProfile from './ViewProfilePage'
 import ManageProfile from './ManageProfilePage'
 import VehicleListPage from "./VehicleListPage";
 
+
 import {
     Car,
     CheckCircle,
@@ -186,9 +187,11 @@ function CustomerDashboard() {
       case "manageProfile":
         return <ManageProfile />;
       case "viewVehicles":
-        return <VehicleListPage />;
+          return <VehicleListPage setSelectedView={setSelectedView} />;
+      case "singleVehicle":
+          return <SingleVehiclePage vehicleId={selectedView.vehicleId} />;
       case "addVehicle":
-        return <div>Add Vehicle Form Goes Here</div>;
+          return <div>Add Vehicle Form Goes Here</div>;
       default:
         return <div>Welcome to the Customer Dashboard</div>;
     }
