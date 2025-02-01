@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import VehicleRegistrationPage from "./pages/VehicleRegistrationPage";
+import VehicleRegistrationPage from "./pages/VehicleRegistrationPage.jsx";
 import Footer from "./components/common/Footer";
 import { Global } from '@emotion/react';
 import globalStyles from './styles/global';
@@ -12,9 +12,8 @@ import Terms from "./pages/Terms";
 import About from "./pages/About";
 import ContactUs from "./pages/Contact";
 import Home from "./pages/Home.jsx";
-import VehicleForm from "./pages/VehicleForm";
+import VehicleForm from "./pages/VehicleForm.jsx";
 import AdminDashboard from "./components/admin/AdminDashboard";
-import QRCodePage from "./pages/QRCodePage"; // Import the new QR Code page
 import CreateAdmins from "./components/admin/CreateAdmins";
 import ManageFuelStations from "./components/admin/ManageFuelStations.jsx";
 import ManageVehicles from "./components/admin/ManageVehicles.jsx";
@@ -22,7 +21,8 @@ import CustomerDashboard from "./components/customer/CustomerDashboard";
 import ViewAdmins from "./components/admin/ViewAdmins";
 import SingleVehiclePage from "./components/customer/SingleVehiclePage";
 import ManageVehiclePage from "./components/customer/ManageVehiclePage.jsx";
-// import QTY from "./pages/QTY.jsx"; 
+import QRCodePage from "./components/customer/QrCodePage.jsx";
+// import QTY from "./pages/QTY.jsx";
 
 function App() {
     return (

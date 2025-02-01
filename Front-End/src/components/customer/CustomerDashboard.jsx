@@ -5,6 +5,8 @@ import Header from "./Header";
 import ViewProfile from './ViewProfilePage'
 import ManageProfile from './ManageProfilePage'
 import VehicleListPage from "./VehicleListPage";
+import SingleVehiclePage from "./SingleVehiclePage";
+import AddVehiclePage from "./AddVehiclePage";
 
 
 import {
@@ -191,7 +193,7 @@ function CustomerDashboard() {
       case "singleVehicle":
           return <SingleVehiclePage vehicleId={selectedView.vehicleId} />;
       case "addVehicle":
-          return <div>Add Vehicle Form Goes Here</div>;
+          return <AddVehiclePage />;
       default:
         return <div>Welcome to the Customer Dashboard</div>;
     }
