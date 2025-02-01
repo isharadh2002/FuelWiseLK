@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
+import ViewProfile from './ViewProfilePage'
+import ManageProfile from './ManageProfilePage'
+import VehicleListPage from "./VehicleListPage";
+
 import {
     Car,
     CheckCircle,
@@ -178,11 +182,11 @@ function CustomerDashboard() {
           </div>
         );
       case "viewProfile":
-        return <div>Profile Data Goes Here</div>;
+        return <ViewProfile />;
       case "manageProfile":
-        return <div>Manage Profile Form Goes Here</div>;
+        return <ManageProfile />;
       case "viewVehicles":
-        return <div>Vehicles Data Goes Here</div>;
+        return <VehicleListPage />;
       case "addVehicle":
         return <div>Add Vehicle Form Goes Here</div>;
       default:
