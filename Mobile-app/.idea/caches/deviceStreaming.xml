@@ -129,6 +129,8 @@
           <option name="brand" value="samsung" />
           <option name="codename" value="dm2q" />
           <option name="id" value="dm2q" />
+
+
           <option name="manufacturer" value="Samsung" />
           <option name="name" value="S23 Plus" />
           <option name="screenDensity" value="450" />
