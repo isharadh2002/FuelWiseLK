@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "./Header";
 
@@ -10,6 +10,7 @@ const SingleVehiclePage = () => {
     const [isQrGenerated, setIsQrGenerated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchVehicleData = async () => {
@@ -41,6 +42,19 @@ const SingleVehiclePage = () => {
             setIsQrGenerated(true);
         } catch (error) {
             console.error("Error generating the QR code!", error);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (window.confirm("Are you sure you want to delete this vehicle?")) {
+            try {
+                await axios.delete(`http://localhost:8080/api/v1/VehicleForm/deleteData/${vehicleId}`);
+                alert("Vehicle deleted successfully!");
+                navigate("/dashboard"); // Navigate to dashboard after successful deletion
+            } catch (error) {
+                console.error("Error deleting vehicle:", error);
+                alert("Failed to delete vehicle.");
+            }
         }
     };
 
@@ -87,12 +101,13 @@ const SingleVehiclePage = () => {
                             </Link>
                         )}
 
-                        <Link
-                            to={`/manage-vehicle/${vehicleId}`}
-                            className="px-5 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 hover:text-white transition duration-300 ease-in-out"
+                        {/* Delete Vehicle Button */}
+                        <button
+                            onClick={handleDelete}
+                            className="px-5 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 hover:text-white transition duration-300 ease-in-out"
                         >
-                            Manage Vehicle
-                        </Link>
+                            Delete Vehicle
+                        </button>
                     </div>
                 </div>
             </div>
