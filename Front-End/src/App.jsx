@@ -22,6 +22,11 @@ import ViewAdmins from "./components/admin/ViewAdmins";
 import SingleVehiclePage from "./components/customer/SingleVehiclePage";
 import ManageVehiclePage from "./components/customer/ManageVehiclePage.jsx";
 import QRCodePage from "./components/customer/QrCodePage.jsx";
+import AddVehicleForm from "./components/admin/AddVehicle.jsx";
+import UpdateVehicleForm from "./components/admin/UpdateVehicle.jsx";
+import UpdateFuelStationForm from "./components/admin/UpdatefuelStation.jsx";
+import AddFuelStationForm from "./components/admin/AddFuelStation.jsx";
+
 // import QTY from "./pages/QTY.jsx";
 
 function App() {
@@ -37,9 +42,17 @@ function App() {
                 <Route path="/createAdmin" element={<CreateAdmins />} />
                 <Route path="/admin/login" element={<AdminLoginForm />} />
                 <Route path="/manage-vehicles" element={<ManageVehicles />} />
+                <Route path="/add-vehicle" element={<AddVehicleForm />} />
+                <Route path="/update-vehicle" element={<UpdateVehicleForm />} />
+
                 <Route
-                  path="/manage-fuel-stations"
-                  element={<ManageFuelStations />}
+                  path="/manage-fuel-stations" element={<ManageFuelStations />}
+                />
+                  <Route
+                  path="/add-fuel-station" element={<AddFuelStationForm />}
+                />
+                  <Route
+                  path="/update-fuel-station" element={<UpdateFuelStationForm />}
                 />
                 <Route path="/Viewadmins" element={<ViewAdmins />} />
                 {/* <Route path={"/qa"} element={<QTY/>}/> */}
