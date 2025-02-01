@@ -18,12 +18,10 @@ import QRCodePage from "./pages/QRCodePage"; // Import the new QR Code page
 import CreateAdmins from "./components/admin/CreateAdmins";
 import ManageFuelStations from "./components/admin/ManageFuelStations.jsx";
 import ManageVehicles from "./components/admin/ManageVehicles.jsx";
-import VehicleListpage from "./pages/VehicleListPage.jsx";
-import SingleVehiclePage from './pages/SingleVehiclePage.jsx';
 import CustomerDashboard from "./components/customer/CustomerDashboard";
-import ViewProfilePage from "./components/customer/ViewProfilePage";
-import ManageProfilePage from "./components/customer/ManageProfilePage";
 import ViewAdmins from "./components/admin/ViewAdmins";
+import SingleVehiclePage from "./components/customer/SingleVehiclePage";
+import ManageVehiclePage from "./components/customer/ManageVehiclePage.jsx";
 // import QTY from "./pages/QTY.jsx"; 
 
 function App() {
@@ -48,14 +46,22 @@ function App() {
 
                 {/* Customer Routes */}
                 <Route path="/dashboard" element={<CustomerDashboard />} />
-
-                {/* General Routes */}
                 <Route path="/VehicleRegister" element={<VehicleForm />} />
-                <Route path="/vehicles" element={<VehicleListpage />} />
                 <Route
                   path="/vehicle/:vehicleId"
                   element={<SingleVehiclePage />}
                 />{" "}
+                {/* QR Code Routes */}
+                <Route
+                  path="/manage-vehicle/:vehicleId"
+                  element={<ManageVehiclePage />}
+                />{" "}
+                {/* QR Code Routes */}
+                <Route
+                  path="/vehicle/:vehicleId/qr"
+                  element={<QRCodePage />}
+                />{" "}
+
                 {/* Single Vehicle Details */}
                 <Route path="/home" element={<Home />} />
                 <Route path="/register" element={<RegistrationForm />} />
@@ -69,11 +75,7 @@ function App() {
                   path="/FuelStation"
                   element={<FuelStationRegistrationPage />}
                 />
-                {/* QR Code Routes */}
-                <Route
-                  path="/vehicle/:vehicleId/qr"
-                  element={<QRCodePage />}
-                />{" "}
+                
                 {/* QR Code Page for Specific Vehicle */}
                 {/* Catch-All Route for 404 */}
                 <Route path="*" element={<PageNotFound />} />
