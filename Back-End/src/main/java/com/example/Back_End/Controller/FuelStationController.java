@@ -22,7 +22,7 @@ public class FuelStationController {
 
     }
 
-    @PostMapping(path = "/get")
+    @GetMapping(path = "/get")
     public FuelStationDTO getFuelStation(@RequestBody String stationName) throws Exception {
 
         return fuelStationService.getFuelStation(stationName);

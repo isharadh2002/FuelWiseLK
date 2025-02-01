@@ -145,7 +145,7 @@ function DashboardLayoutBasic() {
               <a
                 href="#"
                 className={`block px-4 py-2 text-sm ${
-                  active ? "bg-emerald-50 text-emerald-700" : "text-gray-700"
+                  active ? "bg-emerald-50 bg-purple-100" : "text-gray-700"
                 }`}
               >
                 Account settings
@@ -157,7 +157,7 @@ function DashboardLayoutBasic() {
               <a
                 href="#"
                 className={`block px-4 py-2 text-sm ${
-                  active ? "bg-emerald-50 text-emerald-700" : "text-gray-700"
+                  active ? "bg-emerald-50 bg-purple-100" : "text-gray-700"
                 }`}
               >
                 Support
@@ -182,7 +182,7 @@ function DashboardLayoutBasic() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="relative z-10 shadow-lg bg-emerald-600">
+      <header className="relative z-10 bg-purple-600 shadow-lg">
         <div className="flex items-center justify-between h-16 px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <h1 className="text-2xl font-bold text-white">Dashboard</h1>
           <DropDown pathToImage="/api/placeholder/32/32" />

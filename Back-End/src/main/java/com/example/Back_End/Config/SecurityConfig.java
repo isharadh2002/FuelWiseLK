@@ -22,11 +22,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/VehicleOwner/save/**").permitAll()
                         .requestMatchers("/api/v1/VehicleOwner/login/**").permitAll()
-                        .requestMatchers("/api/v1/FuelStation/save/**").permitAll()
-                        .requestMatchers("/api/v1/FuelStation/getStations/**").permitAll()
-                        .requestMatchers("/api/v1/FuelStation/get/**").permitAll()
-                        .requestMatchers("/api/v1/FuelStation/update/**").permitAll()
-                        .requestMatchers("/api/v1/FuelStation/delete/**").permitAll()
+
+                        .requestMatchers("/api/v1/FuelStation/**").permitAll()
+                        .requestMatchers("/api/v1/FuelStation").permitAll()
+
                         .requestMatchers("/api/v1/FuelQuota/**").permitAll()
 
                         .requestMatchers("/api/v1/User/**").permitAll()
@@ -44,6 +43,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/VehicleForm/getAllVehicles/**").permitAll()
                         .requestMatchers("/api/v1/VehicleForm/updateVehicle/**").permitAll()
                         .requestMatchers("/api/v1/VehicleForm/deleteData/**").permitAll()
+
+                        .requestMatchers("/api/v1/admins/**").permitAll()
+                        .requestMatchers("/api/v1/admins").permitAll()
 
                         .anyRequest().authenticated()  // All other endpoints require authentication
                 );
