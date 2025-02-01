@@ -41,6 +41,8 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/v1/VehicleForm/addVehicle/**").permitAll()
                         .requestMatchers("/api/v1/VehicleForm/getAllVehicles/**").permitAll()
+                        .requestMatchers("/api/v1/VehicleForm/updateVehicle/**").permitAll()
+                        .requestMatchers("/api/v1/VehicleForm/deleteData/**").permitAll()
 
                         .anyRequest().authenticated()  // All other endpoints require authentication
                 );
