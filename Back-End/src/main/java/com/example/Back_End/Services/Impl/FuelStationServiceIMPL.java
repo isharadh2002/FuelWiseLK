@@ -1,6 +1,7 @@
 package com.example.Back_End.Services.Impl;
 
 import com.example.Back_End.DTO.FuelStationDTO;
+import com.example.Back_End.DTO.FuelStationRetrieveDTO;
 import com.example.Back_End.Entity.FuelStation;
 import com.example.Back_End.Exceptions.FuelStationException;
 import com.example.Back_End.Repository.FuelStationRepository;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FuelStationServiceIMPL implements FuelStationService {
@@ -51,11 +54,14 @@ public class FuelStationServiceIMPL implements FuelStationService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<FuelStationDTO> getAllFuelStations() {
-
+    public List<FuelStationRetrieveDTO> getAllFuelStations() {
         List<FuelStation> fuelStationList = fuelStationRepository.findAll();
 
-        return modelMapper.map(fuelStationList, new TypeToken<List<FuelStation>>(){}.getType());
+        return fuelStationList.stream().map(fuelStation -> {
+            FuelStationRetrieveDTO retrieveDTO = modelMapper.map(fuelStation, FuelStationRetrieveDTO.class);
+            retrieveDTO.setUserID(fuelStation.getUser().getId()); // Manually set userID
+            return retrieveDTO;
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -136,5 +142,5 @@ public class FuelStationServiceIMPL implements FuelStationService {
         // Return success message
         return "Fuel station '" + stationName + "' deleted successfully.";
     }
-    
+
 }
