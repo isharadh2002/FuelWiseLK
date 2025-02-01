@@ -1,7 +1,7 @@
 import React from "react";
 import {Globe, Lock, BarChart3} from "lucide-react";
 import Header from "../components/common/Header.jsx";
-import Footer from "../components/common/Footer.jsx";
+import Footer from "../components/common/Footer_2.jsx";
 import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css"; // Import Swiper styles
 import "swiper/css/pagination";
@@ -121,7 +121,7 @@ const FuelManagementPlatform = () => {
                     {/* Hero Section Overlay */}
                     <div
                         className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 pointer-events-none">
-                        <div className="text-center text-white z-20 pointer-events-auto">
+                        <div className="text-center text-white z-20 pointer-events-auto m-10">
                             <h1 className="text-5xl font-bold mb-6">
                                 Fuel Smarter, Not Harder
                                 <br/>
