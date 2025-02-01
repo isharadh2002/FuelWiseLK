@@ -1,134 +1,241 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ViewProfilePage from './ViewProfilePage'; // Assuming this is the correct path
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import Header from "./Header";
+import {
+    Car,
+    CheckCircle,
+    AlertTriangle,
+    TrendingUpIcon,
+    TrendingDownIcon,
+  } from "lucide-react";
 
-function DashboardLayoutBasic() {
-    const navigate = useNavigate();
-    const [currentPage, setCurrentPage] = useState(null); // Track current page
-    
-    const NAVIGATION = [
-        { kind: "segment", segment: "viewProfile", title: "View Profile", icon: "👤", onclick: () => setCurrentPage('viewProfile') },
-        { kind: "segment", segment: "manageProfile", title: "Manage Profile", icon: "⚙️", onclick: () => setCurrentPage('manageProfile') },
-        { kind: "segment", segment: "viewVehicles", title: "View Vehicles", icon: "🚗", onclick: () => navigate("/view-vehicles") },
-        { kind: "segment", segment: "addVehicle", title: "Add New Vehicle", icon: "➕", onclick: () => navigate("/add-vehicle") },
-    ];
+function CustomerDashboard() {
+  const navigate = useNavigate();
+  const [selectedView, setSelectedView] = useState("overview");
 
-    const handleLogout = () => {
-        localStorage.removeItem("userId");
-        navigate("/login"); // Redirect to login page
-    };
+  const NAVIGATION = [
+    { kind: "header", title: "Main items" },
+    {
+      kind: "segment",
+      segment: "Overview",
+      title: "Overview",
+      onclick: () => setSelectedView("overview"),
+    },
+    {
+      kind: "segment",
+      segment: "View Profile",
+      title: "View Profile",
+      onclick: () => setSelectedView("viewProfile"),
+    },
+    {
+      kind: "segment",
+      segment: "Manage Profile",
+      title: "Manage Profile",
+      onclick: () => setSelectedView("manageProfile"),
+    },
+    {
+      kind: "segment",
+      segment: "View Vehicles",
+      title: "View Vehicles",
+      onclick: () => setSelectedView("viewVehicles"),
+    },
+    {
+      kind: "segment",
+      segment: "Add Vehicle",
+      title: "Add Vehicle",
+      onclick: () => setSelectedView("addVehicle"),
+    },
+  ];
 
-    function SmoothButton() {
-        return (
-            <button
-                onClick={handleLogout}
-                className="w-full px-6 py-3 rounded-md bg-green-500 text-white font-semibold text-lg transition-all duration-200 ease-in-out hover:bg-green-600 hover:shadow-xl focus:outline-none"
-            >
-                Sign Out
-            </button>
-        );
-    }
+  const stats = [
+    {
+      title: "Total Vehicles",
+      value: "147",
+    },
+    {
+      title: "Total Fuel Quota",
+      value: "5000 Liters",
+      trend: "+5%",
+    },
+    {
+      title: "Total Fuel Usage",
+      value: "3000 Liters",
+      trend: "+2%",
+    },
+  ];
 
-    function Skeleton({ height }) {
-        return (
-            <div className="bg-gray-300 rounded-md" style={{ height: `${height}px` }}></div>
-        );
-    }
+  const historyItems = [
+    {
+      icon: <Car className="w-5 h-5 text-emerald-500" />,
+      text: "New vehicle added",
+      time: "2 hours ago",
+    },
+    {
+      icon: <CheckCircle className="w-5 h-5 text-blue-500" />,
+      text: "Vehicle data updated",
+      time: "5 hours ago",
+    },
+    {
+      icon: <AlertTriangle className="w-5 h-5 text-yellow-500" />,
+      text: "Fuel quota is over",
+      time: "1 day ago",
+    },
+  ];
 
+  const alerts = [
+    { text: "Fuel quota is over", priority: "high" },
+    { text: "Fuel quota is below 20%", priority: "medium" },
+    { text: "Fuel quota is about to end", priority: "low" },
+  ];
+
+  function StatCard({ title, value, trend }) {
     return (
-        <div className="m-0 overflow-hidden">
-            <div className="rounded-2xl">
-                <div className="flex items-center w-screen h-24 text-6xl font-extrabold text-center text-green-600 bg-green-300 ">
-                    <div className="mx-auto">Dashboard</div>
-                    <div className="flex mx-2">
-                        <SmoothButton />
-                    </div>
-                </div>
-
-                <div className="flex flex-col w-screen min-h-screen text-gray-900 bg-gray-100 md:flex-row">
-                    {/* Sidebar */}
-                    <nav className="w-full bg-green-100 shadow-md md:w-64">
-                        <div className="p-4">
-                            <h1 className="text-lg font-semibold text-gray-600">Navigation</h1>
-                        </div>
-                        <ul className="px-4 space-y-2">
-                            {NAVIGATION.map((item, index) => {
-                                if (item.kind === 'segment') {
-                                    return (
-                                        <li
-                                            key={index}
-                                            className="flex items-center p-2 space-x-2 rounded-md cursor-pointer hover:bg-green-600 hover:text-white"
-                                            onClick={item.onclick}
-                                        >
-                                            <span>{item.icon}</span>
-                                            <span>{item.title}</span>
-                                        </li>
-                                    );
-                                }
-                                return null;
-                            })}
-                        </ul>
-                    </nav>
-
-                    {/* Main Content */}
-                    <div className="flex-1 p-6">
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            {/* Skeletons */}
-                            {!currentPage && (
-                                <>
-                                    <div className="col-span-5 md:col-span-1">
-                                        <Skeleton height={14} />
-                                    </div>
-                                    <div className="col-span-12">
-                                        <Skeleton height={14} />
-                                    </div>
-                                    <div className="col-span-12">
-                                        <Skeleton height={14} />
-                                    </div>
-                                    <div className="col-span-4">
-                                        <Skeleton height={100} />
-                                    </div>
-                                    <div className="col-span-8">
-                                        <Skeleton height={100} />
-                                    </div>
-                                    <div className="col-span-12">
-                                        <Skeleton height={150} />
-                                    </div>
-                                    <div className="col-span-12">
-                                        <Skeleton height={14} />
-                                    </div>
-                                    <div className="grid grid-cols-4 gap-4">
-                                        <div className="col-span-1">
-                                            <Skeleton height={100} />
-                                        </div>
-                                        <div className="col-span-1">
-                                            <Skeleton height={100} />
-                                        </div>
-                                        <div className="col-span-1">
-                                            <Skeleton height={100} />
-                                        </div>
-                                        <div className="col-span-1">
-                                            <Skeleton height={100} />
-                                        </div>
-                                    </div>
-                                </>
-                            )}
-
-                            {/* Dynamic Content */}
-                            {currentPage === 'viewProfile' && <ViewProfilePage />}
-                            {currentPage === 'manageProfile' && (
-                                <div>
-                                    <h2 className="text-2xl font-bold text-gray-700">Manage Profile</h2>
-                                    {/* Manage Profile Content */}
-                                    <p className="text-lg text-gray-600">Manage your profile settings here.</p>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div className="p-6 bg-white rounded-lg shadow-sm">
+        <h3 className="text-sm font-medium text-gray-500">{title}</h3>
+        <div className="flex items-center justify-between">
+          <p className="text-3xl font-semibold text-gray-900">{value}</p>
+          {trend && (
+            <span
+              className={`text-sm font-semibold ${
+                trend.startsWith("+") ? "text-emerald-600" : "text-red-600"
+              }`}
+            >
+              {trend.startsWith("+") ? (
+                <TrendingUpIcon className="w-4 h-4" />
+              ) : (
+                <TrendingDownIcon className="w-4 h-4" />
+              )}
+              {trend}
+            </span>
+          )}
         </div>
+      </div>
     );
+  }
+
+  function HistoryCard({ icon, text, time }) {
+    return (
+      <div className="flex items-center space-x-3">
+        {icon}
+        <div className="flex justify-between flex-1">
+          <p className="text-sm text-gray-600">{text}</p>
+          <span className="text-xs text-gray-400">{time}</span>
+        </div>
+      </div>
+    );
+  }
+
+  function AlertsCard({ text, priority }) {
+    return (
+      <div
+        className={`rounded-lg border p-4 ${
+          priority === "high"
+            ? "border-red-200 bg-red-50"
+            : priority === "medium"
+            ? "border-yellow-200 bg-yellow-50"
+            : "border-gray-200 bg-gray-50"
+        }`}
+      >
+        <p className="text-sm font-medium text-gray-900">{text}</p>
+      </div>
+    );
+  }
+
+  // Placeholder content for each view (could be replaced with actual components/data)
+  const renderContent = () => {
+    switch (selectedView) {
+      case "overview":
+        return (
+          <div>
+            <h2 className="text-xl font-semibold text-gray-800">Dashboard Overview</h2>
+
+            <div className="grid gap-4 mb-6 sm:grid-cols-2 lg:grid-cols-3">
+              {stats.map((stat, index) => (
+                <StatCard key={index} {...stat} />
+              ))}
+            </div>
+
+            <div className="grid gap-4 mb-6 lg:grid-cols-2">
+              <div className="p-6 bg-white rounded-lg shadow-sm">
+                <h3 className="mb-4 text-lg font-medium text-gray-900">Recent History</h3>
+                <div className="space-y-4">
+                  {historyItems.map((item, index) => (
+                    <HistoryCard key={index} {...item} />
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-6 bg-white rounded-lg shadow-sm">
+                <h3 className="mb-4 text-lg font-medium text-gray-900">Alerts</h3>
+                <div className="space-y-4">
+                  {alerts.map((alert, index) => (
+                    <AlertsCard key={index} {...alert} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case "viewProfile":
+        return <div>Profile Data Goes Here</div>;
+      case "manageProfile":
+        return <div>Manage Profile Form Goes Here</div>;
+      case "viewVehicles":
+        return <div>Vehicles Data Goes Here</div>;
+      case "addVehicle":
+        return <div>Add Vehicle Form Goes Here</div>;
+      default:
+        return <div>Welcome to the Customer Dashboard</div>;
+    }
+  };
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      // If no user is logged in, redirect to login page
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header component */}
+      <Header />
+
+      <div className="flex flex-col mx-auto max-w-7xl md:flex-row">
+        {/* Navigation */}
+        <nav className="w-full p-4 bg-white shadow-sm shrink-0 md:w-64">
+          <div className="mb-6">
+            <h2 className="text-xs font-semibold tracking-wider text-gray-500 uppercase">Navigation</h2>
+          </div>
+          <ul className="space-y-1">
+            {NAVIGATION.map((item, index) =>
+              item.kind === "header" ? (
+                <li key={index} className="px-3 pt-5 pb-2 text-xs font-semibold tracking-wider text-gray-500 uppercase">
+                  {item.title}
+                </li>
+              ) : (
+                <li key={index}>
+                  <button
+                    onClick={item.onclick}
+                    className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-700 transition-colors rounded-lg hover:bg-emerald-50 hover:text-emerald-700"
+                  >
+                    {item.title}
+                  </button>
+                </li>
+              )
+            )}
+          </ul>
+        </nav>
+
+        {/* Main content area */}
+        <main className="flex-1 p-4">
+          <div>{renderContent()}</div> {/* Dynamically render content */}
+        </main>
+      </div>
+    </div>
+  );
 }
 
-export default DashboardLayoutBasic;
+export default CustomerDashboard;

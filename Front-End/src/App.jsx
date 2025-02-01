@@ -35,7 +35,7 @@ function App() {
 
               <Routes>
                 {/* Admin Routes */}
-                <Route path="/m" element={<AdminDashboard />} />
+                <Route path="/admin-dashboard" element={<AdminDashboard />} />
                 <Route path="/createAdmin" element={<CreateAdmins />} />
                 <Route path="/admin/login" element={<AdminLoginForm />} />
                 <Route path="/manage-vehicles" element={<ManageVehicles />} />
@@ -45,18 +45,10 @@ function App() {
                 />
                 <Route path="/Viewadmins" element={<ViewAdmins />} />
                 {/* <Route path={"/qa"} element={<QTY/>}/> */}
+
                 {/* Customer Routes */}
                 <Route path="/dashboard" element={<CustomerDashboard />} />
-                <Route
-                  path="/view-profile"
-                  element={<ViewProfilePage />}
-                />{" "}
-                {/* View Profile Route */}
-                <Route
-                  path="/manage-profile"
-                  element={<ManageProfilePage />}
-                />{" "}
-                {/* Manage Profile Route */}
+
                 {/* General Routes */}
                 <Route path="/VehicleRegister" element={<VehicleForm />} />
                 <Route path="/vehicles" element={<VehicleListpage />} />
