@@ -61,7 +61,6 @@ const VehicleListPage = () => {
                         {/* Vehicle Details */}
                         <div className="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-4">
                             <div className="text-sm font-medium text-teal-600">Vehicle ID: {vehicle.vehicleId}</div>
-                            <div className="text-sm text-gray-700">Owner: {vehicle.ownerName}</div>
                             <div className="text-sm text-gray-700">Reg. No: {vehicle.registrationNumber}</div>
                             <div className="text-sm text-gray-700">Fuel Quota: {vehicle.vehicleFuelQuota}</div>
                         </div>
