@@ -60,9 +60,15 @@ const ManageVehicles = () => {
   return (
     <div className="min-h-screen p-8 bg-green-50">
       <div className="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-lg">
-        <h1 className="mb-4 text-2xl font-bold text-center text-green-700">
+        <h1 className="mb-4 text-2xl font-bold text-center text-green-600">
           Manage Vehicles
         </h1>
+        <button
+          onClick={() => navigate("/add-vehicle")}
+          className="px-6 py-3 mb-6 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+        >
+          Add Vehicle
+        </button>
         <div className="mb-6">
           <input
             type="text"

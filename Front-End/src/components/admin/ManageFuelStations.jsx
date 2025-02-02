@@ -56,9 +56,16 @@ const ManageFuelStations = () => {
   return (
     <div className="min-h-screen p-8 bg-green-50">
       <div className="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-lg">
-        <h1 className="mb-4 text-2xl font-bold text-center text-green-700">
+        <h1 className="mb-4 text-2xl font-bold text-center text-green-600">
           Manage Fuel Stations
         </h1>
+        <button
+          onClick={() => navigate("/add-fuel-station")}
+          className="px-6 py-3 mb-6 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+        >
+          Add Fuel Station
+        </button>
+      
         <table className="w-full text-black border border-collapse border-gray-300">
           <thead>
             <tr className="bg-green-200">
