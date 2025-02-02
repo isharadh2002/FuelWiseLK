@@ -51,7 +51,7 @@ const Footer = () => {
                                     href={social.href}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="w-10 h-10 border border-white rounded-full flex items-center justify-center hover:bg-green-400 hover:border-green-400 hover:text-green-800 transition-all duration-300"
+                                    className="w-10 h-10 border border-green-50 rounded-full flex items-center justify-center hover:bg-green-400 hover:border-green-400 hover:text-green-800 transition-all duration-300"
                                 >
                                     <img
                                         src={social.icon}

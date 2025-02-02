@@ -1,5 +1,6 @@
 import {Mail, MapPin, Phone, Clock} from "lucide-react";
 import Header from "../components/common/Header.jsx";
+import Footer from "../components/common/Footer_2.jsx";
 
 const ContactUs = () => {
     return (
@@ -165,6 +166,7 @@ const ContactUs = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </>
     );
 };
