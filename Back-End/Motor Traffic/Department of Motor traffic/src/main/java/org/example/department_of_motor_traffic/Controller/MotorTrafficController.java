@@ -1,7 +1,6 @@
 package org.example.department_of_motor_traffic.Controller;
 
 
-import lombok.AllArgsConstructor;
 import org.example.department_of_motor_traffic.Service.MotorTrafficService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

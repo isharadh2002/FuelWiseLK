@@ -10,8 +10,15 @@ import java.util.Optional;
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
     // Find a vehicle by its ID
+    @Override
     Optional<Vehicle> findById(Integer vehicleId);
 
     //    Vehicle findByVehicleNumber(String vehicleNumber);
+<<<<<<< Updated upstream
      boolean vehicleValidation(VehicleDTO vehicleDTO);
+=======
+
+     boolean validateVehicles(VehicleDTO vehicleDTO);
+
+>>>>>>> Stashed changes
 }

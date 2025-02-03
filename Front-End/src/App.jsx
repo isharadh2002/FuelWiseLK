@@ -18,6 +18,10 @@ import ManageFuelStations from "./components/admin/ManageFuelStations.jsx";
 import ManageVehicles from "./components/admin/ManageVehicles.jsx";
 import CustomerDashboard from "./components/customer/CustomerDashboard";
 import ViewAdmins from "./components/admin/ViewAdmins";
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 import SingleVehiclePage from "./components/customer/SingleVehiclePage";
 import ManageVehiclePage from "./components/customer/ManageVehiclePage.jsx";
 import QRCodePage from "./components/customer/QrCodePage.jsx";
@@ -27,6 +31,14 @@ import UpdateFuelStationForm from "./components/admin/UpdatefuelStation.jsx";
 import AddFuelStationForm from "./components/admin/AddFuelStation.jsx";
 
 // import QTY from "./pages/QTY.jsx";
+<<<<<<< Updated upstream
+=======
+=======
+import FuelStationDashBoard from "./components/fuelStation/FuelStationDashBoard.jsx";
+import AdminLoginForm from "./pages/AdminLoginPage.jsx";
+// import QTY from "./pages/QTY.jsx"; 
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 function App() {
     return (
@@ -57,6 +69,14 @@ function App() {
                 {/* Customer Routes */}
                 <Route path="/dashboard" element={<CustomerDashboard />} />
                 <Route path="/VehicleRegister" element={<VehicleForm />} />
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+                <Route path="/vehicles" element={<VehicleListpage />} />
+                <Route path="/fuelStation/login/dashboard" element={<FuelStationDashBoard/>}/>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                 <Route
                   path="/vehicle/:vehicleId"
                   element={<SingleVehiclePage />}
@@ -79,6 +99,7 @@ function App() {
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/" element={<VehicleRegistrationPage />} />
                 <Route path="/footer" element={<Footer />} />
+
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/terms" element={<Terms />} />
                 <Route
