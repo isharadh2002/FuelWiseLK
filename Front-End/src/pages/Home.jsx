@@ -1,14 +1,15 @@
 import React from "react";
 import {Globe, Lock, BarChart3} from "lucide-react";
 import Header from "../components/common/Header.jsx";
-import Footer from "../components/common/Footer.jsx";
+import Footer from "../components/common/Footer_2.jsx";
 import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css"; // Import Swiper styles
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import {Pagination, Navigation, Autoplay} from "swiper/modules";
+import {motion} from "framer-motion";
 
-const FuelManagementPlatform = () => {
+const HomePage = () => {
 
     // Sliding images (replace with your own image URLs)
     const slidingImages = [
@@ -121,7 +122,7 @@ const FuelManagementPlatform = () => {
                     {/* Hero Section Overlay */}
                     <div
                         className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 pointer-events-none">
-                        <div className="text-center text-white z-20 pointer-events-auto">
+                        <div className="text-center text-white z-20 pointer-events-auto m-10">
                             <h1 className="text-5xl font-bold mb-6">
                                 Fuel Smarter, Not Harder
                                 <br/>
@@ -131,7 +132,7 @@ const FuelManagementPlatform = () => {
                                 Access Fuel Seamlessly with a Secure Weekly QR Code System.
                             </p>
                             <button
-                                className="bg-green-600 px-8 py-4 rounded-lg text-white font-semibold text-lg hover:bg-green-700">
+                                className="bg-green-600 px-8 py-4 rounded-lg text-white font-semibold text-lg hover:bg-green-700 transition-all transform hover:scale-105">
                                 Get Your QR Code Now
                             </button>
                         </div>
@@ -160,11 +161,14 @@ const FuelManagementPlatform = () => {
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         {features.map((feature, index) => (
-                            <div key={index} className="p-6 bg-green-100 rounded-lg">
+                            <motion.div key={index} className="p-6 bg-green-100 rounded-lg"
+                                        initial={{opacity: 0, y: 50}}
+                                        whileInView={{opacity: 1, y: 0}}
+                                        transition={{duration: 0.5, delay: 0.5 + index * 0.25}}>
                                 <div className="mb-4">{feature.icon}</div>
                                 <h3 className="text-xl font-semibold mb-2 text-green-800">{feature.title}</h3>
                                 <p className="text-green-600">{feature.description}</p>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -176,7 +180,11 @@ const FuelManagementPlatform = () => {
                     </h2>
                     <div className="max-w-4xl mx-auto">
                         {steps.map((step, index) => (
-                            <div key={index} className="flex items-start mb-8 bg-white p-6 rounded-lg">
+                            <motion.div key={index} className="flex items-start mb-8 bg-white p-6 rounded-lg"
+                                        initial={{opacity: 0, y: 50}}
+                                        whileInView={{opacity: 1, y: 0}}
+                                        transition={{duration: 0.25, delay: 0.5 + index * 0.25}}
+                            >
                                 <div
                                     className="w-12 h-12 flex items-center justify-center bg-green-600 text-white rounded-full mr-4">
                                     {step.number}
@@ -185,7 +193,7 @@ const FuelManagementPlatform = () => {
                                     <h3 className="text-lg font-semibold mb-2 text-green-800">{step.title}</h3>
                                     <p className="text-green-600">{step.team}</p>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -230,4 +238,4 @@ const FuelManagementPlatform = () => {
     );
 };
 
-export default FuelManagementPlatform;
+export default HomePage;

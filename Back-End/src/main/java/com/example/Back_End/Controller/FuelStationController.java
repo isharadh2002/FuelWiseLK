@@ -1,6 +1,7 @@
 package com.example.Back_End.Controller;
 
 import com.example.Back_End.DTO.FuelStationDTO;
+import com.example.Back_End.DTO.FuelStationRetrieveDTO;
 import com.example.Back_End.Exceptions.FuelStationException;
 import com.example.Back_End.Services.FuelStationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class FuelStationController {
 
     }
 
-    @PostMapping(path = "/get")
+    @GetMapping(path = "/get")
     public FuelStationDTO getFuelStation(@RequestBody String stationName) throws Exception {
 
         return fuelStationService.getFuelStation(stationName);
@@ -30,7 +31,7 @@ public class FuelStationController {
     }
 
     @GetMapping("/getStations")
-    public List<FuelStationDTO> getUsers() {
+    public List<FuelStationRetrieveDTO> getUsers() {
         return fuelStationService.getAllFuelStations();
     }
 

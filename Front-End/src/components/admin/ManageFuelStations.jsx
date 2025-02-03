@@ -1,117 +1,112 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ManageFuelStations = () => {
-  const [search, setSearch] = useState("");
-  const [stations, setStations] = useState([]);
+  const [stations, setStations] = useState([]); // Always an array
+  const navigate = useNavigate();
 
   // Fetch stations data from backend
   useEffect(() => {
     const fetchStations = async () => {
       try {
-        const response = await fetch("http://backend-api.com/stations"); // Replace with your API URL
-        const data = await response.json();
-        setStations(data);
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/FuelStation/getStations"
+        );
+        console.log("API Response:", response.data);
+
+        // Assuming the API returns an object with a 'stations' property:
+        if (response.data && Array.isArray(response.data.stations)) {
+          setStations(response.data.stations);
+        } else if (Array.isArray(response.data)) {
+          // If the API returns an array directly:
+          setStations(response.data);
+        } else {
+          setStations([]);
+        }
       } catch (error) {
         console.error("Error fetching stations:", error);
+        setStations([]);
       }
     };
+
     fetchStations();
   }, []);
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
+  // Navigate to the update page for the station
+  const handleUpdate = (stationId) => {
+    navigate(`/update-fuel-station/${stationId}`);
   };
 
-  const handleApprove = async (id) => {
+  // Delete station from the backend and update state
+  const handleDelete = async (stationId) => {
     try {
-      await fetch(`http://backend-api.com/stations/${id}/approve`, {
-        method: "POST",
-      });
+      await axios.delete(
+        `http://localhost:8080/api/v1/FuelStation/delete/${stationId}`
+      );
+      // Update local state by filtering out the deleted station
       setStations((prevStations) =>
-        prevStations.map((station) =>
-          station.id === id ? { ...station, status: "Approved" } : station
-        )
+        prevStations.filter((station) => station.id !== stationId)
       );
     } catch (error) {
-      console.error("Error approving station:", error);
+      console.error("Error deleting station:", error);
     }
   };
-
-  const handleReject = async (id) => {
-    try {
-      await fetch(`http://backend-api.com/stations/${id}/reject`, {
-        method: "POST",
-      });
-      setStations((prevStations) =>
-        prevStations.map((station) =>
-          station.id === id ? { ...station, status: "Rejected" } : station
-        )
-      );
-    } catch (error) {
-      console.error("Error rejecting station:", error);
-    }
-  };
-
-  const filteredStations = stations.filter(
-    (station) =>
-      station.name.toLowerCase().includes(search.toLowerCase()) ||
-      station.location.toLowerCase().includes(search.toLowerCase()) ||
-      station.status.toLowerCase().includes(search.toLowerCase())
-  );
 
   return (
     <div className="min-h-screen p-8 bg-green-50">
       <div className="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-lg">
-        <h1 className="mb-4 text-2xl font-bold text-center text-green-700">
+        <h1 className="mb-4 text-2xl font-bold text-center text-green-600">
           Manage Fuel Stations
         </h1>
-        <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Search by name, location, or status"
-            value={search}
-            onChange={handleSearch}
-            className="w-full px-4 py-2 text-black border rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none"
-          />
-        </div>
+        <button
+          onClick={() => navigate("/add-fuel-station")}
+          className="px-6 py-3 mb-6 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+        >
+          Add Fuel Station
+        </button>
+      
         <table className="w-full text-black border border-collapse border-gray-300">
           <thead>
             <tr className="bg-green-200">
               <th className="px-4 py-2 border">Station Name</th>
               <th className="px-4 py-2 border">Location</th>
-              <th className="px-4 py-2 border">Status</th>
+              <th className="px-4 py-2 border">Contact</th>
               <th className="px-4 py-2 border">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredStations.map((station) => (
-              <tr key={station.id} className="odd:bg-white even:bg-green-50">
-                <td className="px-4 py-2 border">{station.name}</td>
-                <td className="px-4 py-2 border">{station.location}</td>
-                <td className="px-4 py-2 border">{station.status}</td>
-                <td className="px-4 py-2 text-center border">
-                  {station.status === "Pending" && (
-                    <>
-                      <button
-                        onClick={() => handleApprove(station.id)}
-                        className="mx-2 text-green-700 hover:underline"
-                      >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => handleReject(station.id)}
-                        className="mx-2 text-red-600 hover:underline"
-                      >
-                        Reject
-                      </button>
-                    </>
-                  )}
-                  {station.status !== "Pending" && (
-                    <span className="text-gray-600">{station.status}</span>
-                  )}
+            {Array.isArray(stations) && stations.length > 0 ? (
+              stations.map((station) => (
+                <tr key={station.id} className="odd:bg-white even:bg-green-50">
+                  <td className="px-4 py-2 border">{station.stationName}</td>
+                  <td className="px-4 py-2 border">
+                    {station.stationLocation}
+                  </td>
+                  <td className="px-4 py-2 border">{station.stationContact}</td>
+                  <td className="px-4 py-2 border">
+                    <button
+                      onClick={() => handleUpdate(station.id)}
+                      className="px-2 py-1 mr-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleDelete(station.id)}
+                      className="px-2 py-1 text-white bg-red-500 rounded hover:bg-red-600"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="px-4 py-2 text-center">
+                  No stations found.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

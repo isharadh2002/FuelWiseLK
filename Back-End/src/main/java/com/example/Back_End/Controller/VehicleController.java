@@ -1,6 +1,8 @@
 package com.example.Back_End.Controller;
 
 import com.example.Back_End.DTO.VehicleDTO;
+import com.example.Back_End.DTO.VehicleRegistrationDTO;
+import com.example.Back_End.Exceptions.VehicleRegistrationException;
 import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,17 @@ public class VehicleController {
         }
         return ResponseEntity.ok(vehicles); // Return 200 with the list of vehicles
     }
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addNewVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO) {
+        try {
+            VehicleRegistrationDTO savedVehicle = vehicleService.saveVehicle(vehicleRegistrationDTO);
+            return ResponseEntity.ok().body("Vehicle saved successfully");
+        } catch (VehicleRegistrationException e) {
+            return ResponseEntity.status(500).body("Error saving vehicle: " + e.getMessage());
+        }
+    }
+
 
     // Get vehicle by ID
     @GetMapping(path = "/{id}")

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import VehicleRegistrationPage from "./pages/VehicleRegistrationPage";
+import VehicleRegistrationPage from "./pages/VehicleRegistrationPage.jsx";
 import Footer from "./components/common/Footer";
 import { Global } from '@emotion/react';
 import globalStyles from './styles/global';
@@ -11,19 +11,22 @@ import Terms from "./pages/Terms";
 import About from "./pages/About";
 import ContactUs from "./pages/Contact";
 import Home from "./pages/Home.jsx";
-import VehicleForm from "./pages/VehicleForm";
+import VehicleForm from "./pages/VehicleForm.jsx";
 import AdminDashboard from "./components/admin/AdminDashboard";
-import QRCodePage from "./pages/QRCodePage"; // Import the new QR Code page
 import CreateAdmins from "./components/admin/CreateAdmins";
 import ManageFuelStations from "./components/admin/ManageFuelStations.jsx";
 import ManageVehicles from "./components/admin/ManageVehicles.jsx";
-import VehicleListpage from "./pages/VehicleListPage.jsx";
-import SingleVehiclePage from './pages/SingleVehiclePage.jsx';
 import CustomerDashboard from "./components/customer/CustomerDashboard";
-import ViewProfilePage from "./components/customer/ViewProfilePage";
-import ManageProfilePage from "./components/customer/ManageProfilePage";
 import ViewAdmins from "./components/admin/ViewAdmins";
-// import QTY from "./pages/QTY.jsx"; 
+import SingleVehiclePage from "./components/customer/SingleVehiclePage";
+import ManageVehiclePage from "./components/customer/ManageVehiclePage.jsx";
+import QRCodePage from "./components/customer/QrCodePage.jsx";
+import AddVehicleForm from "./components/admin/AddVehicle.jsx";
+import UpdateVehicleForm from "./components/admin/UpdateVehicle.jsx";
+import UpdateFuelStationForm from "./components/admin/UpdatefuelStation.jsx";
+import AddFuelStationForm from "./components/admin/AddFuelStation.jsx";
+
+// import QTY from "./pages/QTY.jsx";
 
 function App() {
     return (
@@ -32,35 +35,43 @@ function App() {
               <Global styles={globalStyles} />
               <Routes>
                 {/* Admin Routes */}
-                <Route path="/m" element={<AdminDashboard />} />
+                <Route path="/admin-dashboard" element={<AdminDashboard />} />
                 <Route path="/createAdmin" element={<CreateAdmins />} />
                 <Route path="/admin/login" element={<AdminLoginForm />} />
                 <Route path="/manage-vehicles" element={<ManageVehicles />} />
+                <Route path="/add-vehicle" element={<AddVehicleForm />} />
+                <Route path="/update-vehicle" element={<UpdateVehicleForm />} />
+
                 <Route
-                  path="/manage-fuel-stations"
-                  element={<ManageFuelStations />}
+                  path="/manage-fuel-stations" element={<ManageFuelStations />}
+                />
+                  <Route
+                  path="/add-fuel-station" element={<AddFuelStationForm />}
+                />
+                  <Route
+                  path="/update-fuel-station" element={<UpdateFuelStationForm />}
                 />
                 <Route path="/Viewadmins" element={<ViewAdmins />} />
                 {/* <Route path={"/qa"} element={<QTY/>}/> */}
+
                 {/* Customer Routes */}
                 <Route path="/dashboard" element={<CustomerDashboard />} />
-                <Route
-                  path="/view-profile"
-                  element={<ViewProfilePage />}
-                />{" "}
-                {/* View Profile Route */}
-                <Route
-                  path="/manage-profile"
-                  element={<ManageProfilePage />}
-                />{" "}
-                {/* Manage Profile Route */}
-                {/* General Routes */}
                 <Route path="/VehicleRegister" element={<VehicleForm />} />
-                <Route path="/vehicles" element={<VehicleListpage />} />
                 <Route
                   path="/vehicle/:vehicleId"
                   element={<SingleVehiclePage />}
                 />{" "}
+                {/* QR Code Routes */}
+                <Route
+                  path="/manage-vehicle/:vehicleId"
+                  element={<ManageVehiclePage />}
+                />{" "}
+                {/* QR Code Routes */}
+                <Route
+                  path="/vehicle/:vehicleId/qr"
+                  element={<QRCodePage />}
+                />{" "}
+
                 {/* Single Vehicle Details */}
                 <Route path="/home" element={<Home />} />
                 <Route path="/register" element={<RegistrationForm />} />
@@ -74,11 +85,7 @@ function App() {
                   path="/FuelStation"
                   element={<FuelStationRegistrationPage />}
                 />
-                {/* QR Code Routes */}
-                <Route
-                  path="/vehicle/:vehicleId/qr"
-                  element={<QRCodePage />}
-                />{" "}
+                
                 {/* QR Code Page for Specific Vehicle */}
                 {/* Catch-All Route for 404 */}
                 <Route path="*" element={<PageNotFound />} />

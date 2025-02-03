@@ -60,3 +60,4 @@ public class AdminController {
         return ResponseEntity.notFound().build(); // Return 404 if not found
     }
 }
+
