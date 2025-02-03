@@ -17,7 +17,7 @@ public class MotorTrafficController {
         this.service = service;
     }
 
-    @PostMapping("/validate")
+    @GetMapping("/validate")
     public ResponseEntity<Boolean> validateVehicle(@RequestParam String licensePlate) {
         boolean isValid = service.validateVehicle(licensePlate);
         return ResponseEntity.ok(isValid);

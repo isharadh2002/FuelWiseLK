@@ -11,10 +11,7 @@ import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -161,5 +158,8 @@ public class VehicleServiceImpl implements VehicleService {
             throw new Exception("Vehicle not found with ID: " + id);
         }
     }
+
+
+
 
 }
