@@ -1,6 +1,8 @@
 package com.example.Back_End.Controller;
 
 import com.example.Back_End.DTO.AdminDTO;
+import com.example.Back_End.DTO.LoginDTO;
+import com.example.Back_End.Response.LoginResponse;
 import com.example.Back_End.Services.AdminService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ public class AdminController {
 
     // Get admin by ID
     @GetMapping("/get/{id}")
-    public ResponseEntity<AdminDTO> getAdminById(@PathVariable Long id) {
+    public ResponseEntity<AdminDTO> getAdminById(@PathVariable int id) {
         Optional<AdminDTO> adminDTO = adminService.getAdminById(id);
         return adminDTO.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build()); // Return 404 if not found
@@ -38,14 +40,31 @@ public class AdminController {
 
     // Create a new admin
     @PostMapping("/create")
-    public ResponseEntity<AdminDTO> createAdmin(@Valid @RequestBody AdminDTO adminDTO) {
-        AdminDTO createdAdmin = adminService.createAdmin(adminDTO);
-        return ResponseEntity.status(201).body(createdAdmin); // Return 201 if created
+    public ResponseEntity<?> createAdmin(@Valid @RequestBody AdminDTO adminDTO) {
+        try {
+            String adminId = adminService.createAdmin(adminDTO);
+            return ResponseEntity.ok().body("Admin created successfully with ID: " + adminId); // Return 200 if successful
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error creating admin: " + e.getMessage()); // Return 400 if bad request
+        }
     }
+
+    //login an admin
+    @PostMapping("/login")
+    public ResponseEntity<?> loginAdmin(@Valid @RequestBody LoginDTO loginDTO) {
+        try {
+            LoginResponse loginResponse = adminService.loginAdmin(loginDTO);
+            return ResponseEntity.ok().body(loginResponse.getMessage()); // Return 200 if successful
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error logging in: " + e.getMessage()); // Return 400 if bad request
+        }
+    }
+
+
 
     // Update an existing admin
     @PutMapping("/update/{id}")
-    public ResponseEntity<AdminDTO> updateAdmin(@PathVariable Long id,@Valid @RequestBody AdminDTO adminDTO) {
+    public ResponseEntity<AdminDTO> updateAdmin(@PathVariable int id,@Valid @RequestBody AdminDTO adminDTO) {
         Optional<AdminDTO> updatedAdmin = adminService.updateAdmin(id, adminDTO);
         return updatedAdmin.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build()); // Return 404 if not found
@@ -53,7 +72,7 @@ public class AdminController {
 
     // Delete an admin
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteAdmin(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAdmin(@PathVariable int id) {
         if (adminService.deleteAdmin(id)) {
             return ResponseEntity.noContent().build(); // Return 204 if deleted
         }

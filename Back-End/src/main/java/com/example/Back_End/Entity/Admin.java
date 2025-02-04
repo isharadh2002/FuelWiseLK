@@ -17,7 +17,7 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generated primary key
     @EqualsAndHashCode.Include // Include in equality checks
-    private Long adminID;
+    private int adminID;
 
     @Column(nullable = false) // Ensure the name is not null
     @ToString.Include
@@ -30,15 +30,4 @@ public class Admin {
     @Column(nullable = false) // Password must not be null
     private String password;
 
-    /**
-     * Hash the password before persisting.
-     */
-    @PrePersist
-    @PreUpdate
-    private void hashPassword() {
-        if (this.password != null) {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            this.password = passwordEncoder.encode(this.password);
-        }
-    }
 }
