@@ -14,11 +14,9 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
     Optional<Vehicle> findById(Integer vehicleId);
 
     //    Vehicle findByVehicleNumber(String vehicleNumber);
-<<<<<<< Updated upstream
-     boolean vehicleValidation(VehicleDTO vehicleDTO);
-=======
+
 
      boolean validateVehicles(VehicleDTO vehicleDTO);
 
->>>>>>> Stashed changes
+
 }
