@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Header from "./Header"; // Dashboard header
+import Header from "./Header";
 
 const ManageVehiclePage = () => {
     const { vehicleId } = useParams();
@@ -34,7 +34,7 @@ const ManageVehiclePage = () => {
 
     const handleUpdate = async () => {
         try {
-            await axios.put(`http://localhost:8080/api/v1/VehicleForm/updateVehicle/${vehicleId}`, vehicle);
+            await axios.put(`http://localhost:8080/api/v1/vehicles/update/${vehicleId}`, vehicle);
             alert("Vehicle updated successfully!");
             navigate(`/vehicle/${vehicleId}`);
         } catch (error) {
@@ -74,8 +74,8 @@ const ManageVehiclePage = () => {
                             <label className="block text-gray-700 font-medium">License Plate</label>
                             <input
                                 type="text"
-                                name="registrationNumber"
-                                value={vehicle.registrationNumber}
+                                name="licensePlate"
+                                value={vehicle.licensePlate}
                                 onChange={handleChange}
                                 className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
                             />
