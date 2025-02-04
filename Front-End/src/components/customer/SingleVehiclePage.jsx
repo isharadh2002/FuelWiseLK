@@ -101,6 +101,14 @@ const SingleVehiclePage = () => {
                             </Link>
                         )}
 
+                        {/* Manage Vehicle Button */}
+                        <Link
+                            to={`/manage-vehicle/${vehicleId}`}
+                            className="px-5 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 hover:text-white transition duration-300 ease-in-out"
+                        >
+                            Manage Vehicle
+                        </Link>
+
                         {/* Delete Vehicle Button */}
                         <button
                             onClick={handleDelete}
