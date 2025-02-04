@@ -46,7 +46,7 @@ const AddFuelStationForm = () => {
     }
 
     const registrationData = {
-      userName: stationName, // Using stationName as userName like Flutter
+      userName: stationName,
       email,
       password,
       phone,
