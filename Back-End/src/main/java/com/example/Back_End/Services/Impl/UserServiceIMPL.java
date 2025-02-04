@@ -123,6 +123,7 @@ public UserDTO getUser(int userId) throws UserException {
             return new LoginResponse(0,"Email does not exist", false);
         }
     }
+
     @Override
 public String updateUser(int userId, UserDTO userDTO) throws UserException {
     Optional<User> userOptional = userRepository.findById(userId);
