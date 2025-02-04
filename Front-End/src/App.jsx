@@ -30,74 +30,78 @@ import AddFuelStationForm from "./components/admin/AddFuelStation.jsx";
 // import QTY from "./pages/QTY.jsx";
 
 function App() {
-    return (
-      
-          <>
-            <Router>
-              <Global styles={globalStyles} />
+  return (
 
-              <Routes>
-                {/* Admin Routes */}
-                <Route path="/admin-dashboard" element={<AdminDashboard />} />
-                <Route path="/createAdmin" element={<CreateAdmins />} />
-                <Route path="/admin/login" element={<AdminLoginForm />} />
-                <Route path="/manage-vehicles" element={<ManageVehicles />} />
-                <Route path="/add-vehicle" element={<AddVehicleForm />} />
-                <Route path="/update-vehicle" element={<UpdateVehicleForm />} />
+    <>
+      <Router>
+        <Global styles={globalStyles} />
 
-                <Route
-                  path="/manage-fuel-stations" element={<ManageFuelStations />}
-                />
-                  <Route
-                  path="/add-fuel-station" element={<AddFuelStationForm />}
-                />
-                  <Route
-                  path="/update-fuel-station" element={<UpdateFuelStationForm />}
-                />
-                <Route path="/Viewadmins" element={<ViewAdmins />} />
-                {/* <Route path={"/qa"} element={<QTY/>}/> */}
+        <Routes>
+          {/* Admin Routes */}
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/createAdmin" element={<CreateAdmins />} />
+          <Route path="/admin/login" element={<AdminLoginForm />} />
+          <Route path="/manage-vehicles" element={<ManageVehicles />} />
+          <Route path="/add-vehicle" element={<AddVehicleForm />} />
+          <Route path="/update-vehicle" element={<UpdateVehicleForm />} />
 
-                {/* Customer Routes */}
-                <Route path="/dashboard" element={<CustomerDashboard />} />
-                <Route path="/VehicleRegister" element={<VehicleForm />} />
-                <Route
-                  path="/vehicle/:vehicleId"
-                  element={<SingleVehiclePage />}
-                />{" "}
-                {/* QR Code Routes */}
-                <Route
-                  path="/manage-vehicle/:vehicleId"
-                  element={<ManageVehiclePage />}
-                />{" "}
-                {/* QR Code Routes */}
-                <Route
-                  path="/vehicle/:vehicleId/qr"
-                  element={<QRCodePage />}
-                />{" "}
 
-                {/* Single Vehicle Details */}
-                <Route path="/home" element={<Home />} />
-                <Route path="/register" element={<RegistrationForm />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<ContactUs />} />
-                <Route path="/" element={<VehicleRegistrationPage />} />
-                <Route path="/footer" element={<Footer />} />
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route
-                  path="/FuelStation"
-                  element={<FuelStationRegistrationPage />}
-                />
-                
-                {/* QR Code Page for Specific Vehicle */}
-                {/* Catch-All Route for 404 */}
-                <Route path="*" element={<PageNotFound />} />
-              </Routes>
-            </Router>
-          </>
-          
+          <Route
+            path="/manage-fuel-stations" element={<ManageFuelStations />}
+          />
+          <Route
+            path="/add-fuel-station" element={<AddFuelStationForm />}
+          />
+          <Route
+            path="/update-fuel-station" element={<UpdateFuelStationForm />}
+          />
+          <Route path="/Viewadmins" element={<ViewAdmins />} />
+          {/* <Route path={"/qa"} element={<QTY/>}/> */}
 
-    );
+
+          {/* Customer Routes */}
+          <Route path="/dashboard" element={<CustomerDashboard />} />
+          <Route path="/VehicleRegister" element={<VehicleForm />} />
+          <Route
+            path="/vehicle/:vehicleId"
+            element={<SingleVehiclePage />}
+          />{" "}
+
+
+          {/* QR Code Routes */}
+          <Route
+            path="/manage-vehicle/:vehicleId"
+            element={<ManageVehiclePage />}
+          />{" "}
+          {/* QR Code Routes */}
+          <Route
+            path="/vehicle/:vehicleId/qr"
+            element={<QRCodePage />}
+          />{" "}
+
+
+          <Route path="/home" element={<Home />} />
+          <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/" element={<VehicleRegistrationPage />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route
+            path="/FuelStation"
+            element={<FuelStationRegistrationPage />}
+          />
+
+
+          {/* Catch-All Route for 404 */}
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </Router>
+    </>
+
+
+  );
 }
 
 export default App;
