@@ -1,7 +1,7 @@
 import React from "react";
 import FuelImage from '/src/assets/Fuel_About.png';
 import Header from "../components/common/Header.jsx";
-import Footer from "../components/common/Footer_2.jsx";
+import Footer from "../components/common/Footer.jsx";
 
 const About = () => {
     return (

@@ -1,4 +1,4 @@
-/* General Footer Styles */
+/* General Footer_Old Styles */
 .footer {
     background: linear-gradient(135deg, #22c55e, #16a34a, #166534);  /* green-500, green-600, green-800 */
     color: #ffffff;
@@ -116,7 +116,7 @@
     margin: 0px;
 }
 
-/* Footer Bottom */
+/* Footer_Old Bottom */
 .footer-bottom {
     margin-top: 20px;
     text-align: center;

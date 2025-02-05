@@ -29,13 +29,4 @@ public interface VehicleService {
 
     void updateFuelQuota(int id, double fuelQuota) throws Exception;
 
-
-
-
-
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
 }
