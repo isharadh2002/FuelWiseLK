@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Car, Edit, Fuel } from "lucide-react";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
+import axios from "axios";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+  Alert,
+} from "@mui/material";
 
-const UpdateVehicleForm = ({ vehicle, onUpdate }) => {
-  const [licensePlate, setLicensePlate] = useState(vehicle?.licensePlate || "");
-  const [vehicleModel, setVehicleModel] = useState(vehicle?.vehicleModel || "");
-  const [vehicleFuelQuota, setVehicleFuelQuota] = useState(vehicle?.vehicleFuelQuota || "");
-  const [ownerId, setOwnerId] = useState(vehicle?.ownerId || "");
+const UpdateVehicleForm = ({ vehicleId, onUpdate }) => {
+  const [licensePlate, setLicensePlate] = useState("");
+  const [vehicleModel, setVehicleModel] = useState("");
+  const [vehicleFuelQuota, setVehicleFuelQuota] = useState("");
+  const [ownerId, setOwnerId] = useState("");
   const [errors, setErrors] = useState({});
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
@@ -18,10 +26,32 @@ const UpdateVehicleForm = ({ vehicle, onUpdate }) => {
     const errors = {};
     if (!licensePlate) errors.licensePlate = "License Plate is required";
     if (!vehicleModel) errors.vehicleModel = "Vehicle Model is required";
-    if (!vehicleFuelQuota || isNaN(vehicleFuelQuota)) errors.vehicleFuelQuota = "Fuel Quota is required and must be a valid number";
+    if (!vehicleFuelQuota || isNaN(vehicleFuelQuota))
+      errors.vehicleFuelQuota =
+        "Fuel Quota is required and must be a valid number";
     if (!ownerId) errors.ownerId = "Owner ID is required";
     return errors;
   };
+
+  useEffect(() => {
+    // Fetch vehicle data based on vehicleId for updating
+    const fetchVehicleData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/v1/vehicles/${vehicleId}`
+        );
+        const data = await response.json();
+        setLicensePlate(data.licensePlate);
+        setVehicleModel(data.vehicleModel);
+        setVehicleFuelQuota(data.vehicleFuelQuota);
+        setOwnerId(data.ownerId);
+      } catch (error) {
+        console.error("Error fetching vehicle data:", error);
+      }
+    };
+
+    fetchVehicleData();
+  }, [vehicleId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,24 +62,34 @@ const UpdateVehicleForm = ({ vehicle, onUpdate }) => {
     }
 
     try {
-      // Simulated API call to update vehicle
-      console.log("Vehicle updated:", { licensePlate, vehicleModel, vehicleFuelQuota, ownerId });
+      // API call to update vehicle
+      const response = await axios.put(
+        `http://localhost:8080/api/v1/vehicles/update/${vehicleId}`,
+        {
+          licensePlate,
+          vehicleModel,
+          vehicleFuelQuota,
+          ownerId,
+        }
+      );
 
-      // Simulate a successful update
-      setDialogTitle("Success");
-      setDialogMessage("Vehicle updated successfully.");
-      setDialogType("success");
-      setDialogOpen(true);
+      if (response.status === 200) {
+        console.log("Vehicle updated:", response.data);
 
-      // Reset form after successful update
-      setLicensePlate("");
-      setVehicleModel("");
-      setVehicleFuelQuota("");
-      setOwnerId("");
-      
-      // Trigger the callback function to update the vehicle in the parent component (if needed)
-      onUpdate({ licensePlate, vehicleModel, vehicleFuelQuota, ownerId });
+        // Simulate a successful update
+        setDialogTitle("Success");
+        setDialogMessage("Vehicle updated successfully.");
+        setDialogType("success");
+        setDialogOpen(true);
 
+        // Reset form after successful update
+        setLicensePlate("");
+        setVehicleModel("");
+        setVehicleFuelQuota("");
+        setOwnerId("");
+      } else {
+        throw new Error("Failed to update vehicle");
+      }
     } catch (error) {
       setDialogTitle("Error");
       setDialogMessage("An error occurred while updating the vehicle.");
@@ -64,10 +104,12 @@ const UpdateVehicleForm = ({ vehicle, onUpdate }) => {
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-green-100 via-green-200 to-green-300">
-      <div className="overflow-hidden bg-white bg-opacity-90 shadow-lg w-96 rounded-2xl">
+      <div className="overflow-hidden bg-white shadow-lg bg-opacity-90 w-96 rounded-2xl">
         <div className="p-6 bg-green-500">
           <h2 className="text-2xl font-bold text-white">Update Vehicle</h2>
-          <p className="mt-1 text-green-100">Enter updated details to modify the vehicle</p>
+          <p className="mt-1 text-green-100">
+            Enter updated details to modify the vehicle
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
@@ -77,13 +119,15 @@ const UpdateVehicleForm = ({ vehicle, onUpdate }) => {
               <Car className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
-                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
                 value={licensePlate}
                 onChange={(e) => setLicensePlate(e.target.value)}
                 placeholder="Enter license plate"
               />
             </div>
-            {errors.licensePlate && <p className="text-sm text-red-500">{errors.licensePlate}</p>}
+            {errors.licensePlate && (
+              <p className="text-sm text-red-500">{errors.licensePlate}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -92,13 +136,15 @@ const UpdateVehicleForm = ({ vehicle, onUpdate }) => {
               <Edit className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
-                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
                 value={vehicleModel}
                 onChange={(e) => setVehicleModel(e.target.value)}
                 placeholder="Enter vehicle model"
               />
             </div>
-            {errors.vehicleModel && <p className="text-sm text-red-500">{errors.vehicleModel}</p>}
+            {errors.vehicleModel && (
+              <p className="text-sm text-red-500">{errors.vehicleModel}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -107,13 +153,15 @@ const UpdateVehicleForm = ({ vehicle, onUpdate }) => {
               <Fuel className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
-                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
                 value={vehicleFuelQuota}
                 onChange={(e) => setVehicleFuelQuota(e.target.value)}
                 placeholder="Enter fuel quota"
               />
             </div>
-            {errors.vehicleFuelQuota && <p className="text-sm text-red-500">{errors.vehicleFuelQuota}</p>}
+            {errors.vehicleFuelQuota && (
+              <p className="text-sm text-red-500">{errors.vehicleFuelQuota}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -121,18 +169,20 @@ const UpdateVehicleForm = ({ vehicle, onUpdate }) => {
             <div className="relative">
               <input
                 type="text"
-                className="w-full py-2 pl-3 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+                className="w-full py-2 pl-3 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
                 value={ownerId}
                 onChange={(e) => setOwnerId(e.target.value)}
                 placeholder="Enter owner ID"
               />
             </div>
-            {errors.ownerId && <p className="text-sm text-red-500">{errors.ownerId}</p>}
+            {errors.ownerId && (
+              <p className="text-sm text-red-500">{errors.ownerId}</p>
+            )}
           </div>
 
           <button
             type="submit"
-            className="w-full py-2 mt-6 text-white transition-all rounded-lg bg-green-500 hover:bg-green-600"
+            className="w-full py-2 mt-6 text-white transition-all bg-green-500 rounded-lg hover:bg-green-600"
           >
             Update Vehicle
           </button>
