@@ -1,7 +1,7 @@
 import React from "react";
 import {Globe, Lock, BarChart3} from "lucide-react";
 import Header from "../components/common/Header.jsx";
-import Footer from "../components/common/Footer_2.jsx";
+import Footer from "../components/common/Footer.jsx";
 import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css"; // Import Swiper styles
 import "swiper/css/pagination";

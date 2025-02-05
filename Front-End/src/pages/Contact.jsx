@@ -1,6 +1,6 @@
 import {Mail, MapPin, Phone, Clock} from "lucide-react";
 import Header from "../components/common/Header.jsx";
-import Footer from "../components/common/Footer_2.jsx";
+import Footer from "../components/common/Footer.jsx";
 
 const ContactUs = () => {
     return (
