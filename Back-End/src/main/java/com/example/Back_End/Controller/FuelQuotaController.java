@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/FuelQuota")
+@CrossOrigin
 public class FuelQuotaController {
 
     @Autowired
