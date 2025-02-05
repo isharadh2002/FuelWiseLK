@@ -26,7 +26,7 @@ import QRCodePage from "./components/customer/QrCodePage.jsx";
 
 // Admin Dashboard
 import AdminDashboard from "./components/admin/AdminDashboard";
-import AdminLoginForm from "./pages/AdminLoginPage.jsx";
+import AdminLoginForm from "./components/admin/AdminLoginPage.jsx";
 import CreateAdmins from "./components/admin/CreateAdmins";
 import ViewAdmins from "./components/admin/ViewAdmins";
 import ManageFuelStations from "./components/admin/ManageFuelStations.jsx";
@@ -64,7 +64,7 @@ function App() {
                     <Route path="/vehicle/:vehicleId/qr" element={<QRCodePage />} />
 
                     {/* Admin Routes */}
-                    <Route path="/admin/login" element={<AdminLoginForm />} />
+                    <Route path="/admin-login" element={<AdminLoginForm />} />
                     <Route path="/admin-dashboard" element={<AdminDashboard />} />
                     <Route path="/createAdmin" element={<CreateAdmins />} />
                     <Route path="/Viewadmins" element={<ViewAdmins />} />

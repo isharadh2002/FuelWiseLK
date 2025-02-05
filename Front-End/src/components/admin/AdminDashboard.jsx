@@ -202,7 +202,7 @@ function AdminDashboard() {
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
-      navigate("/login");
+      navigate("/admin-login");
     }
   }, [navigate]);
 
