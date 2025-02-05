@@ -200,8 +200,8 @@ function AdminDashboard() {
 
   // User Authentication Check
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
+    const adminId = localStorage.getItem("adminId");
+    if (!adminId) {
       navigate("/admin-login");
     }
   }, [navigate]);

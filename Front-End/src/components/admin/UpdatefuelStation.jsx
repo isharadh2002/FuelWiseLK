@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
 
 const UpdateFuelStationForm = ({ stationId }) => {
@@ -51,20 +52,34 @@ const UpdateFuelStationForm = ({ stationId }) => {
     }
 
     try {
-      // Simulate updating the fuel station
-      console.log("Fuel Station updated:", { stationName, stationLocation, stationContact, userId });
+      // API call to update fuel station
+      const response = await axios.put(
+        `http://localhost:8080/api/v1/fuelstations/update/${stationId}`,
+        {
+          stationName,
+          stationLocation,
+          stationContact,
+          userId,
+        }
+      );
 
-      // Simulate a successful submission
-      setDialogTitle("Success");
-      setDialogMessage("Fuel Station updated successfully.");
-      setDialogType("success");
-      setDialogOpen(true);
+      if (response.status === 200) {
+        console.log("Fuel Station updated:", response.data);
 
-      // Reset form after successful submission
-      setStationName("");
-      setStationLocation("");
-      setStationContact("");
-      setUserId("");
+        // Simulate a successful submission
+        setDialogTitle("Success");
+        setDialogMessage("Fuel Station updated successfully.");
+        setDialogType("success");
+        setDialogOpen(true);
+
+        // Reset form after successful submission
+        setStationName("");
+        setStationLocation("");
+        setStationContact("");
+        setUserId("");
+      } else {
+        throw new Error("Failed to update fuel station");
+      }
     } catch (error) {
       setDialogTitle("Error");
       setDialogMessage("An error occurred while updating the fuel station.");
@@ -79,7 +94,7 @@ const UpdateFuelStationForm = ({ stationId }) => {
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-green-100 via-green-200 to-green-300">
-      <div className="overflow-hidden bg-white bg-opacity-90 shadow-lg w-96 rounded-2xl">
+      <div className="overflow-hidden bg-white shadow-lg bg-opacity-90 w-96 rounded-2xl">
         <div className="p-6 bg-gradient-to-r from-green-500 to-green-600">
           <h2 className="text-2xl font-bold text-white">Update Fuel Station</h2>
           <p className="mt-1 text-green-100">Update fuel station details</p>
@@ -90,7 +105,7 @@ const UpdateFuelStationForm = ({ stationId }) => {
             <label className="block text-gray-700">Station Name</label>
             <input
               type="text"
-              className="w-full py-2 pl-4 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+              className="w-full py-2 pl-4 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
               value={stationName}
               onChange={(e) => setStationName(e.target.value)}
               placeholder="Enter station name"
@@ -102,7 +117,7 @@ const UpdateFuelStationForm = ({ stationId }) => {
             <label className="block text-gray-700">Station Location</label>
             <input
               type="text"
-              className="w-full py-2 pl-4 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+              className="w-full py-2 pl-4 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
               value={stationLocation}
               onChange={(e) => setStationLocation(e.target.value)}
               placeholder="Enter station location"
@@ -114,7 +129,7 @@ const UpdateFuelStationForm = ({ stationId }) => {
             <label className="block text-gray-700">Station Contact</label>
             <input
               type="text"
-              className="w-full py-2 pl-4 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+              className="w-full py-2 pl-4 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
               value={stationContact}
               onChange={(e) => setStationContact(e.target.value)}
               placeholder="Enter station contact"
@@ -126,7 +141,7 @@ const UpdateFuelStationForm = ({ stationId }) => {
             <label className="block text-gray-700">User ID</label>
             <input
               type="text"
-              className="w-full py-2 pl-4 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+              className="w-full py-2 pl-4 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
               placeholder="Enter user ID"
