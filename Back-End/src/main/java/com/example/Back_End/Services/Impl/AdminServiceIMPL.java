@@ -1,9 +1,12 @@
 package com.example.Back_End.Services.Impl;
 
 import com.example.Back_End.DTO.AdminDTO;
+import com.example.Back_End.DTO.LoginDTO;
 import com.example.Back_End.Entity.Admin;
+import com.example.Back_End.Entity.User;
 import com.example.Back_End.Exceptions.AdminException;
 import com.example.Back_End.Repository.AdminRepository;
+import com.example.Back_End.Response.LoginResponse;
 import com.example.Back_End.Services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,8 +40,8 @@ public class AdminServiceIMPL implements AdminService {
 
     // Get admin by ID
     @Override
-    public Optional<AdminDTO> getAdminById(Long id) {
-        Optional<Admin> admin = adminRepository.findById(id);
+    public Optional<AdminDTO> getAdminById(int AdminId) {
+        Optional<Admin> admin = adminRepository.findById(AdminId);
         return admin.map(a -> {
             AdminDTO adminDTO = new AdminDTO();
             adminDTO.setAdminID(a.getAdminID());
@@ -48,9 +51,38 @@ public class AdminServiceIMPL implements AdminService {
         });
     }
 
+    //login an admin
+  @Override
+   public LoginResponse loginAdmin(LoginDTO loginDTO) {
+
+       Optional<Admin> adminOptional = adminRepository.findByEmail(loginDTO.getEmail());
+
+       if (adminOptional.isPresent()) {
+           Admin admin = adminOptional.get();
+           int adminID = admin.getAdminID();
+           String password = loginDTO.getPassword();
+           String encodedPassword = admin.getPassword();
+           boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+
+           if (isPwdRight) {
+               Optional<Admin> newAdmin = adminRepository.findOneByEmailAndPassword(
+                       loginDTO.getEmail(),encodedPassword);
+               if (newAdmin.isPresent()) {
+                   return new LoginResponse(adminID,"Login Success", true);
+               } else {
+                   return new LoginResponse(adminID,"Login Failed", false);
+               }
+           } else {
+               return new LoginResponse(adminID,"Password does not match", false);
+           }
+       } else {
+           return new LoginResponse(0,"Email does not exist", false);
+       }
+   }
+
     // Create a new admin
     @Override
-    public AdminDTO createAdmin(AdminDTO adminDTO) {
+    public String createAdmin(AdminDTO adminDTO) {
         Optional<Admin> existingAdmin = adminRepository.findByEmail(adminDTO.getEmail());
         if (existingAdmin.isPresent()) {
             throw new AdminException("An admin with this email already exists.");
@@ -67,12 +99,12 @@ public class AdminServiceIMPL implements AdminService {
         savedAdminDTO.setAdminID(savedAdmin.getAdminID());
         savedAdminDTO.setAdminName(savedAdmin.getAdminName());
         savedAdminDTO.setEmail(savedAdmin.getEmail());
-        return savedAdminDTO;
+        return "Admin Created Successfully";
     }
 
     // Update an existing admin
     @Override
-    public Optional<AdminDTO> updateAdmin(Long id, AdminDTO adminDTO) {
+    public Optional<AdminDTO> updateAdmin(int id, AdminDTO adminDTO) {
         Optional<Admin> existingAdminOptional = adminRepository.findById(id);
         if (existingAdminOptional.isPresent()) {
             Admin existingAdmin = existingAdminOptional.get();
@@ -97,7 +129,7 @@ public class AdminServiceIMPL implements AdminService {
 
     // Delete an admin
     @Override
-    public boolean deleteAdmin(Long id) {
+    public boolean deleteAdmin(int id) {
         if (adminRepository.existsById(id)) {
             adminRepository.deleteById(id);
             return true;

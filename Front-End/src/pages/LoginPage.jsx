@@ -108,7 +108,10 @@ const LoginForm = () => {
         <form onSubmit={login}>
           {/* Email Input */}
           <div className="mb-6">
-            <label htmlFor="email" className="block mb-2 text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-semibold text-gray-700"
+            >
               Username
             </label>
             <input
@@ -120,12 +123,17 @@ const LoginForm = () => {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
-            {emailError && <p className="mt-2 text-sm text-red-600">{emailError}</p>}
+            {emailError && (
+              <p className="mt-2 text-sm text-red-600">{emailError}</p>
+            )}
           </div>
 
           {/* Password Input */}
           <div className="mb-6">
-            <label htmlFor="password" className="block mb-2 text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="password"
+              className="block mb-2 text-sm font-semibold text-gray-700"
+            >
               Password
             </label>
             <input
@@ -137,7 +145,9 @@ const LoginForm = () => {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
-            {passwordError && <p className="mt-2 text-sm text-red-600">{passwordError}</p>}
+            {passwordError && (
+              <p className="mt-2 text-sm text-red-600">{passwordError}</p>
+            )}
           </div>
 
           {/* Login Button */}
@@ -147,6 +157,17 @@ const LoginForm = () => {
           >
             Login
           </button>
+
+          <div className="mt-4 text-sm text-center text-gray-600">
+            {/* Register Button */}
+            <button
+              type="button"
+              onClick={() => navigate("/register")}
+              className="w-full px-5 py-3 text-lg font-semibold text-white border rounded-lg bg-gradient-to-r from-green-400 to-emerald-600 "
+            >
+              Register
+            </button>
+          </div>
         </form>
       </div>
 

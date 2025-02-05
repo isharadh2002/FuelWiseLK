@@ -1,107 +1,90 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import VehicleRegistrationPage from "./pages/VehicleRegistrationPage.jsx";
+import { Global } from "@emotion/react";
+import globalStyles from "./styles/global";
+
+// Common Components
 import Footer from "./components/common/Footer";
-import { Global } from '@emotion/react';
-import globalStyles from './styles/global';
-import LoginForm from './pages/LoginPage';
-import AdminLoginForm from './pages/AdminLoginPage';
+
+// Public Pages
+import Home from "./pages/Home.jsx";
+import LoginForm from "./pages/LoginPage";
 import RegistrationForm from "./pages/RegisterPage";
-import PageNotFound from "./pages/PageNotFound";
-import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
 import Terms from "./pages/Terms";
 import About from "./pages/About";
 import ContactUs from "./pages/Contact";
-import Home from "./pages/Home.jsx";
+import PageNotFound from "./pages/PageNotFound";
+
+// Vehicle Registration
+import VehicleRegistrationPage from "./pages/VehicleRegistrationPage.jsx";
 import VehicleForm from "./pages/VehicleForm.jsx";
-import AdminDashboard from "./components/admin/AdminDashboard";
-import CreateAdmins from "./components/admin/CreateAdmins";
-import ManageFuelStations from "./components/admin/ManageFuelStations.jsx";
-import ManageVehicles from "./components/admin/ManageVehicles.jsx";
+
+// Customer Dashboard
 import CustomerDashboard from "./components/customer/CustomerDashboard";
-import ViewAdmins from "./components/admin/ViewAdmins";
 import SingleVehiclePage from "./components/customer/SingleVehiclePage";
 import ManageVehiclePage from "./components/customer/ManageVehiclePage.jsx";
 import QRCodePage from "./components/customer/QrCodePage.jsx";
+
+// Admin Dashboard
+import AdminDashboard from "./components/admin/AdminDashboard";
+import AdminLoginForm from "./components/admin/AdminLoginPage.jsx";
+import CreateAdmins from "./components/admin/CreateAdmins";
+import ViewAdmins from "./components/admin/ViewAdmins";
+import ManageFuelStations from "./components/admin/ManageFuelStations.jsx";
+import ManageVehicles from "./components/admin/ManageVehicles.jsx";
 import AddVehicleForm from "./components/admin/AddVehicle.jsx";
 import UpdateVehicleForm from "./components/admin/UpdateVehicle.jsx";
-import UpdateFuelStationForm from "./components/admin/UpdatefuelStation.jsx";
 import AddFuelStationForm from "./components/admin/AddFuelStation.jsx";
+import UpdateFuelStationForm from "./components/admin/UpdatefuelStation.jsx";
 
-// import QTY from "./pages/QTY.jsx";
+// Fuel Station Dashboard
+import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
+import FuelStationDashBoard from "./components/fuelStation/FuelStationDashBoard.jsx";
 
 function App() {
-  return (
+    return (
+        <>
+            <Router>
+                <Global styles={globalStyles} />
+                <Routes>
+                    {/* Public Routes */}
+                    <Route path="/" element={<VehicleRegistrationPage />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/register" element={<RegistrationForm />} />
+                    <Route path="/terms" element={<Terms />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<ContactUs />} />
+                    <Route path="/footer" element={<Footer />} />
 
-    <>
-      <Router>
-        <Global styles={globalStyles} />
+                    {/* Customer Routes */}
+                    <Route path="/dashboard" element={<CustomerDashboard />} />
+                    <Route path="/VehicleRegister" element={<VehicleForm />} />
+                    <Route path="/vehicle/:vehicleId" element={<SingleVehiclePage />} />
+                    <Route path="/manage-vehicle/:vehicleId" element={<ManageVehiclePage />} />
+                    <Route path="/vehicle/:vehicleId/qr" element={<QRCodePage />} />
 
-        <Routes>
-          {/* Admin Routes */}
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/createAdmin" element={<CreateAdmins />} />
-          <Route path="/admin/login" element={<AdminLoginForm />} />
-          <Route path="/manage-vehicles" element={<ManageVehicles />} />
-          <Route path="/add-vehicle" element={<AddVehicleForm />} />
-          <Route path="/update-vehicle" element={<UpdateVehicleForm />} />
+                    {/* Admin Routes */}
+                    <Route path="/admin-login" element={<AdminLoginForm />} />
+                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                    <Route path="/createAdmin" element={<CreateAdmins />} />
+                    <Route path="/Viewadmins" element={<ViewAdmins />} />
+                    <Route path="/manage-vehicles" element={<ManageVehicles />} />
+                    <Route path="/add-vehicle" element={<AddVehicleForm />} />
+                    <Route path="/update-vehicle" element={<UpdateVehicleForm />} />
+                    <Route path="/manage-fuel-stations" element={<ManageFuelStations />} />
+                    <Route path="/add-fuel-station" element={<AddFuelStationForm />} />
+                    <Route path="/update-fuel-station" element={<UpdateFuelStationForm />} />
 
+                    {/* Fuel Station Routes */}
+                    <Route path="/FuelStation" element={<FuelStationRegistrationPage />} />
+                    <Route path="/fuelStation/login/dashboard" element={<FuelStationDashBoard />} />
 
-          <Route
-            path="/manage-fuel-stations" element={<ManageFuelStations />}
-          />
-          <Route
-            path="/add-fuel-station" element={<AddFuelStationForm />}
-          />
-          <Route
-            path="/update-fuel-station" element={<UpdateFuelStationForm />}
-          />
-          <Route path="/Viewadmins" element={<ViewAdmins />} />
-          {/* <Route path={"/qa"} element={<QTY/>}/> */}
-
-
-          {/* Customer Routes */}
-          <Route path="/dashboard" element={<CustomerDashboard />} />
-          <Route path="/VehicleRegister" element={<VehicleForm />} />
-          <Route
-            path="/vehicle/:vehicleId"
-            element={<SingleVehiclePage />}
-          />{" "}
-
-
-          {/* QR Code Routes */}
-          <Route
-            path="/manage-vehicle/:vehicleId"
-            element={<ManageVehiclePage />}
-          />{" "}
-          {/* QR Code Routes */}
-          <Route
-            path="/vehicle/:vehicleId/qr"
-            element={<QRCodePage />}
-          />{" "}
-
-
-          <Route path="/home" element={<Home />} />
-          <Route path="/register" element={<RegistrationForm />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/" element={<VehicleRegistrationPage />} />
-          <Route path="/footer" element={<Footer />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route
-            path="/FuelStation"
-            element={<FuelStationRegistrationPage />}
-          />
-
-
-          {/* Catch-All Route for 404 */}
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </Router>
-    </>
-
-
-  );
+                    {/* 404 Page */}
+                    <Route path="*" element={<PageNotFound />} />
+                </Routes>
+            </Router>
+        </>
+    );
 }
 
 export default App;

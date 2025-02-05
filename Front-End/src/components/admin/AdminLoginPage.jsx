@@ -51,7 +51,7 @@ const AdminLoginForm = () => {
 
     try {
       await axios
-        .post("http://localhost:8080/api/v1/Admin/login", {
+        .post("http://localhost:8080/api/v1/admins/login", {
           email: email,
           password: password,
         })
@@ -67,6 +67,7 @@ const AdminLoginForm = () => {
               setDialogTitle("Login Success");
               setDialogType("success"); // Success message
               setDialogOpen(true);
+              localStorage.setItem("adminId", res.data.adminId);
               navigate("/admin/dashboard"); // Redirect after success
             } else {
               setDialogMessage("Incorrect email or password.");
@@ -97,7 +98,7 @@ const AdminLoginForm = () => {
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-blue-300 via-indigo-400 to-purple-500">
-      <div className="w-full max-w-lg p-10 bg-white bg-opacity-90 rounded-lg shadow-xl">
+      <div className="w-full max-w-lg p-10 bg-white rounded-lg shadow-xl bg-opacity-90">
         <h2 className="mb-8 text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 drop-shadow-md">
           Admin Login
         </h2>
@@ -137,7 +138,7 @@ const AdminLoginForm = () => {
 
           <button
             type="submit"
-            className="w-full px-4 py-3 text-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-indigo-400"
+            className="w-full px-4 py-3 text-lg font-semibold text-white rounded-lg shadow-md bg-gradient-to-r from-indigo-500 to-purple-500 focus:outline-none focus:ring-4 focus:ring-indigo-400"
           >
             Login
           </button>

@@ -13,45 +13,38 @@ import "material/src/module/event.js";
 function Analysing() {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    const [currentPage,setCurrentPage]=useState(1);
-   
+    const [currentPage, setCurrentPage] = useState(1);
+
     const [error, setError] = useState(null);
-    const itemsPerPage=15;
+    const itemsPerPage = 15;
 
-    const dummyData= [{
-                                                        name:"Ishara Dhanushan",
-                                                        vehicleNum:"CAB-7651",
-                                                        defineQTY:50,
-                                                        remaineQTY:20
-                                                    },
-                                                    {
-                                                        name:"Ishara Dhanushan",
-                                                        vehicleNum:"CAB-7551",
-                                                        defineQTY:50,
-                                                        remaineQTY:30
-
-
-                                                    },
-                                                    {
-                                                        name:"Ishara Dhanushan",
-                                                        vehicleNum:"CAB-7851",
-                                                        defineQTY:50,
-                                                        remaineQTY:40
-                                                    }];
+    const dummyData = [{
+        name: "Ishara Dhanushan",
+        vehicleNum: "CAB-7651",
+        defineQTY: 50,
+        remaineQTY: 20
+    },
+    {
+        name: "Ishara Dhanushan",
+        vehicleNum: "CAB-7551",
+        defineQTY: 50,
+        remaineQTY: 30
 
 
-
-
-
-
-
+    },
+    {
+        name: "Ishara Dhanushan",
+        vehicleNum: "CAB-7851",
+        defineQTY: 50,
+        remaineQTY: 40
+    }];
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get("url");
 
-                    setData(Array.isArray(response.data)?response.data:[]);
+                setData(Array.isArray(response.data) ? response.data : []);
 
             } catch (error) {
                 console.log("Error Occurred");
@@ -62,13 +55,13 @@ function Analysing() {
         };
         fetchData();
     }, []);
-    
-    const handlePageination=(event,value)=>{
+
+    const handlePageination = (event, value) => {
         setCurrentPage(value);
     };
-    const paginationedData=data.length>0
-                                ? data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage)
-                                : dummyData.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage);
+    const paginationedData = data.length > 0
+        ? data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+        : dummyData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     if (loading) {
         return <p>Loading...</p>;
@@ -82,9 +75,6 @@ function Analysing() {
             </Box>
         );
     }
-
-
-
 
     const QTY = ({ name, vehicleNum, defineQTY, remaineQTY }) => (
         <Box
@@ -139,44 +129,44 @@ function Analysing() {
             </Box>
         </Box>
     );
-    QTY.propTypes={
-        name:PropTypes.string,
-        vehicleNum:PropTypes.string,
-        defineQTY:PropTypes.number,
-        remaineQTY:PropTypes.number
+    QTY.propTypes = {
+        name: PropTypes.string,
+        vehicleNum: PropTypes.string,
+        defineQTY: PropTypes.number,
+        remaineQTY: PropTypes.number
     };
-    return(
-<Box sx={{padding:3}}>
-    {error && (
-        <p style={{color: "red", marginLeft: "10px"}}>
-            Error: {error}. Displaying dummy data instead.
-        </p>
-    )
-    }
-    <Typography>Analysing the Quota</Typography>
-    {paginationedData.map((user,index)=>(
-        
-        
-        <QTY
-            key={index}
-            name={user.name}
-            vehicleNum={user.vehicleNum}
-            defineQTY={user.defineQTY}
-            remaineQTY={user.remaineQTY}
-        
-        
-        />
-    ))
-    }
-    <Pagination
-        count={Math.ceil((data.length > 0 ?data.length: dummyData.length)/itemsPerPage)}
-        page={currentPage}
-        onChange={handlePageination}
-        sx={{display:"flex",justifyContent:"center",marginTop:3}}
+    return (
+        <Box sx={{ padding: 3 }}>
+            {error && (
+                <p style={{ color: "red", marginLeft: "10px" }}>
+                    Error: {error}. Displaying dummy data instead.
+                </p>
+            )
+            }
+            <Typography>Analysing the Quota</Typography>
+            {paginationedData.map((user, index) => (
 
-       />
 
-</Box>
+                <QTY
+                    key={index}
+                    name={user.name}
+                    vehicleNum={user.vehicleNum}
+                    defineQTY={user.defineQTY}
+                    remaineQTY={user.remaineQTY}
+
+
+                />
+            ))
+            }
+            <Pagination
+                count={Math.ceil((data.length > 0 ? data.length : dummyData.length) / itemsPerPage)}
+                page={currentPage}
+                onChange={handlePageination}
+                sx={{ display: "flex", justifyContent: "center", marginTop: 3 }}
+
+            />
+
+        </Box>
 
     );
 
