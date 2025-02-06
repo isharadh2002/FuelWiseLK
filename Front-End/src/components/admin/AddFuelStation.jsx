@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
 
 const AddFuelStationForm = () => {
@@ -12,6 +13,8 @@ const AddFuelStationForm = () => {
   const [dialogMessage, setDialogMessage] = useState("");
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogType, setDialogType] = useState(""); // success or error
+
+    const navigate = useNavigate();
 
   // Validate form inputs
   const validate = () => {
@@ -57,6 +60,9 @@ const AddFuelStationForm = () => {
         setStationLocation("");
         setStationContact("");
         setUserId("");
+
+        // Redirect to manage fuel stations page
+        navigate("/manage-fuel-stations");
       } else {
         throw new Error("Failed to add fuel station");
       }
