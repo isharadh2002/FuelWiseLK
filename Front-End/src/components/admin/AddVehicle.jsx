@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Car, Edit, Fuel } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
 
 const AddVehicleForm = () => {
@@ -13,6 +14,8 @@ const AddVehicleForm = () => {
   const [dialogMessage, setDialogMessage] = useState("");
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogType, setDialogType] = useState(""); // success or error
+
+  const navigate = useNavigate();
 
   // Validate form inputs
   const validate = () => {
@@ -58,6 +61,9 @@ const AddVehicleForm = () => {
         setVehicleModel("");
         setVehicleFuelQuota("");
         setOwnerId("");
+
+        // Redirect to manage vehicles page
+        navigate("/manage-vehicles");
       } else {
         throw new Error("Failed to add vehicle");
       }

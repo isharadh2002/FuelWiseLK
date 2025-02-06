@@ -1,50 +1,38 @@
-import { useState, useEffect } from "react";
-import { Car, Edit, Fuel } from "lucide-react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Button,
-  Alert,
-} from "@mui/material";
+import { Car } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const UpdateVehicleForm = ({ vehicleId, onUpdate }) => {
-  const [licensePlate, setLicensePlate] = useState("");
-  const [vehicleModel, setVehicleModel] = useState("");
-  const [vehicleFuelQuota, setVehicleFuelQuota] = useState("");
-  const [ownerId, setOwnerId] = useState("");
+const UpdateVehicleForm = () => {
+  
+  const { vehicleId } = useParams(); // Retrieve vehicleId from the URL
+
+  const [vehicleData, setVehicleData] = useState({
+    licensePlate: "",
+    vehicleModel: "",
+    vehicleFuelQuota: "",
+    ownerId: "",
+  });
   const [errors, setErrors] = useState({});
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogMessage, setDialogMessage] = useState("");
   const [dialogTitle, setDialogTitle] = useState("");
-  const [dialogType, setDialogType] = useState(""); // success or error
-
-  // Validate form inputs
-  const validate = () => {
-    const errors = {};
-    if (!licensePlate) errors.licensePlate = "License Plate is required";
-    if (!vehicleModel) errors.vehicleModel = "Vehicle Model is required";
-    if (!vehicleFuelQuota || isNaN(vehicleFuelQuota))
-      errors.vehicleFuelQuota =
-        "Fuel Quota is required and must be a valid number";
-    if (!ownerId) errors.ownerId = "Owner ID is required";
-    return errors;
-  };
+  const [dialogMessage, setDialogMessage] = useState("");
+  const [dialogType, setDialogType] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!vehicleId) {
+      console.error("vehicleId is undefined, cannot fetch vehicle data.");
+      return;
+    }
     // Fetch vehicle data based on vehicleId for updating
     const fetchVehicleData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/v1/vehicles/${vehicleId}`
+        const response = await axios.get(
+          `http://localhost:8080/api/v1/vehicles/get/${vehicleId}`
         );
-        const data = await response.json();
-        setLicensePlate(data.licensePlate);
-        setVehicleModel(data.vehicleModel);
-        setVehicleFuelQuota(data.vehicleFuelQuota);
-        setOwnerId(data.ownerId);
+        setVehicleData(response.data);
       } catch (error) {
         console.error("Error fetching vehicle data:", error);
       }
@@ -53,48 +41,49 @@ const UpdateVehicleForm = ({ vehicleId, onUpdate }) => {
     fetchVehicleData();
   }, [vehicleId]);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setVehicleData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
     try {
-      // API call to update vehicle
-      const response = await axios.put(
+      await axios.put(
         `http://localhost:8080/api/v1/vehicles/update/${vehicleId}`,
+        vehicleData,
         {
-          licensePlate,
-          vehicleModel,
-          vehicleFuelQuota,
-          ownerId,
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
 
-      if (response.status === 200) {
-        console.log("Vehicle updated:", response.data);
-
-        // Simulate a successful update
-        setDialogTitle("Success");
-        setDialogMessage("Vehicle updated successfully.");
-        setDialogType("success");
-        setDialogOpen(true);
-
-        // Reset form after successful update
-        setLicensePlate("");
-        setVehicleModel("");
-        setVehicleFuelQuota("");
-        setOwnerId("");
-      } else {
-        throw new Error("Failed to update vehicle");
-      }
-    } catch (error) {
-      setDialogTitle("Error");
-      setDialogMessage("An error occurred while updating the vehicle.");
-      setDialogType("error");
+      // Simulate a successful update
+      setDialogTitle("Success");
+      setDialogMessage("Vehicle updated successfully.");
+      setDialogType("success");
       setDialogOpen(true);
+
+      // Reset the form
+      setVehicleData({
+        licensePlate: "",
+        vehicleModel: "",
+        vehicleFuelQuota: "",
+        ownerId: "",
+      });
+
+      const timer = setTimeout(() => {
+        navigate("/admin-dashboard/manage-vehicles");
+      }, 2000);
+
+      return () => clearTimeout(timer); // Cleanup timeout if component unmounts
+      
+    } catch (error) {
+      console.error("Error updating vehicle:", error);
     }
   };
 
@@ -119,9 +108,10 @@ const UpdateVehicleForm = ({ vehicleId, onUpdate }) => {
               <Car className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
+                name="licensePlate"
                 className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
-                value={licensePlate}
-                onChange={(e) => setLicensePlate(e.target.value)}
+                value={vehicleData.licensePlate}
+                onChange={handleInputChange}
                 placeholder="Enter license plate"
               />
             </div>
@@ -133,12 +123,13 @@ const UpdateVehicleForm = ({ vehicleId, onUpdate }) => {
           <div className="space-y-2">
             <label className="block text-gray-700">Vehicle Model</label>
             <div className="relative">
-              <Edit className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+              <Car className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
+                name="vehicleModel"
                 className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
-                value={vehicleModel}
-                onChange={(e) => setVehicleModel(e.target.value)}
+                value={vehicleData.vehicleModel}
+                onChange={handleInputChange}
                 placeholder="Enter vehicle model"
               />
             </div>
@@ -150,13 +141,14 @@ const UpdateVehicleForm = ({ vehicleId, onUpdate }) => {
           <div className="space-y-2">
             <label className="block text-gray-700">Vehicle Fuel Quota</label>
             <div className="relative">
-              <Fuel className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+              <Car className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
+                name="vehicleFuelQuota"
                 className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
-                value={vehicleFuelQuota}
-                onChange={(e) => setVehicleFuelQuota(e.target.value)}
-                placeholder="Enter fuel quota"
+                value={vehicleData.vehicleFuelQuota}
+                onChange={handleInputChange}
+                placeholder="Enter vehicle fuel quota"
               />
             </div>
             {errors.vehicleFuelQuota && (
@@ -167,11 +159,13 @@ const UpdateVehicleForm = ({ vehicleId, onUpdate }) => {
           <div className="space-y-2">
             <label className="block text-gray-700">Owner ID</label>
             <div className="relative">
+              <Car className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
-                className="w-full py-2 pl-3 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
-                value={ownerId}
-                onChange={(e) => setOwnerId(e.target.value)}
+                name="ownerId"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
+                value={vehicleData.ownerId}
+                onChange={handleInputChange}
                 placeholder="Enter owner ID"
               />
             </div>
@@ -182,44 +176,31 @@ const UpdateVehicleForm = ({ vehicleId, onUpdate }) => {
 
           <button
             type="submit"
-            className="w-full py-2 mt-6 text-white transition-all bg-green-500 rounded-lg hover:bg-green-600"
+            className="px-4 py-2 text-white bg-green-500 rounded-lg"
           >
             Update Vehicle
           </button>
         </form>
-      </div>
 
-      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-        <DialogTitle
-          style={{
-            textAlign: "center",
-            fontSize: "1.8rem",
-            fontWeight: "bold",
-            color: dialogType === "success" ? "#4caf50" : "#f44336",
-          }}
-        >
-          {dialogTitle}
-        </DialogTitle>
-        <DialogContent>
-          <Alert
-            severity={dialogType}
-            style={{
-              borderRadius: "20px",
-              padding: "20px",
-              fontSize: "1rem",
-              fontWeight: "600",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            {dialogMessage}
-          </Alert>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+        {dialogOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="p-6 bg-white rounded-lg shadow-lg">
+              <h2
+                className={`text-2xl font-bold ${dialogType === "success" ? "text-green-500" : "text-red-500"}`}
+              >
+                {dialogTitle}
+              </h2>
+              <p className="mt-2">{dialogMessage}</p>
+              <button
+                onClick={handleCloseDialog}
+                className="px-4 py-2 mt-4 text-white bg-green-500 rounded-lg"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
