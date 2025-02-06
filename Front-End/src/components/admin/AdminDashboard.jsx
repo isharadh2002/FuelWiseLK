@@ -36,17 +36,17 @@ function AdminDashboard() {
   }, [navigate]);
 
   return (
-    <div className="w-full bg-purple-600 shadow-lg">
+    <div className="w-full bg-green-600 shadow-lg">
       <Header />
       <div className="flex min-h-screen bg-gray-50">
         {/* Sidebar */}
-        <aside className="w-64 p-5 text-white bg-purple-600">
+        <aside className="w-64 p-5 text-white bg-green-600">
           <nav>
             <ul className="space-y-2">
               {NAVIGATION.map((item, index) => (
                 <li
                   key={index}
-                  className={`flex items-center p-2 rounded cursor-pointer ${selectedView === item.view ? "bg-purple-800" : "hover:bg-purple-700"}`}
+                  className={`flex items-center p-2 rounded cursor-pointer ${selectedView === item.view ? "bg-green-800" : "hover:bg-green-700"}`}
                   onClick={() => navigate(`/admin-dashboard/${item.view}`)}
                 >
                   {item.icon}
