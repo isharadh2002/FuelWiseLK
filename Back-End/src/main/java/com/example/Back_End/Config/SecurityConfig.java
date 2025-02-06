@@ -22,6 +22,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/VehicleOwner/save/**").permitAll()
                         .requestMatchers("/api/v1/VehicleOwner/login/**").permitAll()
+                        .requestMatchers("/api/v1/VehicleOwner/getOwnerID/**").permitAll()
 
                         .requestMatchers("/api/v1/FuelStation/**").permitAll()
                         .requestMatchers("/api/v1/FuelStation").permitAll()

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/FuelQuota")
-@CrossOrigin
 public class FuelQuotaController {
 
     @Autowired
@@ -20,17 +19,17 @@ public class FuelQuotaController {
         return fuelQuotaService.getRemainingFuelQuota(vehicleId);
     }
 
-//    // Endpoint to update the remaining fuel quota for a vehicle and create a fuel transaction
-//    @PutMapping("/updateFuelQuota/{vehicleId}")
-//    public VehicleDTO updateFuelQuota(@PathVariable int vehicleId,
-//                                      @RequestParam double fuelUsedOrAdded,
-//                                      @RequestParam String fuelType) throws FuelQuotaException {
-//        return fuelQuotaService.updateFuelQuota(vehicleId, fuelUsedOrAdded, fuelType);
-//    }
+    // Endpoint to update the remaining fuel quota for a vehicle and create a fuel transaction
+    @PutMapping("/updateFuelQuota/")
+    public VehicleDTO updateFuelQuota(@RequestParam int vehicleId,
+                                      @RequestParam double fuelUsedOrAdded,
+                                      @RequestParam String fuelType,
+                                      @RequestParam int stationId) throws FuelQuotaException {
+        return fuelQuotaService.updateFuelQuota(vehicleId, fuelUsedOrAdded, fuelType, stationId);
+    }
 
-    @PutMapping("/updateFuelQuota/{vehicleId}")
-    public VehicleDTO updateFuelQuota(@PathVariable int vehicleId,
-                                      @RequestBody VehicleDTO vehicleDTO) throws FuelQuotaException {
-        return fuelQuotaService.updateFuelQuota(vehicleId, vehicleDTO.getVehicleFuelQuota(), "Petrol");
+    @PutMapping("/resetQuota")
+    public String resetFuelQuotaForAllVehicles() throws FuelQuotaException {
+        return fuelQuotaService.resetFuelQuotaForAllVehicles();
     }
 }

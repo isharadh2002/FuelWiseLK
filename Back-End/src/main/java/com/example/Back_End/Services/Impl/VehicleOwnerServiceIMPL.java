@@ -2,7 +2,9 @@ package com.example.Back_End.Services.Impl;
 
 import com.example.Back_End.DTO.LoginDTO;
 import com.example.Back_End.DTO.VehicleOwnerDTO;
+import com.example.Back_End.Entity.User;
 import com.example.Back_End.Entity.VehicleOwner;
+import com.example.Back_End.Repository.UserRepository;
 import com.example.Back_End.Repository.VehicleOwnerRepository;
 import com.example.Back_End.Response.LoginResponse;
 import com.example.Back_End.Services.VehicleOwnerService;
@@ -18,6 +20,8 @@ public class VehicleOwnerServiceIMPL implements VehicleOwnerService {
     private VehicleOwnerRepository vehicleOwnerRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public String addVehicleOwner(VehicleOwnerDTO vehicleOwnerDTO) {
@@ -72,6 +76,22 @@ public class VehicleOwnerServiceIMPL implements VehicleOwnerService {
             }
         } else {
             return new LoginResponse(0,"Owner does not exist", false);
+        }
+    }
+
+    @Override
+    public int getOwnerID(int userID) {
+        Optional<User> user = userRepository.findById(userID);
+        if(user.isPresent()) {
+            Optional<VehicleOwner> vehicleOwner = vehicleOwnerRepository.findOneByUser(user.get());
+            if(vehicleOwner.isPresent()) {
+                return vehicleOwner.get().getOwnerID();
+            }
+            else{
+                throw new RuntimeException("UserID does not exist in vehicle_owner table");
+            }
+        } else{
+            throw new RuntimeException("User does not exist");
         }
     }
 }

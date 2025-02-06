@@ -183,7 +183,7 @@ const HomePage = () => {
                             <motion.div key={index} className="flex items-start mb-8 bg-white p-6 rounded-lg"
                                         initial={{opacity: 0, y: 50}}
                                         whileInView={{opacity: 1, y: 0}}
-                                        transition={{duration: 0.25, delay: 0.5 + index * 0.25}}
+                                        transition={{duration: 0.25, delay: 0.5}}
                             >
                                 <div
                                     className="w-12 h-12 flex items-center justify-center bg-green-600 text-white rounded-full mr-4">

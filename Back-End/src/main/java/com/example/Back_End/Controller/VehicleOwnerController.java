@@ -31,4 +31,9 @@ public class VehicleOwnerController {
         return ResponseEntity.ok(loginResponse);
     }
 
+    @GetMapping("/getOwnerID/{UserID}")
+    public int getOwnerID(@PathVariable int UserID){
+        return vehicleOwnerService.getOwnerID(UserID);
+    }
+
 }
