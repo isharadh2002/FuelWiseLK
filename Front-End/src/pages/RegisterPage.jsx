@@ -25,16 +25,22 @@ const RegistrationForm = () => {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-      role:
-        name === "isFuelStation"
-          ? checked
-            ? "fuel_station"
-            : "vehicle_owner"
-          : prev.role,
-    }));
+    setFormData((prev) => {
+      const updatedFormData = {
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      };
+
+      // Ensure role updates correctly when "Register as Fuel Station" is checked
+      if (name === "isFuelStation") {
+        updatedFormData.role = checked ? "fuel_station" : "vehicle_owner";
+      }
+
+      // Store role in local storage
+      localStorage.setItem("userRole", updatedFormData.role);
+
+      return updatedFormData;
+    });
 
     console.log("Updated formData:", formData); // Debugging
   };
@@ -56,41 +62,51 @@ const RegistrationForm = () => {
     return null;
   };
 
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState("");
+  const [dialogMessage, setDialogMessage] = useState("");
+
   // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const error = validateForm();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const error = validateForm();
 
-    if (error) {
-      setAlertMessage(error);
-      setAlertType("error");
-      setShowAlert(true);
-      return;
-    }
+  if (error) {
+    setAlertMessage(error);
+    setAlertType("error");
+    setShowAlert(true);
+    return;
+  }
 
-    try {
-      await axios.post("http://localhost:8080/api/v1/User/save", {
-        userName: formData.userName,
-        phone: formData.phone,
-        email: formData.email,
-        password: formData.password,
-        role: formData.role,
-        stationName:
-          formData.role === "fuel_station" ? formData.stationName : "",
-        contact: formData.role === "fuel_station" ? formData.contact : "",
-        location: formData.role === "fuel_station" ? formData.location : "",
-      });
+  try {
+    await axios.post("http://localhost:8080/api/v1/User/save", {
+      userName: formData.userName,
+      phone: formData.phone,
+      email: formData.email,
+      password: formData.password,
+      role: formData.role,
+      stationName: formData.role === "fuel_station" ? formData.stationName : "",
+      contact: formData.role === "fuel_station" ? formData.contact : "",
+      location: formData.role === "fuel_station" ? formData.location : "",
+    });
 
-      setAlertMessage("Registration successful!");
-      setAlertType("success");
-      setShowAlert(true);
-      setTimeout(() => navigate("/login"), 2000);
-    } catch (error) {
-      setAlertMessage("Registration failed. Please try again.");
-      setAlertType("error");
-      setShowAlert(true);
-    }
-  };
+    // Show Dialog Instead of Alert
+    setDialogTitle("Registration Successful!");
+    setDialogMessage(
+      "Your account has been created successfully. Redirecting to login..."
+    );
+    setDialogOpen(true);
+
+    // Redirect after 2 seconds
+    setTimeout(() => navigate("/login"), 2000);
+  } catch (error) {
+    setAlertMessage("Registration failed. Please try again.");
+    setAlertType("error");
+    setShowAlert(true);
+  }
+};
+
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-green-100 via-teal-200 to-green-500">
@@ -249,6 +265,23 @@ const RegistrationForm = () => {
             Register
           </button>
         </form>
+        {/* Dialog Box for Registration Success */}
+        {dialogOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="p-6 bg-white rounded-lg shadow-lg">
+              <h2 className="text-xl font-semibold text-green-600">
+                {dialogTitle}
+              </h2>
+              <p className="mt-2">{dialogMessage}</p>
+              <button
+                onClick={() => setDialogOpen(false)}
+                className="px-4 py-2 mt-4 text-white bg-green-500 rounded hover:bg-green-600"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
