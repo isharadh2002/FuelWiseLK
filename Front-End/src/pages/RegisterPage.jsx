@@ -37,7 +37,7 @@ const RegistrationForm = () => {
       }
 
       // Store role in local storage
-      localStorage.setItem("userRole", updatedFormData.role);
+      // localStorage.setItem("userRole", updatedFormData.role);
 
       return updatedFormData;
     });
