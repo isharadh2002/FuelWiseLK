@@ -20,11 +20,17 @@ public class FuelQuotaController {
         return fuelQuotaService.getRemainingFuelQuota(vehicleId);
     }
 
-    // Endpoint to update the remaining fuel quota for a vehicle and create a fuel transaction
+//    // Endpoint to update the remaining fuel quota for a vehicle and create a fuel transaction
+//    @PutMapping("/updateFuelQuota/{vehicleId}")
+//    public VehicleDTO updateFuelQuota(@PathVariable int vehicleId,
+//                                      @RequestParam double fuelUsedOrAdded,
+//                                      @RequestParam String fuelType) throws FuelQuotaException {
+//        return fuelQuotaService.updateFuelQuota(vehicleId, fuelUsedOrAdded, fuelType);
+//    }
+
     @PutMapping("/updateFuelQuota/{vehicleId}")
     public VehicleDTO updateFuelQuota(@PathVariable int vehicleId,
-                                      @RequestParam double fuelUsedOrAdded,
-                                      @RequestParam String fuelType) throws FuelQuotaException {
-        return fuelQuotaService.updateFuelQuota(vehicleId, fuelUsedOrAdded, fuelType);
+                                      @RequestBody VehicleDTO vehicleDTO) throws FuelQuotaException {
+        return fuelQuotaService.updateFuelQuota(vehicleId, vehicleDTO.getVehicleFuelQuota(), "Petrol");
     }
 }
