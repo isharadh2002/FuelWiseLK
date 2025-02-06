@@ -125,7 +125,7 @@ const handleSubmit = async (e) => {
               name="userName"
               value={formData.userName}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+              className="w-full p-2 text-gray-900 border rounded focus:ring-2 focus:ring-green-400"
             />
           </div>
 
@@ -138,7 +138,7 @@ const handleSubmit = async (e) => {
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+              className="w-full p-2 text-gray-900 border rounded focus:ring-2 focus:ring-green-400"
             />
           </div>
 
@@ -151,7 +151,7 @@ const handleSubmit = async (e) => {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+              className="w-full p-2 text-gray-900 border rounded focus:ring-2 focus:ring-green-400"
             />
           </div>
 
@@ -164,7 +164,7 @@ const handleSubmit = async (e) => {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+              className="w-full p-2 text-gray-900 border rounded focus:ring-2 focus:ring-green-400"
             />
           </div>
 
@@ -177,7 +177,7 @@ const handleSubmit = async (e) => {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+              className="w-full p-2 text-gray-900 border rounded focus:ring-2 focus:ring-green-400"
             />
           </div>
 
@@ -205,7 +205,7 @@ const handleSubmit = async (e) => {
                   name="stationName"
                   value={formData.stationName}
                   onChange={handleInputChange}
-                  className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+                  className="w-full p-2 text-gray-900 border rounded focus:ring-2 focus:ring-green-400"
                 />
               </div>
 
@@ -218,7 +218,7 @@ const handleSubmit = async (e) => {
                   name="contact"
                   value={formData.contact}
                   onChange={handleInputChange}
-                  className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+                  className="w-full p-2 text-gray-900 border rounded focus:ring-2 focus:ring-green-400"
                 />
               </div>
 
@@ -231,7 +231,7 @@ const handleSubmit = async (e) => {
                   name="location"
                   value={formData.location}
                   onChange={handleInputChange}
-                  className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+                  className="w-full p-2 text-gray-900 border rounded focus:ring-2 focus:ring-green-400"
                 />
               </div>
             </div>
