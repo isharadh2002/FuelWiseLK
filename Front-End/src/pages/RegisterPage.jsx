@@ -1,242 +1,255 @@
 import { useState } from "react";
 import axios from "axios";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
-import { useNavigate } from "react-router-dom";  // Import the useNavigate hook
+import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
-    ownerName: "",
-    ownerPhone: "",
+    userName: "",
+    phone: "",
     email: "",
     password: "",
     confirmPassword: "",
+    role: "vehicle_owner",
+    stationName: "",
+    contact: "",
+    location: "",
     termsAccepted: false,
   });
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogMessage, setDialogMessage] = useState("");
-  const [dialogTitle, setDialogTitle] = useState("");
-  const [dialogType, setDialogType] = useState(""); // success or error
-  const navigate = useNavigate();  // Initialize the navigate hook
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
+  const navigate = useNavigate();
+
+  // Handle input change and ensure proper state updates
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
+
+    setFormData((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
-    });
+      role:
+        name === "isFuelStation"
+          ? checked
+            ? "fuel_station"
+            : "vehicle_owner"
+          : prev.role,
+    }));
+
+    console.log("Updated formData:", formData); // Debugging
   };
 
-  const validateFields = () => {
-    let isValid = true;
-
-    if (!formData.ownerName) {
-      setDialogTitle("Validation Error");
-      setDialogMessage("Owner name is required.");
-      setDialogType("error");
-      setDialogOpen(true);
-      isValid = false;
-    } else if (!/^\d+$/.test(formData.ownerPhone)) {
-      setDialogTitle("Validation Error");
-      setDialogMessage("Phone number must contain only digits.");
-      setDialogType("error");
-      setDialogOpen(true);
-      isValid = false;
-    } else if (formData.password !== formData.confirmPassword) {
-      setDialogTitle("Validation Error");
-      setDialogMessage("Passwords do not match.");
-      setDialogType("error");
-      setDialogOpen(true);
-      isValid = false;
-    } else if (!formData.termsAccepted) {
-      setDialogTitle("Validation Error");
-      setDialogMessage("You must accept the terms and conditions.");
-      setDialogType("error");
-      setDialogOpen(true);
-      isValid = false;
+  // Validate form inputs
+  const validateForm = () => {
+    if (!formData.userName) return "Username is required";
+    if (!/^\d+$/.test(formData.phone))
+      return "Phone number must contain only digits";
+    if (!formData.email) return "Email is required";
+    if (formData.password !== formData.confirmPassword)
+      return "Passwords do not match";
+    if (!formData.termsAccepted) return "Please accept terms and conditions";
+    if (formData.role === "fuel_station") {
+      if (!formData.stationName) return "Station name is required";
+      if (!formData.contact) return "Station contact is required";
+      if (!formData.location) return "Station location is required";
     }
-
-    return isValid;
+    return null;
   };
 
-  const handleRegister = async (event) => {
-    event.preventDefault();
-    if (!validateFields()) return;
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const error = validateForm();
+
+    if (error) {
+      setAlertMessage(error);
+      setAlertType("error");
+      setShowAlert(true);
+      return;
+    }
 
     try {
       await axios.post("http://localhost:8080/api/v1/User/save", {
-        userName: formData.ownerName,
-        phone: formData.ownerPhone,
+        userName: formData.userName,
+        phone: formData.phone,
         email: formData.email,
         password: formData.password,
-        role: "vehicle_owner",
-        stationName: "",
-        contact: "",
-        location: "",
+        role: formData.role,
+        stationName:
+          formData.role === "fuel_station" ? formData.stationName : "",
+        contact: formData.role === "fuel_station" ? formData.contact : "",
+        location: formData.role === "fuel_station" ? formData.location : "",
       });
-      setDialogTitle("Registration Successful");
-      setDialogMessage("Your registration is complete.");
-      setDialogType("success");
-      setDialogOpen(true);
 
-      // Redirect to login page after successful registration
-      setTimeout(() => {
-        navigate("/login");  // Adjust the path if needed
-      }, 2000);  // Wait 2 seconds before redirecting
+      setAlertMessage("Registration successful!");
+      setAlertType("success");
+      setShowAlert(true);
+      setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
-      setDialogTitle("Registration Failed");
-      setDialogMessage("An error occurred. Please try again.");
-      setDialogType("error");
-      setDialogOpen(true);
+      setAlertMessage("Registration failed. Please try again.");
+      setAlertType("error");
+      setShowAlert(true);
     }
   };
 
-  const handleCloseDialog = () => {
-    setDialogOpen(false);
-  };
-
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-br from-green-100 via-teal-200 to-green-500">
-      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-xl sm:w-[26rem]">
-        <h2 className="mb-6 text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-500">
+    <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-green-100 via-teal-200 to-green-500">
+      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+        <h2 className="mb-6 text-2xl font-bold text-center text-green-600">
           User Registration
         </h2>
 
-        <form onSubmit={handleRegister}>
-          <div className="mb-6">
-            <label htmlFor="ownerName" className="block mb-2 text-sm font-semibold text-gray-700">
-              Owner Name
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Username
             </label>
             <input
               type="text"
-              id="ownerName"
-              name="ownerName"
-              value={formData.ownerName}
+              name="userName"
+              value={formData.userName}
               onChange={handleInputChange}
-              placeholder="Enter owner name"
-              className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-green-400 focus:outline-none hover:shadow-md"
-              required
+              className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
             />
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="ownerPhone" className="block mb-2 text-sm font-semibold text-gray-700">
-              Owner Phone
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Phone
             </label>
             <input
               type="text"
-              id="ownerPhone"
-              name="ownerPhone"
-              value={formData.ownerPhone}
+              name="phone"
+              value={formData.phone}
               onChange={handleInputChange}
-              placeholder="Enter owner phone"
-              className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-green-400 focus:outline-none hover:shadow-md"
-              required
+              className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
             />
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="email" className="block mb-2 text-sm font-semibold text-gray-700">
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
               Email
             </label>
             <input
               type="email"
-              id="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              placeholder="Enter your email"
-              className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-green-400 focus:outline-none hover:shadow-md"
-              required
+              className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
             />
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="password" className="block mb-2 text-sm font-semibold text-gray-700">
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
               Password
             </label>
             <input
               type="password"
-              id="password"
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              placeholder="Enter your password"
-              className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-green-400 focus:outline-none hover:shadow-md"
-              required
+              className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
             />
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block mb-2 text-sm font-semibold text-gray-700">
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
               Confirm Password
             </label>
             <input
               type="password"
-              id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              placeholder="Confirm your password"
-              className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-green-400 focus:outline-none hover:shadow-md"
-              required
+              className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
             />
           </div>
 
-          <div className="flex items-center mb-6">
+          <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              id="termsAccepted"
+              name="isFuelStation"
+              checked={formData.role === "fuel_station"}
+              onChange={handleInputChange}
+              className="text-green-500 rounded focus:ring-green-400"
+            />
+            <label className="text-sm text-gray-700">
+              Register as Fuel Station
+            </label>
+          </div>
+
+          {formData.role === "fuel_station" && (
+            <div className="space-y-4">
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Station Name
+                </label>
+                <input
+                  type="text"
+                  name="stationName"
+                  value={formData.stationName}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+                />
+              </div>
+
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Station Contact
+                </label>
+                <input
+                  type="text"
+                  name="contact"
+                  value={formData.contact}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+                />
+              </div>
+
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Station Location
+                </label>
+                <input
+                  type="text"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded focus:ring-2 focus:ring-green-400"
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
               name="termsAccepted"
               checked={formData.termsAccepted}
               onChange={handleInputChange}
-              className="w-4 h-4 text-green-500 border-gray-300 rounded focus:ring-green-400"
-              required
+              className="text-green-500 rounded focus:ring-green-400"
             />
-            <label htmlFor="termsAccepted" className="ml-2 text-sm text-gray-600">
+            <label className="text-sm text-gray-700">
               I accept the Terms and Conditions
             </label>
           </div>
 
+          {showAlert && (
+            <div
+              className={`p-2 text-white text-center rounded ${alertType === "error" ? "bg-red-500" : "bg-green-500"}`}
+            >
+              {alertMessage}
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full px-4 py-3 text-lg font-semibold text-white bg-gradient-to-r from-green-500 to-teal-500 rounded-lg shadow-md hover:from-teal-500 hover:to-green-500 focus:ring-4 focus:ring-green-400"
+            className="w-full py-2 text-white bg-green-500 rounded hover:bg-green-600 focus:ring-2 focus:ring-green-400"
           >
             Register
           </button>
         </form>
       </div>
-
-      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-        <DialogTitle
-          style={{
-            textAlign: "center",
-            fontSize: "1.8rem",
-            fontWeight: "bold",
-            color: dialogType === "success" ? "#4caf50" : "#f44336",
-          }}
-        >
-          {dialogTitle}
-        </DialogTitle>
-        <DialogContent>
-          <Alert
-            severity={dialogType}
-            style={{
-              borderRadius: "20px",
-              padding: "20px",
-              fontSize: "1rem",
-              fontWeight: "600",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            {dialogMessage}
-          </Alert>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
     </div>
   );
 };
