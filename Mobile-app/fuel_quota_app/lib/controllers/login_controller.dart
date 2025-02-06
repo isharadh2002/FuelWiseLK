@@ -14,6 +14,31 @@ Future<void> storeUserId(String userId) async {
 class LoginController {
   static const String baseUrl = 'http://10.0.2.2:8080/api/v1/User';
 
+  //Retrieve FuelStationID after login
+  Future<void> fetchAndStoreStationID(String userId) async {
+    const String fuelStationBaseUrl = 'http://192.168.1.55:8080/api/v1/FuelStation';
+
+    try {
+      final response = await http.get(
+        Uri.parse('$fuelStationBaseUrl/getStationID/$userId'),
+      );
+
+      if (response.statusCode == 200) {
+        final stationID = response.body; // Assuming it returns just the integer ID as response
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('stationID', stationID);
+
+        print('Station ID stored successfully: $stationID');
+      } else {
+        print('Failed to fetch station ID');
+      }
+    } catch (e) {
+      print('Error fetching station ID: $e');
+    }
+  }
+
+
   Future<void> login(BuildContext context, String email, String password) async {
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -49,6 +74,9 @@ class LoginController {
           // Store the userId in SharedPreferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('userId', userId);
+
+          // Retrieve and store stationID
+          await fetchAndStoreStationID(userId);
 
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Login successful')),

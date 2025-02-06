@@ -29,6 +29,7 @@ class RegistrationScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                const SizedBox(height: 50.0),
                 // App logo
                 Image.asset(
                   'assets/website_logo.png',
