@@ -99,7 +99,7 @@ function App() {
               element={<FuelStationRegistrationPage />}
             />
             <Route
-              path="/fuelStation/login/dashboard"
+              path="/fuelStation-dashboard"
               element={<FuelStationDashBoard />}
             />
 
