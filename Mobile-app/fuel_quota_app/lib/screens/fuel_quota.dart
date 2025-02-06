@@ -55,7 +55,7 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
     fuelController.clear();
 
     // Call API to update fuel quota
-    bool success = await vehicleDetailsController.updateFuelQuota(widget.vehicleId, currentFuelQuota);
+    bool success = await vehicleDetailsController.updateFuelQuota(widget.vehicleId, enteredFuel);
 
     if (success) {
       _showSnackBar('Fuel quota updated successfully!');

@@ -24,20 +24,23 @@ class VehicleDetailsController {
   }
 
   // Update fuel quota for a vehicle
-  Future<bool> updateFuelQuota(String vehicleId, double newFuelQuota) async {
+  Future<bool> updateFuelQuota(String vehicleId, double enteredFuel) async {
     try {
-      final Uri uri = Uri.parse('$baseUrl/api/v1/FuelQuota/updateFuelQuota/$vehicleId')
-          .replace(queryParameters: {
-        'fuelUsedOrAdded': newFuelQuota.toString(),
-        'fuelType': 'Petrol',
-      });
+      final Uri uri = Uri.parse('$baseUrl/updateFuelQuota/$vehicleId');
+
+      final Map<String, dynamic> body = {
+        "vehicleFuelQuota": enteredFuel,
+      };
 
       final response = await http.put(
         uri,
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body),
       );
 
-      if (response.statusCode == 500) {
+      if (response.statusCode == 200) {
         print("Fuel quota updated successfully.");
         return true;
       } else {
