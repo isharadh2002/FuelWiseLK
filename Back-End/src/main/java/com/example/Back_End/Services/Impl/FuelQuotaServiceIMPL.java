@@ -1,13 +1,16 @@
 package com.example.Back_End.Services.Impl;
 
 import com.example.Back_End.DTO.VehicleDTO;
+import com.example.Back_End.Entity.FuelStation;
 import com.example.Back_End.Entity.FuelTransaction;
 import com.example.Back_End.Entity.Vehicle;
 import com.example.Back_End.Exceptions.FuelQuotaException;
+import com.example.Back_End.Repository.FuelStationRepository;
 import com.example.Back_End.Repository.FuelTransactionRepository;
 import com.example.Back_End.Repository.VehicleRepository;
 import com.example.Back_End.Services.FuelQuotaService;
 import com.example.Back_End.Services.NotificationService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +31,9 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
     @Autowired
     NotificationService notificationService;
 
+    @Autowired
+    FuelStationRepository fuelStationRepository;
+
     // Get the remaining fuel quota for a vehicle
     @Override
     public VehicleDTO getRemainingFuelQuota(int vehicleId) throws FuelQuotaException {
@@ -37,6 +43,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             vehicleDTO.setVehicleId(vehicle.get().getVehicleId());
             vehicleDTO.setVehicleFuelQuota(vehicle.get().getVehicleFuelQuota());
             vehicleDTO.setRegistrationNumber(vehicle.get().getLicensePlate());
+            vehicleDTO.setOwnerName(vehicle.get().getVehicleOwner().getOwnerName());
             return vehicleDTO;
         } else {
             throw new FuelQuotaException("Vehicle not found");
@@ -45,14 +52,14 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
 
     // Update the remaining fuel quota for a vehicle and create a fuel transaction record
     @Override
-    public VehicleDTO updateFuelQuota(int vehicleId, double fuelUsedOrAdded, String fuelType) throws FuelQuotaException {
+    public VehicleDTO updateFuelQuota(int vehicleId, double fuelUsedOrAdded, String fuelType, int stationID) throws FuelQuotaException {
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
-        if (vehicle.isPresent()) {
+        Optional<FuelStation> fuelStation = fuelStationRepository.findById(stationID);
+        if (vehicle.isPresent() && fuelStation.isPresent()) {
             Vehicle existingVehicle = vehicle.get();
             // Update the remaining fuel quota
             double newFuelQuota = existingVehicle.getVehicleFuelQuota() - fuelUsedOrAdded;
             existingVehicle.setVehicleFuelQuota(newFuelQuota);
-            vehicleRepository.save(existingVehicle);
 
             // Create a new FuelTransaction record
             FuelTransaction fuelTransaction = new FuelTransaction();
@@ -62,6 +69,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             //fuelTransaction.setTransactionTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()));  // Transaction timestamp
             fuelTransaction.setTransactionTime(LocalDateTime.now());  // Transaction timestamp
             fuelTransaction.setVehicle(existingVehicle);  // Set the vehicle for the transaction
+            fuelTransaction.setFuelStation(fuelStation.get());
 
 
             //send sms
@@ -71,16 +79,36 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
 
 
             // Save the transaction
+            vehicleRepository.save(existingVehicle);
             fuelTransactionRepository.save(fuelTransaction);
 
             // Return the updated vehicle info with the new fuel quota
             VehicleDTO vehicleDTO = new VehicleDTO();
             vehicleDTO.setVehicleId(existingVehicle.getVehicleId());
+            vehicleDTO.setRegistrationNumber(existingVehicle.getLicensePlate());
+            vehicleDTO.setOwnerName(existingVehicle.getVehicleOwner().getOwnerName());
             vehicleDTO.setVehicleFuelQuota(existingVehicle.getVehicleFuelQuota());
             return vehicleDTO;
 
         } else {
-            throw new FuelQuotaException("Vehicle not found");
+            if(vehicle.isEmpty()){
+                throw new FuelQuotaException("Vehicle not found");
+            }
+            else{
+                throw new FuelQuotaException("FuelStation not found");
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public String resetFuelQuotaForAllVehicles() throws FuelQuotaException {
+        try {
+            vehicleRepository.resetFuelQuota();
+            return "Fuel Quota reset successfully for all vehicles";
+        }
+        catch (Exception e){
+            throw new FuelQuotaException("Something went wrong when resetting the fuel quota");
         }
     }
 }
