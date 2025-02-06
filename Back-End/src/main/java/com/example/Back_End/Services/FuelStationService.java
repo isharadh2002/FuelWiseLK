@@ -14,4 +14,5 @@ public interface FuelStationService {
     FuelStationDTO updateFuelStation(FuelStationDTO fuelStationDTO) throws FuelStationException;
     String deleteFuelStation(String stationName) throws FuelStationException;
     List<FuelStationRetrieveDTO> getAllFuelStations();
+    int getStaionIDByUserID(int userID) throws FuelStationException;
 }

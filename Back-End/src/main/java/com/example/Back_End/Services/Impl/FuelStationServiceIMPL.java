@@ -3,8 +3,10 @@ package com.example.Back_End.Services.Impl;
 import com.example.Back_End.DTO.FuelStationDTO;
 import com.example.Back_End.DTO.FuelStationRetrieveDTO;
 import com.example.Back_End.Entity.FuelStation;
+import com.example.Back_End.Entity.User;
 import com.example.Back_End.Exceptions.FuelStationException;
 import com.example.Back_End.Repository.FuelStationRepository;
+import com.example.Back_End.Repository.UserRepository;
 import com.example.Back_End.Services.FuelStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +22,8 @@ public class FuelStationServiceIMPL implements FuelStationService {
 
     @Autowired
     private FuelStationRepository fuelStationRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public String addFuelStation(FuelStationDTO fuelStationDTO) {
@@ -62,6 +67,24 @@ public class FuelStationServiceIMPL implements FuelStationService {
             retrieveDTO.setUserID(fuelStation.getUser().getId()); // Manually set userID
             return retrieveDTO;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public int getStaionIDByUserID(int userID) throws FuelStationException {
+        Optional<User> user = userRepository.findById(userID);
+        if(user.isPresent()) {
+            User fuelStationUser = user.get();
+            Optional<FuelStation> fuelStation = fuelStationRepository.findOneByUser(fuelStationUser);
+            if(fuelStation.isPresent()) {
+                return fuelStation.get().getStationID();
+            }
+            else{
+                throw new FuelStationException("Fuel station not found with UserID: " + userID);
+            }
+        }
+        else{
+            throw new FuelStationException("User not found with UserID: " + userID);
+        }
     }
 
     @Override

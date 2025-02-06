@@ -1,6 +1,7 @@
 package com.example.Back_End.Repository;
 
 import com.example.Back_End.Entity.FuelStation;
+import com.example.Back_End.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,4 +23,6 @@ public interface FuelStationRepository extends JpaRepository<FuelStation, Intege
 
     @Query(value = "SELECT * FROM fuel_station WHERE stationID = ?1", nativeQuery = true)
     FuelStation getStationById(int StationID);
+
+    Optional<FuelStation> findOneByUser(User user);
 }
