@@ -5,11 +5,12 @@ import com.example.Back_End.DTO.LoginDTO;
 import com.example.Back_End.DTO.UserDTO;
 import com.example.Back_End.Exceptions.UserException;
 import com.example.Back_End.Response.LoginResponse;
+import com.example.Back_End.Response.WebLoginResponse;
 
 public interface UserService {
 
     String addUser(UserDTO userDTO) throws UserException;
-    LoginResponse loginUser(LoginDTO loginDTO);
+    WebLoginResponse loginUser(LoginDTO loginDTO);
 
     String addMobileUser(UserDTO userDTO) throws UserException;
     LoginResponse loginMobileUser(LoginDTO loginDTO);
