@@ -1,6 +1,7 @@
 package com.example.Back_End.Repository;
 
 
+import com.example.Back_End.Entity.User;
 import com.example.Back_End.Entity.VehicleOwner;
 
 
@@ -15,4 +16,6 @@ public interface VehicleOwnerRepository extends JpaRepository<VehicleOwner, Inte
     Optional<VehicleOwner> findByEmail(String email);
 
     Optional<VehicleOwner> findOneByEmailAndPassword(String email, String password);
+
+    Optional<VehicleOwner> findOneByUser(User user);
 }

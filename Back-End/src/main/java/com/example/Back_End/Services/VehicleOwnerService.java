@@ -9,4 +9,6 @@ public interface VehicleOwnerService {
 
     String addVehicleOwner(VehicleOwnerDTO vehicleOwnerDTO);
     LoginResponse loginVehicleOwner(LoginDTO loginDTO);
+
+    int getOwnerID (int userID);
 }
