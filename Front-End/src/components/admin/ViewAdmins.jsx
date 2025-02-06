@@ -57,18 +57,18 @@ const ViewAdmins = () => {
   };
 
   const handleUpdate = (adminId) => {
-    navigate(`/update-admin/${adminId}`);
+    navigate(`/admin-dashboard/update-admin/${adminId}`);
   };
 
   return (
     <div className="container max-w-6xl px-4 py-8 mx-auto">
-      <h1 className="mb-8 text-3xl font-bold text-purple-800">
+      <h1 className="mb-8 text-3xl font-bold text-black md:text-4xl">
         Administrator Management
       </h1>
       {error && <p className="text-red-500">{error}</p>}
       <button
-        onClick={() => navigate("/createAdmin")}
-        className="px-4 py-2 mb-4 text-white bg-purple-600 rounded-lg hover:bg-purple-700"
+        onClick={() => navigate("/admin-dashboard/createAdmin")}
+        className="px-4 py-2 mb-4 text-white bg-green-600 rounded-lg hover:bg-green-700"
       >
         Create Admin
       </button>
@@ -77,16 +77,16 @@ const ViewAdmins = () => {
           <table className="min-w-full divide-y divide-purple-200">
             <thead className="bg-purple-50">
               <tr>
-                <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left text-purple-700 uppercase">
+                <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left text-black uppercase">
                   ID
                 </th>
-                <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left text-purple-700 uppercase">
+                <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left text-black uppercase">
                   Name
                 </th>
-                <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left text-purple-700 uppercase">
+                <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left text-black uppercase">
                   Email
                 </th>
-                <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left text-purple-700 uppercase">
+                <th className="px-6 py-4 text-sm font-semibold tracking-wider text-left text-black uppercase">
                   Actions
                 </th>
               </tr>
@@ -109,18 +109,16 @@ const ViewAdmins = () => {
                       index % 2 === 0 ? "bg-white" : "bg-purple-50/50"
                     }`}
                   >
-                    <td className="px-6 py-4 text-sm text-purple-600 whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm text-black whitespace-nowrap">
                       {admin.adminID}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-purple-900">
+                      <div className="text-sm font-medium text-black">
                         {admin.adminName}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-purple-600">
-                        {admin.email}
-                      </div>
+                      <div className="text-sm text-black">{admin.email}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button

@@ -94,9 +94,9 @@ const login = async (event) => {
   };
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-blue-300 via-indigo-400 to-purple-500">
+    <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-green-100 via-green-300 to-green-500">
       <div className="w-full max-w-lg p-10 bg-white rounded-lg shadow-xl bg-opacity-90">
-        <h2 className="mb-8 text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 drop-shadow-md">
+        <h2 className="mb-8 text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-500 drop-shadow-md">
           Admin Login
         </h2>
 
@@ -144,16 +144,16 @@ const login = async (event) => {
           </div>
 
           <button
-            type="submit"
-            className="w-full px-4 py-3 text-lg font-semibold text-white rounded-lg shadow-md bg-gradient-to-r from-indigo-500 to-purple-500 focus:outline-none focus:ring-4 focus:ring-indigo-400"
-          >
-            Login
-          </button>
+                      type="submit"
+                      className="w-full px-4 py-3 text-lg font-semibold text-white rounded-lg shadow-md bg-gradient-to-r from-green-400 to-green-600 focus:outline-none focus:ring-4 focus:ring-green-300"
+                    >
+                      Login
+                    </button>
 
           <div className="mt-8 text-sm text-center text-gray-600">
             Return to{" "}
             <a
-              href="/"
+              href="/home"
               className="font-semibold text-indigo-600 hover:text-indigo-700"
             >
               Home Page
