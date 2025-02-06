@@ -26,7 +26,7 @@ class VehicleDetailsController {
   // Update fuel quota for a vehicle
   Future<bool> updateFuelQuota(String vehicleId, double newFuelQuota) async {
     try {
-      final Uri uri = Uri.parse('$baseUrl/FuelQuota/updateFuelQuota/$vehicleId')
+      final Uri uri = Uri.parse('$baseUrl/api/v1/FuelQuota/updateFuelQuota/$vehicleId')
           .replace(queryParameters: {
         'fuelUsedOrAdded': newFuelQuota.toString(),
         'fuelType': 'Petrol',
