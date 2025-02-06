@@ -26,7 +26,7 @@ class VehicleDetailsController {
   // Update fuel quota for a vehicle
   Future<bool> updateFuelQuota(String vehicleId, double enteredFuel) async {
     try {
-      final Uri uri = Uri.parse('$baseUrl/updateFuelQuota/$vehicleId');
+      final Uri uri = Uri.parse('$baseUrl/updateFuelQuota1/$vehicleId');
 
       final Map<String, dynamic> body = {
         "vehicleFuelQuota": enteredFuel,
