@@ -1,8 +1,12 @@
 package com.example.Back_End.Repository;
 
 import com.example.Back_End.DTO.VehicleDTO;
+import com.example.Back_End.Entity.FuelStation;
 import com.example.Back_End.Entity.Vehicle;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -15,7 +19,9 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 
     //    Vehicle findByVehicleNumber(String vehicleNumber);
 
-
+    @Modifying
+    @Query(value = "UPDATE `vehicle` SET `vehicle_fuel_quota`=0 WHERE 1", nativeQuery = true)
+    void resetFuelQuota();
 
 
 }
