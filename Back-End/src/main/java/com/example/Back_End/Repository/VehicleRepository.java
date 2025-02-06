@@ -20,7 +20,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
     //    Vehicle findByVehicleNumber(String vehicleNumber);
 
     @Modifying
-    @Query(value = "UPDATE `vehicle` SET `vehicle_fuel_quota`=0 WHERE 1", nativeQuery = true)
+    @Query(value = "UPDATE `vehicle` SET `vehicle_fuel_quota`=50 WHERE 1", nativeQuery = true)
     void resetFuelQuota();
 
 
