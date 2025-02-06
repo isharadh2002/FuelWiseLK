@@ -39,7 +39,7 @@ import Overview from "./components/admin/Overview.jsx";
 
 // Fuel Station Dashboard
 import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
-import FuelStationDashBoard from "./components/fuelStation/FuelStationDashBoard.jsx";
+import FuelStationDashboard from "./components/fuelStation/FuelStationDashboard.jsx";
 
 function App() {
     return (
@@ -100,7 +100,7 @@ function App() {
             />
             <Route
               path="/fuelStation-dashboard"
-              element={<FuelStationDashBoard />}
+              element={<FuelStationDashboard />}
             />
 
             {/* 404 Page */}

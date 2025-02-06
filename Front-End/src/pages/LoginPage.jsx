@@ -81,6 +81,29 @@ const LoginForm = () => {
             localStorage.setItem("userId", userId);
             localStorage.setItem("userRole", userRole); // Store role in localStorage
 
+          if(userRole === 'fuel_station'){
+            try {
+              const response = await axios.get(
+                  `http://localhost:8080/api/v1/FuelStation/getStationID/${userId}`
+              );
+
+              const stationId = response.data; // Since response is a raw integer
+              localStorage.setItem("stationId", stationId); // Store in localStorage
+
+              console.log("Fuel Station ID:", stationId); // Debugging log
+
+              // Additional logic can go here if needed
+
+            } catch (error) {
+              console.error("Failed to fetch fuel station ID:", error);
+
+              setDialogTitle("Error");
+              setDialogMessage("Unable to retrieve Fuel Station ID. Please try again.");
+              setDialogType("error");
+              setDialogOpen(true);
+            }
+          }
+
             setDialogTitle("Login Success");
             setDialogMessage("Successfully logged in!");
             setDialogType("success");

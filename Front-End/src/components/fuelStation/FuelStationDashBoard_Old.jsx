@@ -66,7 +66,7 @@ DemoPageContent.propTypes = {
     pathname: PropTypes.string.isRequired,
 };
 
-function FuelStationDashBoard(props) {
+function FuelStationDashBoard_Old(props) {
 
     const { window } = props;
 
@@ -89,7 +89,7 @@ function FuelStationDashBoard(props) {
     );
 }
 
-FuelStationDashBoard.propTypes = {
+FuelStationDashBoard_Old.propTypes = {
     /**
      * Injected by the documentation to work in an iframe.
      * Remove this when copying and pasting into your project.
@@ -101,4 +101,4 @@ FuelStationDashBoard.propTypes = {
 
 
 
-export default FuelStationDashBoard;
+export default FuelStationDashBoard_Old;
