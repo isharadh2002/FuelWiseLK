@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddVehiclePage = () => {
@@ -6,24 +6,48 @@ const AddVehiclePage = () => {
   const [vehicleModel, setVehicleModel] = useState("");
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [ownerId, setOwnerId] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchOwnerId = async () => {
+      const userId = localStorage.getItem("userId");
+
+      if (!userId) {
+        setError("User is not logged in.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/v1/VehicleOwner/getOwnerID/${userId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch owner ID");
+        }
+        const data = await response.json();
+        setOwnerId(data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchOwnerId();
+  }, []);
 
   const handleAddVehicle = async (e) => {
     e.preventDefault();
 
-    const ownerId = localStorage.getItem("userId");
     if (!ownerId) {
-      setError("User is not logged in.");
+      setError("Owner ID not available.");
       return;
     }
 
     const vehicleData = {
       licensePlate,
       vehicleModel,
-      ownerId: 8, // Hardcoded for now, replace with ownerId
+      ownerId,
     };
 
-    console.log("Sending Vehicle Data:", vehicleData); // Log the request data for debugging
+    console.log("Sending Vehicle Data:", vehicleData);
 
     try {
       setIsSubmitting(true);
@@ -39,7 +63,6 @@ const AddVehiclePage = () => {
         throw new Error("Failed to add vehicle");
       }
 
-      // Assuming that a successful response means the vehicle has been added
       if (response.status === 200) {
         alert("Vehicle added successfully!");
         navigate("/dashboard");
