@@ -35,7 +35,7 @@ const ManageFuelStations = () => {
 
   // Navigate to the update page for the station
   const handleUpdate = (stationId) => {
-    navigate(`/update-fuel-station/${stationId}`);
+    navigate(`/admin-dashboard/update-fuel-station/${stationId}`);
   };
 
   // Delete station from the backend and update state
@@ -60,7 +60,7 @@ const ManageFuelStations = () => {
           Manage Fuel Stations
         </h1>
         <button
-          onClick={() => navigate("/add-fuel-station")}
+          onClick={() => navigate("/admin-dashboard/add-fuel-station")}
           className="px-6 py-3 mb-6 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
         >
           Add Fuel Station
