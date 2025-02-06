@@ -21,7 +21,7 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     // Get all vehicles
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<VehicleDTO>> getAllVehicles() {
         List<VehicleDTO> vehicles = vehicleService.getAllVehicles();
         if (vehicles.isEmpty()) {
@@ -32,7 +32,9 @@ public class VehicleController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addNewVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO) {
+
         try {
+
             VehicleRegistrationDTO savedVehicle = vehicleService.saveVehicle(vehicleRegistrationDTO);
             return ResponseEntity.ok().body("Vehicle saved successfully");
         } catch (VehicleRegistrationException e) {

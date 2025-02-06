@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { Car, Edit, Fuel } from "lucide-react";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
 
@@ -32,20 +33,34 @@ const AddVehicleForm = () => {
     }
 
     try {
-      // Simulated API call
-      console.log("Vehicle added:", { licensePlate, vehicleModel, vehicleFuelQuota, ownerId });
+      // API call to add vehicle
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/vehicles/add",
+        {
+          licensePlate,
+          vehicleModel,
+          vehicleFuelQuota,
+          ownerId,
+        }
+      );
 
-      // Simulate a successful submission
-      setDialogTitle("Success");
-      setDialogMessage("Vehicle added successfully.");
-      setDialogType("success");
-      setDialogOpen(true);
+      if (response.status === 200) {
+        console.log("Vehicle added:", response.data);
 
-      // Reset form after successful submission
-      setLicensePlate("");
-      setVehicleModel("");
-      setVehicleFuelQuota("");
-      setOwnerId("");
+        // Simulate a successful submission
+        setDialogTitle("Success");
+        setDialogMessage("Vehicle added successfully.");
+        setDialogType("success");
+        setDialogOpen(true);
+
+        // Reset form after successful submission
+        setLicensePlate("");
+        setVehicleModel("");
+        setVehicleFuelQuota("");
+        setOwnerId("");
+      } else {
+        throw new Error("Failed to add vehicle");
+      }
     } catch (error) {
       setDialogTitle("Error");
       setDialogMessage("An error occurred while adding the vehicle.");
@@ -60,7 +75,7 @@ const AddVehicleForm = () => {
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-green-100 via-green-200 to-green-300">
-      <div className="overflow-hidden bg-white bg-opacity-90 shadow-lg w-96 rounded-2xl">
+      <div className="overflow-hidden bg-white shadow-lg bg-opacity-90 w-96 rounded-2xl">
         <div className="p-6 bg-green-500">
           <h2 className="text-2xl font-bold text-white">Add Vehicle</h2>
           <p className="mt-1 text-green-100">Enter vehicle details to add a new vehicle</p>
@@ -73,7 +88,7 @@ const AddVehicleForm = () => {
               <Car className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
-                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
                 value={licensePlate}
                 onChange={(e) => setLicensePlate(e.target.value)}
                 placeholder="Enter license plate"
@@ -88,7 +103,7 @@ const AddVehicleForm = () => {
               <Edit className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
-                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
                 value={vehicleModel}
                 onChange={(e) => setVehicleModel(e.target.value)}
                 placeholder="Enter vehicle model"
@@ -103,7 +118,7 @@ const AddVehicleForm = () => {
               <Fuel className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
-                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
                 value={vehicleFuelQuota}
                 onChange={(e) => setVehicleFuelQuota(e.target.value)}
                 placeholder="Enter fuel quota"
@@ -117,7 +132,7 @@ const AddVehicleForm = () => {
             <div className="relative">
               <input
                 type="text"
-                className="w-full py-2 pl-3 text-gray-600 placeholder-gray-400 border rounded-lg border-green-200 focus:ring-2 focus:ring-green-200 focus:border-transparent"
+                className="w-full py-2 pl-3 text-gray-600 placeholder-gray-400 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-transparent"
                 value={ownerId}
                 onChange={(e) => setOwnerId(e.target.value)}
                 placeholder="Enter owner ID"
@@ -128,7 +143,7 @@ const AddVehicleForm = () => {
 
           <button
             type="submit"
-            className="w-full py-2 mt-6 text-white transition-all rounded-lg bg-green-500 hover:bg-green-600"
+            className="w-full py-2 mt-6 text-white transition-all bg-green-500 rounded-lg hover:bg-green-600"
           >
             Add Vehicle
           </button>

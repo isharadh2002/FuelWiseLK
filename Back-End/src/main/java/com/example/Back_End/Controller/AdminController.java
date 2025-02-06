@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
@@ -49,18 +51,25 @@ public class AdminController {
         }
     }
 
-    //login an admin
     @PostMapping("/login")
     public ResponseEntity<?> loginAdmin(@Valid @RequestBody LoginDTO loginDTO) {
         try {
             LoginResponse loginResponse = adminService.loginAdmin(loginDTO);
-            return ResponseEntity.ok().body(loginResponse.getMessage()); // Return 200 if successful
+
+            // Ensure adminId is included in the response
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", loginResponse.getMessage());
+            response.put("adminId", loginResponse.getId()); // Add this line
+
+            return ResponseEntity.ok().body(response);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error logging in: " + e.getMessage()); // Return 400 if bad request
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Error logging in");
+            errorResponse.put("message", e.getMessage());
+
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
-
-
 
     // Update an existing admin
     @PutMapping("/update/{id}")
