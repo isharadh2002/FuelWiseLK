@@ -28,16 +28,11 @@ class VehicleDetailsController {
     try {
       final Uri uri = Uri.parse('$baseUrl/updateFuelQuota1/$vehicleId');
 
-      final Map<String, dynamic> body = {
-        "vehicleFuelQuota": enteredFuel,
-      };
-
       final response = await http.put(
         uri,
         headers: {
           'Content-Type': 'application/json',
         },
-        body: jsonEncode(body),
       );
 
       if (response.statusCode == 200) {

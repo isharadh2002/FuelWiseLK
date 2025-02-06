@@ -25,8 +25,13 @@ class FuelQuotaPage extends StatefulWidget {
 class _FuelQuotaPageState extends State<FuelQuotaPage> {
   TextEditingController fuelController = TextEditingController();
   late double currentFuelQuota;
-  final VehicleDetailsController vehicleDetailsController = VehicleDetailsController();
+  final VehicleDetailsController vehicleDetailsController =
+      VehicleDetailsController();
   static const double maxFuelQuota = 50.0;
+
+  // Fuel Type Dropdown
+  final List<String> fuelTypes = ['Petrol', 'Diesel', 'Kerosene'];
+  String selectedFuelType = 'Petrol'; // Default value
 
   @override
   void initState() {
@@ -60,7 +65,8 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
     //bool success = await vehicleDetailsController.updateFuelQuota(widget.vehicleId, enteredFuel);
 
     //Checking with the new one
-    bool success = await vehicleDetailsController.updateFuelQuota_2(widget.vehicleId, enteredFuel, "Petrol", 1);
+    bool success = await vehicleDetailsController.updateFuelQuota_2(
+        widget.vehicleId, enteredFuel, selectedFuelType, 1);
 
     if (success) {
       _showSnackBar('Fuel quota updated successfully!');
@@ -78,7 +84,8 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
   @override
   Widget build(BuildContext context) {
     // Ensure percentage is between 0.0 and 1.0
-    double percentageRemaining = (currentFuelQuota / maxFuelQuota).clamp(0.0, 1.0);
+    double percentageRemaining =
+        (currentFuelQuota / maxFuelQuota).clamp(0.0, 1.0);
     final primaryGreen = Color(0xFF2E7D32);
 
     return Scaffold(
@@ -187,6 +194,47 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
 
                     SizedBox(height: 16),
 
+                    // Fuel Type Dropdown
+                    SizedBox(
+                      width: double.infinity,
+                      // Ensures it matches the input field width
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButtonFormField<String>(
+                          value: selectedFuelType,
+                          items: fuelTypes.map((String fuel) {
+                            return DropdownMenuItem<String>(
+                              value: fuel,
+                              child: Text(fuel),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedFuelType = newValue!;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Select Fuel Type',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            filled: true,
+                            fillColor: Color(0xFFFAFAFA),
+                            // Match background color
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryGreen),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
+                          menuMaxHeight: 200, // Limits dropdown height
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+
                     // Update Button
                     SizedBox(
                       width: double.infinity,
@@ -220,7 +268,8 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Dashboard()),
+                            MaterialPageRoute(
+                                builder: (context) => Dashboard()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -241,7 +290,6 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),
