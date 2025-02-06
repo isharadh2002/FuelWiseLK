@@ -31,7 +31,7 @@ const ManageVehicles = () => {
 
   // Navigate to the update page for a vehicle
   const handleEdit = (vehicleId) => {
-    navigate(`/update-vehicle/${vehicleId}`);
+    navigate(`/admin-dashboard/update-vehicle/${vehicleId}`);
   };
 
   // Delete vehicle from the backend and update state
@@ -55,7 +55,7 @@ const ManageVehicles = () => {
           Manage Vehicles
         </h1>
         <button
-          onClick={() => navigate("/add-vehicle")}
+          onClick={() => navigate("/admin-dashboard/add-vehicle")}
           className="px-6 py-3 mb-6 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
         >
           Add Vehicle
