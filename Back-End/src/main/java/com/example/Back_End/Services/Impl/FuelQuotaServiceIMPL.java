@@ -54,14 +54,14 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             existingVehicle.setVehicleFuelQuota(newFuelQuota);
             vehicleRepository.save(existingVehicle);
 
-            // Create a new FuelTransaction record
-            FuelTransaction fuelTransaction = new FuelTransaction();
-            fuelTransaction.setFuelType(fuelType);  // The type of fuel
-            fuelTransaction.setPumpedLitres(String.valueOf(fuelUsedOrAdded));  // Amount added or used
-            fuelTransaction.setRemainingQuota(String.valueOf(newFuelQuota));  // Updated fuel quota
-            //fuelTransaction.setTransactionTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()));  // Transaction timestamp
-            fuelTransaction.setTransactionTime(LocalDateTime.now());  // Transaction timestamp
-            fuelTransaction.setVehicle(existingVehicle);  // Set the vehicle for the transaction
+//            // Create a new FuelTransaction record
+//            FuelTransaction fuelTransaction = new FuelTransaction();
+//            fuelTransaction.setFuelType(fuelType);  // The type of fuel
+//            fuelTransaction.setPumpedLitres(String.valueOf(fuelUsedOrAdded));  // Amount added or used
+//            fuelTransaction.setRemainingQuota(String.valueOf(newFuelQuota));  // Updated fuel quota
+//            //fuelTransaction.setTransactionTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()));  // Transaction timestamp
+//            fuelTransaction.setTransactionTime(LocalDateTime.now());  // Transaction timestamp
+//            fuelTransaction.setVehicle(existingVehicle);  // Set the vehicle for the transaction
 
 
             //send sms
@@ -71,7 +71,7 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
 
 
             // Save the transaction
-            fuelTransactionRepository.save(fuelTransaction);
+            //fuelTransactionRepository.save(fuelTransaction);
 
             // Return the updated vehicle info with the new fuel quota
             VehicleDTO vehicleDTO = new VehicleDTO();
