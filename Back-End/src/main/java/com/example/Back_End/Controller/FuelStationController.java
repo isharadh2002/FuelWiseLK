@@ -52,6 +52,11 @@ public class FuelStationController {
     }
 
 
+    @GetMapping("/getStationID/{UserID}")
+    public int getStationIDByUserID(@PathVariable int UserID) throws FuelStationException {
+        return fuelStationService.getStaionIDByUserID(UserID);
+    }
+
 
     
 }
