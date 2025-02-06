@@ -44,7 +44,7 @@ public class VehicleController {
 
 
     // Get vehicle by ID
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "get/{id}")
     public ResponseEntity<VehicleDTO> getVehicleById(@PathVariable int id) {
         Optional<VehicleDTO> vehicleDTO = vehicleService.getVehicleById(id);
         return vehicleDTO.map(ResponseEntity::ok)

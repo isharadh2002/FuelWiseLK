@@ -31,7 +31,7 @@ const ManageVehicles = () => {
 
   // Navigate to the update page for a vehicle
   const handleEdit = (vehicleId) => {
-    navigate(`/edit-vehicle/${vehicleId}`);
+    navigate(`/update-vehicle/${vehicleId}`);
   };
 
   // Delete vehicle from the backend and update state

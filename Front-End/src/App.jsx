@@ -35,6 +35,7 @@ import AddVehicleForm from "./components/admin/AddVehicle.jsx";
 import UpdateVehicleForm from "./components/admin/UpdateVehicle.jsx";
 import AddFuelStationForm from "./components/admin/AddFuelStation.jsx";
 import UpdateFuelStationForm from "./components/admin/UpdatefuelStation.jsx";
+import Overview from "./components/admin/Overview.jsx";
 
 // Fuel Station Dashboard
 import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
@@ -42,48 +43,71 @@ import FuelStationDashBoard from "./components/fuelStation/FuelStationDashBoard.
 
 function App() {
     return (
-        <>
-            <Router>
-                <Global styles={globalStyles} />
-                <Routes>
-                    {/* Public Routes */}
-                    <Route path="/" element={<VehicleRegistrationPage />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/login" element={<LoginForm />} />
-                    <Route path="/register" element={<RegistrationForm />} />
-                    <Route path="/terms" element={<Terms />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<ContactUs />} />
-                    <Route path="/footer" element={<Footer />} />
+      <>
+        <Router>
+          <Global styles={globalStyles} />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<VehicleRegistrationPage />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<RegistrationForm />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/footer" element={<Footer />} />
 
-                    {/* Customer Routes */}
-                    <Route path="/dashboard" element={<CustomerDashboard />} />
-                    <Route path="/VehicleRegister" element={<VehicleForm />} />
-                    <Route path="/vehicle/:vehicleId" element={<SingleVehiclePage />} />
-                    <Route path="/manage-vehicle/:vehicleId" element={<ManageVehiclePage />} />
-                    <Route path="/vehicle/:vehicleId/qr" element={<QRCodePage />} />
+            {/* Customer Routes */}
+            <Route path="/dashboard" element={<CustomerDashboard />} />
+            <Route path="/VehicleRegister" element={<VehicleForm />} />
+            <Route path="/vehicle/:vehicleId" element={<SingleVehiclePage />} />
+            <Route
+              path="/manage-vehicle/:vehicleId"
+              element={<ManageVehiclePage />}
+            />
+            <Route path="/vehicle/:vehicleId/qr" element={<QRCodePage />} />
 
-                    {/* Admin Routes */}
-                    <Route path="/admin-login" element={<AdminLoginForm />} />
-                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
-                    <Route path="/createAdmin" element={<CreateAdmins />} />
-                    <Route path="/Viewadmins" element={<ViewAdmins />} />
-                    <Route path="/manage-vehicles" element={<ManageVehicles />} />
-                    <Route path="/add-vehicle" element={<AddVehicleForm />} />
-                    <Route path="/update-vehicle" element={<UpdateVehicleForm />} />
-                    <Route path="/manage-fuel-stations" element={<ManageFuelStations />} />
-                    <Route path="/add-fuel-station" element={<AddFuelStationForm />} />
-                    <Route path="/update-fuel-station" element={<UpdateFuelStationForm />} />
+            {/* Admin Routes */}
+            <Route path="/admin-login" element={<AdminLoginForm />} />
 
-                    {/* Fuel Station Routes */}
-                    <Route path="/FuelStation" element={<FuelStationRegistrationPage />} />
-                    <Route path="/fuelStation/login/dashboard" element={<FuelStationDashBoard />} />
+            {/* Admin Dashboard with Nested Routes */}
+            <Route path="/admin-dashboard" element={<AdminDashboard />}>
+              <Route index element={<Overview />} />
+                <Route path="overview" element={<Overview />} />
+              <Route path="createAdmin" element={<CreateAdmins />} />
+              <Route path="view-admins" element={<ViewAdmins />} />
+              <Route path="manage-vehicles" element={<ManageVehicles />} />
+              <Route path="add-vehicle" element={<AddVehicleForm />} />
+              <Route
+                path="update-vehicle/:vehicleId"
+                element={<UpdateVehicleForm />}
+              />
+              <Route
+                path="manage-fuel-stations"
+                element={<ManageFuelStations />}
+              />
+              <Route path="add-fuel-station" element={<AddFuelStationForm />} />
+              <Route
+                path="update-fuel-station/:id"
+                element={<UpdateFuelStationForm />}
+              />
+            </Route>
 
-                    {/* 404 Page */}
-                    <Route path="*" element={<PageNotFound />} />
-                </Routes>
-            </Router>
-        </>
+            {/* Fuel Station Routes */}
+            <Route
+              path="/FuelStation"
+              element={<FuelStationRegistrationPage />}
+            />
+            <Route
+              path="/fuelStation/login/dashboard"
+              element={<FuelStationDashBoard />}
+            />
+
+            {/* 404 Page */}
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </Router>
+      </>
     );
 }
 
