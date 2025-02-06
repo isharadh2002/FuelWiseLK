@@ -7,7 +7,7 @@ class ForgotPasswordPopup {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Forgot Password'),
-          content: const Text('Redirecting you to our web portal.'),
+          content: const Text('Go to our web portal.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -15,7 +15,7 @@ class ForgotPasswordPopup {
                 // Add your web portal redirection logic here
               },
               child: const Text(
-                'Go to Portal',
+                'Okay',
                 style: TextStyle(
                   color: Colors.blue,
                 ),

@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = 'http://10.0.2.2:8080/api/v1/vehicles';
+const String baseUrl = 'http://10.0.2.2:8080/api/v1/FuelQuota';
 
 class VehicleDetailsController {
   // Fetch vehicle details by vehicle ID
   Future<Map<String, dynamic>?> fetchVehicleDetails(String vehicleId) async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/$vehicleId'),
+        Uri.parse('$baseUrl/getRemainingQuota/$vehicleId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -23,21 +23,21 @@ class VehicleDetailsController {
     }
   }
 
-  Future<bool> updateFuelQuota(String vehicleId, double newFuelQuota) async {
-    const double maxFuelQuota = 50.0;
-
+  // Update fuel quota for a vehicle
+  Future<bool> updateFuelQuota(String vehicleId, double enteredFuel) async {
     try {
-      // Ensure the new fuel quota doesn't exceed the maximum limit (50L)
-      if (newFuelQuota > maxFuelQuota) {
-        print("New fuel quota exceeds maximum limit.");
-        return false;
-      }
+      final Uri uri = Uri.parse('$baseUrl/updateFuelQuota1/$vehicleId');
 
-      // API expects JSON in the body, so we send it correctly
+      final Map<String, dynamic> body = {
+        "vehicleFuelQuota": enteredFuel,
+      };
+
       final response = await http.put(
-        Uri.parse('$baseUrl/update-fuel-quota/$vehicleId'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(newFuelQuota), // Sending newFuelQuota as a JSON body
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body),
       );
 
       if (response.statusCode == 200) {

@@ -28,6 +28,12 @@ public class FuelQuotaController {
         return fuelQuotaService.updateFuelQuota(vehicleId, fuelUsedOrAdded, fuelType, stationId);
     }
 
+    @PutMapping("/updateFuelQuota1/{vehicleId}")
+    public VehicleDTO updateFuelQuota(@PathVariable int vehicleId,
+                                      @RequestBody VehicleDTO vehicleDTO) throws FuelQuotaException {
+        return fuelQuotaService.updateFuelQuota(vehicleId, vehicleDTO.getVehicleFuelQuota(), "Petrol", 1);
+    }
+
     @PutMapping("/resetQuota")
     public String resetFuelQuotaForAllVehicles() throws FuelQuotaException {
         return fuelQuotaService.resetFuelQuotaForAllVehicles();

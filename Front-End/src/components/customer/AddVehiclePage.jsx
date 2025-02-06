@@ -11,7 +11,7 @@ const AddVehiclePage = () => {
   const handleAddVehicle = async (e) => {
     e.preventDefault();
 
-    const ownerId = localStorage.getItem("userId"); // Assuming userId is stored in local storage
+    const ownerId = localStorage.getItem("userId");
     if (!ownerId) {
       setError("User is not logged in.");
       return;
@@ -20,7 +20,7 @@ const AddVehiclePage = () => {
     const vehicleData = {
       licensePlate,
       vehicleModel,
-      ownerId: parseInt(ownerId), // Ensure ownerId is sent as a number if required
+      ownerId: 8, // Hardcoded for now, replace with ownerId
     };
 
     console.log("Sending Vehicle Data:", vehicleData); // Log the request data for debugging
@@ -39,12 +39,10 @@ const AddVehiclePage = () => {
         throw new Error("Failed to add vehicle");
       }
 
-      const data = await response.json();
-      console.log("Response Data:", data); // Log the response for debugging
-
       // Assuming that a successful response means the vehicle has been added
       if (response.status === 200) {
-        navigate("/dashboard/vehicles");
+        alert("Vehicle added successfully!");
+        navigate("/dashboard");
       }
 
     } catch (error) {

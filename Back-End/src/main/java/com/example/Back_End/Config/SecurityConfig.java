@@ -28,6 +28,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/FuelStation").permitAll()
 
                         .requestMatchers("/api/v1/FuelQuota/**").permitAll()
+                        .requestMatchers("/api/v1/FuelQuota/updateFuelQuota/**").permitAll()
 
                         .requestMatchers("/api/v1/User/**").permitAll()
                         .requestMatchers("/api/v1/User").permitAll()

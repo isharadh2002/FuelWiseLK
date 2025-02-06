@@ -25,6 +25,7 @@ class FuelQuotaPage extends StatefulWidget {
 class _FuelQuotaPageState extends State<FuelQuotaPage> {
   TextEditingController fuelController = TextEditingController();
   late double currentFuelQuota;
+  late double remainingFuelQuota;
   final VehicleDetailsController vehicleDetailsController = VehicleDetailsController();
   static const double maxFuelQuota = 50.0;
 
@@ -32,6 +33,7 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
   void initState() {
     super.initState();
     currentFuelQuota = widget.vehicleFuelQuota;
+    remainingFuelQuota = maxFuelQuota - currentFuelQuota;
   }
 
   void _updateFuelQuota() async {
@@ -42,7 +44,7 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
       return;
     }
 
-    if (enteredFuel > currentFuelQuota) {
+    if (enteredFuel > remainingFuelQuota) {
       _showSnackBar('Exceeds maximum quota. Adjust your input.');
       return;
     }
@@ -50,12 +52,13 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
     // Update UI optimistically
     setState(() {
       currentFuelQuota = currentFuelQuota - enteredFuel;
+      remainingFuelQuota = maxFuelQuota - currentFuelQuota;
     });
 
     fuelController.clear();
 
     // Call API to update fuel quota
-    bool success = await vehicleDetailsController.updateFuelQuota(widget.vehicleId, enteredFuel);
+    bool success = await vehicleDetailsController.updateFuelQuota(widget.vehicleId, currentFuelQuota);
 
     if (success) {
       _showSnackBar('Fuel quota updated successfully!');
@@ -73,7 +76,7 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
   @override
   Widget build(BuildContext context) {
     // Ensure percentage is between 0.0 and 1.0
-    double percentageRemaining = (currentFuelQuota / maxFuelQuota).clamp(0.0, 1.0);
+    double percentageRemaining = (remainingFuelQuota / maxFuelQuota).clamp(0.0, 1.0);
     final primaryGreen = Color(0xFF2E7D32);
 
     return Scaffold(
@@ -135,7 +138,7 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "${currentFuelQuota.toStringAsFixed(1)} L",
+                            "${remainingFuelQuota.toStringAsFixed(1)} L",
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,

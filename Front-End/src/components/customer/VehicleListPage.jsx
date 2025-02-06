@@ -10,7 +10,7 @@ const VehicleListPage = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await fetch("http://localhost:8080/api/v1/vehicles");
+                const response = await fetch("http://localhost:8080/api/v1/vehicles/all");
                 if (!response.ok) {
                     throw new Error("Failed to fetch vehicles");
                 }
