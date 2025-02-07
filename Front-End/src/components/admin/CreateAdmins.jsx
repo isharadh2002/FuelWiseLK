@@ -1,8 +1,18 @@
 import { useState } from "react";
 import { User, Mail, Lock } from "lucide-react";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+  Alert,
+} from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CreateAdmins = () => {
+  const navigate = useNavigate();
   const [adminName, setAdminName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +29,8 @@ const CreateAdmins = () => {
     if (!adminName) errors.adminName = "Admin Name is required";
     if (!email) errors.email = "Email is required";
     if (!password) errors.password = "Password is required";
-    if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match"; // Confirm password validation
+    if (password !== confirmPassword)
+      errors.confirmPassword = "Passwords do not match"; // Confirm password validation
     return errors;
   };
 
@@ -32,7 +43,7 @@ const CreateAdmins = () => {
     if (confirmPassword && value !== confirmPassword) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        confirmPassword: "Passwords do not match"
+        confirmPassword: "Passwords do not match",
       }));
     } else {
       setErrors((prevErrors) => {
@@ -50,7 +61,7 @@ const CreateAdmins = () => {
     if (password && value !== password) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        confirmPassword: "Passwords do not match"
+        confirmPassword: "Passwords do not match",
       }));
     } else {
       setErrors((prevErrors) => {
@@ -69,8 +80,16 @@ const CreateAdmins = () => {
     }
 
     try {
-      // Simulated API call
-      console.log("Form submitted");
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/admins/create",
+        {
+          adminName,
+          email,
+          password,
+        }
+      );
+
+      console.log("Response Data:", response.data);
 
       // Simulate a successful submission
       setDialogTitle("Success");
@@ -83,7 +102,10 @@ const CreateAdmins = () => {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+      // Redirect to manage vehicles page
+      navigate("/view-admins");
     } catch (error) {
+      console.error("Error creating admin:", error);
       setDialogTitle("Error");
       setDialogMessage("An error occurred while creating the admin account.");
       setDialogType("error");
@@ -176,12 +198,12 @@ const CreateAdmins = () => {
             )}
           </div>
 
-                    <button
-                      type="submit"
-                      className="w-full py-2 mt-6 text-white transition-all rounded-lg bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700"
-                    >
-                      Create Admin Account
-                    </button>
+          <button
+            type="submit"
+            className="w-full py-2 mt-6 text-white transition-all rounded-lg bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700"
+          >
+            Create Admin Account
+          </button>
         </form>
       </div>
 
