@@ -35,7 +35,7 @@ const ManageFuelStations = () => {
 
   // Navigate to the update page for the station
   const handleUpdate = (stationId) => {
-    navigate(`/update-fuel-station/${stationId}`);
+    navigate(`/admin-dashboard/update-fuel-station/${stationId}`);
   };
 
   // Delete station from the backend and update state
@@ -60,12 +60,12 @@ const ManageFuelStations = () => {
           Manage Fuel Stations
         </h1>
         <button
-          onClick={() => navigate("/add-fuel-station")}
+          onClick={() => navigate("/admin-dashboard/add-fuel-station")}
           className="px-6 py-3 mb-6 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
         >
           Add Fuel Station
         </button>
-      
+
         <table className="w-full text-black border border-collapse border-gray-300">
           <thead>
             <tr className="bg-green-200">
@@ -78,7 +78,10 @@ const ManageFuelStations = () => {
           <tbody>
             {Array.isArray(stations) && stations.length > 0 ? (
               stations.map((station) => (
-                <tr key={station.id} className="odd:bg-white even:bg-green-50">
+                <tr
+                  key={station.stationID}
+                  className="odd:bg-white even:bg-green-50"
+                >
                   <td className="px-4 py-2 border">{station.stationName}</td>
                   <td className="px-4 py-2 border">
                     {station.stationLocation}
@@ -86,13 +89,13 @@ const ManageFuelStations = () => {
                   <td className="px-4 py-2 border">{station.stationContact}</td>
                   <td className="px-4 py-2 border">
                     <button
-                      onClick={() => handleUpdate(station.id)}
+                      onClick={() => handleUpdate(station.stationID)}
                       className="px-2 py-1 mr-2 text-white bg-blue-500 rounded hover:bg-blue-600"
                     >
                       Update
                     </button>
                     <button
-                      onClick={() => handleDelete(station.id)}
+                      onClick={() => handleDelete(station.stationID)}
                       className="px-2 py-1 text-white bg-red-500 rounded hover:bg-red-600"
                     >
                       Delete

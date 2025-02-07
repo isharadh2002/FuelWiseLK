@@ -58,14 +58,14 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
         if (vehicle.isPresent() && fuelStation.isPresent()) {
             Vehicle existingVehicle = vehicle.get();
             // Update the remaining fuel quota
-            double newFuelQuota = existingVehicle.getVehicleFuelQuota() + fuelUsedOrAdded;
+            double newFuelQuota = existingVehicle.getVehicleFuelQuota() - fuelUsedOrAdded;
             existingVehicle.setVehicleFuelQuota(newFuelQuota);
 
             // Create a new FuelTransaction record
             FuelTransaction fuelTransaction = new FuelTransaction();
             fuelTransaction.setFuelType(fuelType);  // The type of fuel
             fuelTransaction.setPumpedLitres(String.valueOf(fuelUsedOrAdded));  // Amount added or used
-            fuelTransaction.setRemainingQuota(String.valueOf(50-newFuelQuota));  // Updated fuel quota
+            fuelTransaction.setRemainingQuota(String.valueOf(newFuelQuota));  // Updated fuel quota
             //fuelTransaction.setTransactionTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()));  // Transaction timestamp
             fuelTransaction.setTransactionTime(LocalDateTime.now());  // Transaction timestamp
             fuelTransaction.setVehicle(existingVehicle);  // Set the vehicle for the transaction
@@ -73,9 +73,9 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
 
 
             //send sms
-            String message = String.format("Hello %s, your fuel quota has been updated. Remaining balance: %.2f liters. Date: %s.",
-                    existingVehicle.getVehicleOwner(), newFuelQuota, LocalDateTime.now());
-            notificationService.sendSms(existingVehicle.getVehicleOwner().getOwnerPhone(), message);
+//            String message = String.format("Hello %s, your fuel quota has been updated. Remaining balance: %.2f liters. Date: %s.",
+//                    existingVehicle.getVehicleOwner(), newFuelQuota, LocalDateTime.now());
+//            notificationService.sendSms(existingVehicle.getVehicleOwner().getOwnerPhone(), message);
 
 
             // Save the transaction

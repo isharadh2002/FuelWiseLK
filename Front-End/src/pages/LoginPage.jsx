@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+  Alert,
+} from "@mui/material";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -32,7 +39,7 @@ const LoginForm = () => {
     if (!password) {
       setPasswordError("Password is required.");
       isValid = false;
-    } else if (password.length < 6) {
+    } else if (password.length < 5) {
       setPasswordError("Password must be at least 6 characters long.");
       isValid = false;
     } else {
@@ -50,10 +57,13 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/v1/User/login", {
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/User/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
 
       const res = response.data;
 
@@ -63,18 +73,57 @@ const LoginForm = () => {
         setDialogType("error");
         setDialogOpen(true);
       } else if (res.message === "Login Success") {
-        const userId = res.id;
+        const userId = res.userId;
+        const userRole = res.role; // Get the user role
 
-        if (userId) {
-          localStorage.setItem("userId", userId);
-          setDialogTitle("Login Success");
-          setDialogMessage("Successfully logged in!");
-          setDialogType("success");
-          setDialogOpen(true);
-          setTimeout(() => navigate("/home"), 1500); // Redirect after 1.5 seconds
+        if (userId && userRole) {
+          
+            localStorage.setItem("userId", userId);
+            localStorage.setItem("userRole", userRole); // Store role in localStorage
+
+          if(userRole === 'fuel_station'){
+            try {
+              const response = await axios.get(
+                  `http://localhost:8080/api/v1/FuelStation/getStationID/${userId}`
+              );
+
+              const stationId = response.data; // Since response is a raw integer
+              localStorage.setItem("stationId", stationId); // Store in localStorage
+
+              console.log("Fuel Station ID:", stationId); // Debugging log
+
+              // Additional logic can go here if needed
+
+            } catch (error) {
+              console.error("Failed to fetch fuel station ID:", error);
+
+              setDialogTitle("Error");
+              setDialogMessage("Unable to retrieve Fuel Station ID. Please try again.");
+              setDialogType("error");
+              setDialogOpen(true);
+            }
+          }
+
+            setDialogTitle("Login Success");
+            setDialogMessage("Successfully logged in!");
+            setDialogType("success");
+            setDialogOpen(true);
+
+            setTimeout(() => {
+              if (userRole === "vehicle_owner") {
+                navigate("/dashboard");
+              } else if (userRole === "fuel_station") {
+                navigate("/fuelStation-dashboard");
+              } else {
+                navigate("/home"); // Fallback route
+              }
+            }, 1500);
+          
         } else {
           setDialogTitle("Login Success");
-          setDialogMessage("Login Success, but userId not provided by the server.");
+          setDialogMessage(
+            "Login Success, but userId not provided by the server."
+          );
           setDialogType("success");
           setDialogOpen(true);
         }

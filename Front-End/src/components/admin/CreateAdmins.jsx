@@ -96,11 +96,15 @@ const CreateAdmins = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-blue-300 via-indigo-400 to-purple-500">
-      <div className="overflow-hidden bg-white bg-opacity-90 shadow-lg w-96 rounded-2xl">
-        <div className="p-6 bg-gradient-to-r from-indigo-500 to-purple-500">
-          <h2 className="text-2xl font-bold text-white">Create Admin Account</h2>
-          <p className="mt-1 text-indigo-100">Add a new administrator to the system</p>
+    <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-green-100 via-green-200 to-green-300">
+      <div className="overflow-hidden bg-white shadow-lg bg-opacity-90 w-96 rounded-2xl">
+        <div className="p-6 bg-gradient-to-r from-green-500 to-green-400">
+          <h2 className="text-2xl font-bold text-white">
+            Create Admin Account
+          </h2>
+          <p className="mt-1 text-indigo-100">
+            Add a new administrator to the system
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
@@ -110,13 +114,15 @@ const CreateAdmins = () => {
               <User className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
-                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={adminName}
                 onChange={(e) => setAdminName(e.target.value)}
                 placeholder="Enter admin name"
               />
             </div>
-            {errors.adminName && <p className="text-sm text-red-500">{errors.adminName}</p>}
+            {errors.adminName && (
+              <p className="text-sm text-red-500">{errors.adminName}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -125,13 +131,15 @@ const CreateAdmins = () => {
               <Mail className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="email"
-                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@company.com"
               />
             </div>
-            {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -140,13 +148,15 @@ const CreateAdmins = () => {
               <Lock className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="password"
-                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={password}
                 onChange={handlePasswordChange}
                 placeholder="Enter secure password"
               />
             </div>
-            {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -155,21 +165,23 @@ const CreateAdmins = () => {
               <Lock className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="password"
-                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full py-2 pl-10 text-gray-600 placeholder-gray-400 border border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
                 placeholder="Confirm your password"
               />
             </div>
-            {errors.confirmPassword && <p className="text-sm text-red-500">{errors.confirmPassword}</p>}
+            {errors.confirmPassword && (
+              <p className="text-sm text-red-500">{errors.confirmPassword}</p>
+            )}
           </div>
 
-          <button
-            type="submit"
-            className="w-full py-2 mt-6 text-white transition-all rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600"
-          >
-            Create Admin Account
-          </button>
+                    <button
+                      type="submit"
+                      className="w-full py-2 mt-6 text-white transition-all rounded-lg bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700"
+                    >
+                      Create Admin Account
+                    </button>
         </form>
       </div>
 

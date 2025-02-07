@@ -9,6 +9,7 @@ import com.example.Back_End.Repository.FuelStationRepository;
 import com.example.Back_End.Repository.UserRepository;
 import com.example.Back_End.Repository.VehicleOwnerRepository;
 import com.example.Back_End.Response.LoginResponse;
+import com.example.Back_End.Response.WebLoginResponse;
 import com.example.Back_End.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +39,6 @@ public class UserServiceIMPL implements UserService {
             user.setUsername(userDTO.getUserName());
 
             user.setPassword(passwordEncoder.encode(userDTO.getPassword())); // Encrypt the password
-
 
             user.setEmail(userDTO.getEmail());
             user.setPhone(userDTO.getPhone());
@@ -96,35 +96,38 @@ public UserDTO getUser(int userId) throws UserException {
 }
 
     @Override
-    public LoginResponse loginUser(LoginDTO loginDTO) {
+    public WebLoginResponse loginUser(LoginDTO loginDTO) {
 
-        Optional<User> userOptional = userRepository.findByEmail(loginDTO.getEmail());
+            Optional<User> userOptional = userRepository.findByEmail(loginDTO.getEmail());
 
-        if (userOptional.isPresent()) {
+            if (userOptional.isPresent()) {
 
-            User user = userOptional.get();
-            int userId = user.getId();
-            String password = loginDTO.getPassword();
-            String encodedPassword = user.getPassword();
-            boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+                User user = userOptional.get();
+                int userId = user.getId();
+                String role = user.getRole(); // Get the user role
+                String password = loginDTO.getPassword();
+                String encodedPassword = user.getPassword();
+                boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
 
-            if (isPwdRight) {
-                Optional<User> newuser = userRepository.findOneByEmailAndPassword(
-                        loginDTO.getEmail(), encodedPassword);
-                if (newuser.isPresent()) {
-                    return new LoginResponse(userId,"Login Success", true);
+                if (isPwdRight) {
+                    Optional<User> newuser = userRepository.findOneByEmailAndPassword(
+                            loginDTO.getEmail(), encodedPassword);
+
+                    if (newuser.isPresent()) {
+                        return new WebLoginResponse(userId, role, "Login Success", true);
+                    } else {
+                        return new WebLoginResponse(userId, role, "Login Failed", false);
+                    }
                 } else {
-                    return new LoginResponse(userId,"Login Failed", false);
+                    return new WebLoginResponse(userId, null, "Password does not match", false);
                 }
             } else {
-                return new LoginResponse(userId,"Password does not match", false);
+                return new WebLoginResponse(0, null, "Email does not exist", false);
             }
-        } else {
-            return new LoginResponse(0,"Email does not exist", false);
         }
-    }
 
-    @Override
+
+        @Override
 public String updateUser(int userId, UserDTO userDTO) throws UserException {
     Optional<User> userOptional = userRepository.findById(userId);
 
@@ -229,7 +232,7 @@ public String updateUser(int userId, UserDTO userDTO) throws UserException {
             userDTO.setPhone(user.getPhone());
             userDTO.setRole(user.getRole());
 
-            Optional<FuelStation> fuelStationOptional = fuelStationRepository.findStationById(userId);
+            Optional<FuelStation> fuelStationOptional = fuelStationRepository.findOneByUser(user);
             if (fuelStationOptional.isPresent()) {
                 FuelStation fuelStation = fuelStationOptional.get();
                 userDTO.setStationName(fuelStation.getStationName());
@@ -268,7 +271,7 @@ public String updateUser(int userId, UserDTO userDTO) throws UserException {
                 }
                 userRepository.save(user);
 
-                Optional<FuelStation> fuelStationOptional = fuelStationRepository.findStationById(userId);
+                Optional<FuelStation> fuelStationOptional = fuelStationRepository.findOneByUser(user);
                 if (fuelStationOptional.isPresent()) {
                     FuelStation fuelStation = fuelStationOptional.get();
                     if (userDTO.getStationName() != null && !userDTO.getStationName().isEmpty()) {

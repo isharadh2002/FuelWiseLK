@@ -43,7 +43,7 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
     final fuelAmount = double.tryParse(fuelAmountController.text);
 
     if (fuelAmount != null && fuelAmount > 0) {
-      final success = await vehicleController.updateFuelQuota(widget.vehicleId, fuelAmount);
+      final success = await vehicleController.updateFuelQuota(widget.vehicleId, fuelAmount, 'Hardcoded-Petrol', "1");
 
       if (success) {
         setState(() {

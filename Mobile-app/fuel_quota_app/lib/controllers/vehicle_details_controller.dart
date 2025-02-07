@@ -24,12 +24,19 @@ class VehicleDetailsController {
   }
 
   // Update fuel quota for a vehicle
-  Future<bool> updateFuelQuota(String vehicleId, double enteredFuel) async {
+  Future<bool> updateFuelQuota(String vehicleId, double fuelUsedOrAdded,
+      String fuelType, String? stationId) async {
     try {
-      final Uri uri = Uri.parse('$baseUrl/updateFuelQuota1/$vehicleId');
+      final Uri uri =
+          Uri.parse('$baseUrl/updateFuelQuota/').replace(queryParameters: {
+        "vehicleId": vehicleId.toString(),
+        "fuelUsedOrAdded": fuelUsedOrAdded.toString(),
+        "fuelType": fuelType,
+        "stationId": stationId.toString(),
+      });
 
       final Map<String, dynamic> body = {
-        "vehicleFuelQuota": enteredFuel,
+        "vehicleFuelQuota": fuelUsedOrAdded,
       };
 
       final response = await http.put(

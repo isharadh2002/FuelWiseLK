@@ -3,6 +3,7 @@ package com.example.Back_End.Controller;
 import com.example.Back_End.DTO.LoginDTO;
 import com.example.Back_End.DTO.UserDTO;
 import com.example.Back_End.Response.LoginResponse;
+import com.example.Back_End.Response.WebLoginResponse;
 import com.example.Back_End.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,8 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO)
 
     {
-        LoginResponse loginResponse = userService.loginUser(loginDTO);
-        return ResponseEntity.ok(loginResponse);
+        WebLoginResponse webLoginResponse = userService.loginUser(loginDTO);
+        return ResponseEntity.ok(webLoginResponse);
     }
 
     @PutMapping("/update/{userId}")

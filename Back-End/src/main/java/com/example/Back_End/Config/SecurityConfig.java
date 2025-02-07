@@ -50,6 +50,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admins/**").permitAll()
                         .requestMatchers("/api/v1/admins").permitAll()
 
+                        .requestMatchers("/api/v1/FuelTransaction/getTransactions/**").permitAll()
+
                         .anyRequest().authenticated()  // All other endpoints require authentication
                 );
 
