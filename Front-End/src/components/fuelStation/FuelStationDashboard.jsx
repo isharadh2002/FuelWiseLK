@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Users, Car, Fuel, TrendingUp } from "lucide-react";
+import { Fuel, TrendingUp, User, UserPen, History } from "lucide-react";
 import Header from "./Header";
 
 function FuelStationDashboard() {
@@ -14,19 +14,19 @@ function FuelStationDashboard() {
       view: "overview",
     },
     {
-      title: "Manage Admins",
-      icon: <Users className="w-5 h-5" />,
-      view: "view-admins",
+      title: "View Profile",
+      icon: <User className="w-5 h-5" />,
+      view: "profile",
     },
     {
-      title: "Manage Vehicles",
-      icon: <Car className="w-5 h-5" />,
-      view: "manage-vehicles",
+      title: "Manage Profile",
+      icon: <UserPen className="w-5 h-5" />,
+      view: "manage-profile",
     },
     {
-      title: "Manage Fuelstations",
-      icon: <Fuel className="w-5 h-5" />,
-      view: "manage-fuel-stations",
+      title: "View Fuel Transaction",
+      icon: <History className="w-5 h-5" />,
+      view: "fuel-transactions",
     },
   ];
 
