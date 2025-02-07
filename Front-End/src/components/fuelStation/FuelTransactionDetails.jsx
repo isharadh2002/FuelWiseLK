@@ -61,7 +61,7 @@ export default function FuelTransactionList() {
                                 <h2 className="text-xl font-semibold flex items-center gap-2">
                                     <Fuel className="text-blue-500"/> Transaction #{transaction.transactionID}
                                 </h2>
-                                <div className="flex flex-row gap-10">
+                                <div className="flex flex-row flex-wrap gap-x-10">
                                     <p className="text-gray-600">Transaction ID: {transaction.transactionID}</p>
                                     <p className="text-gray-600">Fuel Type: {transaction.fuelType}</p>
                                     <p className="text-gray-600">Pumped Litres: {transaction.pumpedLitres}</p>
@@ -70,7 +70,7 @@ export default function FuelTransactionList() {
 
                                 {/* Vehicle Details */}
                                 {vehicle ? (
-                                    <div className="flex flex-row gap-10 border-t pt-1">
+                                    <div className="flex flex-row flex-wrap gap-x-10 border-t mt-1 pt-1">
                                         <p className="text-gray-800">Vehicle Details</p>
                                         <p className="text-gray-600">Registration Number: {vehicle.registrationNumber}</p>
                                         <p className="text-gray-600">Vehicle Model: {vehicle.vehicleModel}</p>
