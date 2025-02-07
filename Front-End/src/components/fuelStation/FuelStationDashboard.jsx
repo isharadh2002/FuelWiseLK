@@ -31,38 +31,38 @@ function FuelStationDashboard() {
   ];
 
   useEffect(() => {
-    const stationID = localStorage.getItem("stationId");
-    if (!stationID) navigate("/admin-login");
+    const adminId = localStorage.getItem("userId");
+    if (!adminId) navigate("/login");
   }, [navigate]);
 
   return (
-    <div className="w-full bg-green-600 shadow-lg">
-      <Header />
-      <div className="flex min-h-screen bg-gray-50">
-        {/* Sidebar */}
-        <aside className="w-64 p-5 text-white bg-green-600">
-          <nav>
-            <ul className="space-y-2">
-              {NAVIGATION.map((item, index) => (
-                <li
-                  key={index}
-                  className={`flex items-center p-2 rounded cursor-pointer ${selectedView === item.view ? "bg-green-800" : "hover:bg-green-700"}`}
-                  onClick={() => navigate(`/admin-dashboard/${item.view}`)}
-                >
-                  {item.icon}
-                  <span className="ml-3">{item.title}</span>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </aside>
+      <div className="w-full bg-green-600 shadow-lg">
+        <Header />
+        <div className="flex min-h-screen bg-gray-50">
+          {/* Sidebar */}
+          <aside className="w-64 p-5 text-white bg-green-600">
+            <nav>
+              <ul className="space-y-2">
+                {NAVIGATION.map((item, index) => (
+                    <li
+                        key={index}
+                        className={`flex items-center p-2 rounded cursor-pointer ${selectedView === item.view ? "bg-green-800" : "hover:bg-green-700"}`}
+                        onClick={() => navigate(`/fuelStation-dashboard/${item.view}`)}
+                    >
+                      {item.icon}
+                      <span className="ml-3">{item.title}</span>
+                    </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
 
-        {/* Main Content */}
-        <main className="flex-1 p-6">
-          <Outlet />
-        </main>
+          {/* Main Content */}
+          <main className="flex-1">
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </div>
   );
 }
 

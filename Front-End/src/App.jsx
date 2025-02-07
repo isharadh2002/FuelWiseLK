@@ -40,6 +40,7 @@ import Overview from "./components/admin/Overview.jsx";
 // Fuel Station Dashboard
 import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
 import FuelStationDashboard from "./components/fuelStation/FuelStationDashboard.jsx";
+import FuelStaionOverview from "./components/fuelStation/Overview.jsx";
 
 function App() {
     return (
@@ -98,10 +99,10 @@ function App() {
               path="/FuelStation"
               element={<FuelStationRegistrationPage />}
             />
-            <Route
-              path="/fuelStation-dashboard"
-              element={<FuelStationDashboard />}
-            />
+            <Route path="/fuelStation-dashboard" element={<FuelStationDashboard />}>
+              <Route index element={<FuelStaionOverview/>} />
+              <Route path="overview" element={<FuelStaionOverview />} />
+            </Route>
 
             {/* 404 Page */}
             <Route path="*" element={<PageNotFound />} />
