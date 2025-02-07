@@ -2,6 +2,7 @@ package com.example.Back_End.Controller;
 
 import com.example.Back_End.DTO.VehicleRegistrationDTO;
 import com.example.Back_End.Entity.Vehicle;
+import com.example.Back_End.Services.Validation;
 import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,12 @@ public class VehicleRegistrationController {
    @Autowired
     public VehicleService vehicleService;
 
+    public final Validation validation;
+    @Autowired
+    public VehicleRegistrationController(VehicleService vehicleService, Validation validation) {
 
+        this.validation = validation;
+    }
 
 
    @GetMapping("/getAllVehicles")
@@ -30,8 +36,13 @@ public class VehicleRegistrationController {
 
    }
    @PostMapping("/addVehicle")
-    public VehicleRegistrationDTO saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO){
-     return vehicleService.saveVehicle(vehicleRegistrationDTO);
+    public boolean saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO) {
+       if (validation.vehicleValidation(vehicleRegistrationDTO)) {
+
+            vehicleService.saveVehicle(vehicleRegistrationDTO);
+            return true;
+       }
+       return false;
    }
     @PutMapping("/updateVehicle?id={id}")
     public ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable int id) {

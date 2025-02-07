@@ -12,8 +12,7 @@ public class MotorTrafficController {
 
     private final MotorTrafficService service;
 
-    public MotorTrafficController(MotorTrafficService service) {
-        this.service = service;
+    public MotorTrafficController(MotorTrafficService service) {this.service = service;
     }
 
     @GetMapping("/validate")

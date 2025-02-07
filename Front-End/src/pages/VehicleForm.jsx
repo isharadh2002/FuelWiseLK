@@ -5,6 +5,7 @@ import  { useState } from "react";
 import { styled } from "@mui/material/styles";
 import {Paper,TextField,Button,Box,Card,Grid,Typography} from "@mui/material";
 import PropTypes from 'prop-types';
+import axios from "axios";
 
 
   
@@ -43,7 +44,9 @@ function VehicleForm() {
       color="success"
       multiline
       maxRows={4}
-      error={errors && isSubmitted} // error only when isSubmitted and error exist
+      error={errors}
+      value={formData[id]}
+        // error only when isSubmitted and error exist
       sx={{
         marginBottom: '20px',
         marginTop: '20px',
@@ -67,8 +70,11 @@ function VehicleForm() {
 
   
   const [formData, setFormData] = useState({
-    name: "",
-    label:"",
+   brand:"",
+    model:"",
+    number:"",
+    ownerId:3
+
    
   });
 
@@ -79,30 +85,74 @@ function VehicleForm() {
  
   //To set the values to the useStates()
   const handleInputs = (e) => {
-    setLoading(true);
+
     const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }))
+
     if (validation) {
       setFormData((prev) => ({ ...prev, [id]: value }))
       setLoading(false);
       setIsSubmitted(true);
-      document.location.href = ("./VehicleRegister&success=success");
+
+      postingData(e);
+
       
     }
     return "files are not submitted";
   };
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    setIsSubmitted(true);
+
+    if(validation()){
+      postingData();
+    }
+
+
+  }
   const validation = () => {
     
     const newErrors = {};
     if (!formData.brand.trim()) newErrors.brand = "Brand is required.";
     if (!formData.model.trim()) newErrors.model = "Model is required.";
     if (!formData.number.trim()) newErrors.number = "Number is required.";
-    if (!formData.capacity.trim()) newErrors.capacity = "Capacity is required.";
-    if (!formData.owFullName.trim()) newErrors.owFullName = "Owner's full name is required.";
-    if (!formData.nameWithInitials.trim()) newErrors.nameWithInitials = "Name with initials is required.";
-    if (!formData.nic.trim()) newErrors.nic = "NIC is required.";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+  const postingData=async (e)=>{
+        e.preventDefault();
+        setIsSubmitted(true);
+        if (validation())return;
+        setLoading(true);
+    try{
+      const response=await axios.post("http://localhost:8080/api/v1/VehicleForm/addVehicle/",formData,{
+
+        headers:{
+          "Content-Type":"application/json",
+        },
+      });
+      alert("Vehicle Added successfully:"+response.data);
+
+      setFormData({
+        brand: "",
+        model:"",
+        number:"",
+        ownerId: 3
+
+      });
+      setErrors({});
+      setIsSubmitted(false);
+
+      }catch (error){
+      console.log("Error adding vehicles:"+error);
+      alert("Failed to add vehicle")
+    }finally {
+      setLoading(false);
+    }
+
+
+
   };
  
 
@@ -151,10 +201,9 @@ function VehicleForm() {
                         { id: "brand", label: "Vehicle Brand" },
                         { id: "model", label: "Vehicle model" },
                         { id: "number", label: "Vehicle Number"},
-                        { id: "capacity", label: "Vehicle Capacity"},
-                        { id: "owFullName", label: "Owner's FullName" },
-                        { id: "nameWithInitials", label: "Name With Initials" },
-                        { id: "nic", label: "NIC", value: "nic" },
+
+
+
                        
                       ].map(({ id, label}) => (
                         <CustomTextField
@@ -171,7 +220,8 @@ function VehicleForm() {
                           color='success'
                           multiline
                           maxRows={4}
-                          error={errors[id]}
+                          error={!!errors[id]}
+
                           isSubmitted={isSubmitted}
                         />
                       ))}
@@ -189,7 +239,7 @@ function VehicleForm() {
                           fontWeight: '12px'
                         }}
 
-                          onClick={handleInputs}
+                          onClick={handleSubmit}
                           type="submit"
                       >
                         <Typography

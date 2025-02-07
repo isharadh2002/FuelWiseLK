@@ -8,3 +8,7 @@ import java.util.Optional;
 public interface MotorTrafficRepository extends JpaRepository<VehicleData, Integer> {
     Optional<VehicleData> findByLicensePlate(String licensePlate);
 }
+
+
+
+
