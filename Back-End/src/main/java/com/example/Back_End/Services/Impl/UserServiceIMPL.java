@@ -232,7 +232,7 @@ public String updateUser(int userId, UserDTO userDTO) throws UserException {
             userDTO.setPhone(user.getPhone());
             userDTO.setRole(user.getRole());
 
-            Optional<FuelStation> fuelStationOptional = fuelStationRepository.findStationById(userId);
+            Optional<FuelStation> fuelStationOptional = fuelStationRepository.findOneByUser(user);
             if (fuelStationOptional.isPresent()) {
                 FuelStation fuelStation = fuelStationOptional.get();
                 userDTO.setStationName(fuelStation.getStationName());
@@ -271,7 +271,7 @@ public String updateUser(int userId, UserDTO userDTO) throws UserException {
                 }
                 userRepository.save(user);
 
-                Optional<FuelStation> fuelStationOptional = fuelStationRepository.findStationById(userId);
+                Optional<FuelStation> fuelStationOptional = fuelStationRepository.findOneByUser(user);
                 if (fuelStationOptional.isPresent()) {
                     FuelStation fuelStation = fuelStationOptional.get();
                     if (userDTO.getStationName() != null && !userDTO.getStationName().isEmpty()) {
