@@ -56,7 +56,5 @@ public class FuelStationController {
     public int getStationIDByUserID(@PathVariable int UserID) throws FuelStationException {
         return fuelStationService.getStaionIDByUserID(UserID);
     }
-
-
     
 }

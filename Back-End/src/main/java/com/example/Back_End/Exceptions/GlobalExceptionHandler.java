@@ -37,6 +37,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>("UserException occurred! : "+ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(FuelTransactionException.class)
+    public ResponseEntity<String> handleFuelStationException(FuelTransactionException ex) {
+        // Return the exception message with a 404 status code
+        return new ResponseEntity<>("FuelTransactionException occurred! : "+ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGenericException(Exception ex) {
         // Handle all other exceptions with a 500 status code

@@ -20,6 +20,8 @@ class LoginScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(height:50),
+
                 Image.asset(
                   'assets/website_logo.png',
                   width: 150,
@@ -173,6 +175,8 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                SizedBox(height:50),
               ],
             ),
           ),
