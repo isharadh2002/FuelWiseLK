@@ -104,6 +104,29 @@ const LoginForm = () => {
             }
           }
 
+          else if(userRole === 'vehicle_owner'){
+            try {
+              const response = await axios.get(
+                  `http://localhost:8080/api/v1/VehicleOwner/getOwnerID/${userId}`
+              );
+
+              const ownerId = response.data; // Since response is a raw integer
+              localStorage.setItem("ownerId", ownerId); // Store in localStorage
+
+              console.log("Vehicle Owner ID:", ownerId); // Debugging log
+
+              // Additional logic can go here if needed
+
+            } catch (error) {
+              console.error("Failed to fetch vehicle owner ID:", error);
+
+              setDialogTitle("Error");
+              setDialogMessage("Unable to retrieve Vehicle Owner ID. Please try again.");
+              setDialogType("error");
+              setDialogOpen(true);
+            }
+          }
+
             setDialogTitle("Login Success");
             setDialogMessage("Successfully logged in!");
             setDialogType("success");

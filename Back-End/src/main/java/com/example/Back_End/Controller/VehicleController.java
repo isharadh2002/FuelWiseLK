@@ -30,6 +30,16 @@ public class VehicleController {
         return ResponseEntity.ok(vehicles); // Return 200 with the list of vehicles
     }
 
+    // Get all vehicles by ownerID
+    @GetMapping("/getAllByOwnerID/{ownerID}")
+    public ResponseEntity<List<VehicleDTO>> getAllVehiclesByOwnerID(@PathVariable int ownerID) {
+        List<VehicleDTO> vehicles = vehicleService.getAllVehiclesByOwnerId(ownerID);
+        if (vehicles.isEmpty()) {
+            return ResponseEntity.noContent().build(); // Return 204 if no vehicles
+        }
+        return ResponseEntity.ok(vehicles); // Return 200 with the list of vehicles
+    }
+
     @PostMapping("/add")
     public ResponseEntity<?> addNewVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO) {
 

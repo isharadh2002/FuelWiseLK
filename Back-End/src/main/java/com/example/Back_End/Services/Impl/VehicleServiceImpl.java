@@ -141,6 +141,25 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    public List<VehicleDTO> getAllVehiclesByOwnerId(int ownerId) {
+        Optional<VehicleOwner> vehicleOwnerOpt = vehicleOwnerRepository.findById(ownerId);
+        if (vehicleOwnerOpt.isPresent()) {
+            VehicleOwner vehicleOwner = vehicleOwnerOpt.get();
+            List<Vehicle> vehicles = vehicleRepository.findAllByVehicleOwner(vehicleOwner);
+            return vehicles.stream()
+                    .map(vehicle -> new VehicleDTO(
+                            vehicle.getVehicleId(),
+                            vehicle.getLicensePlate(),
+                            vehicle.getVehicleOwner().getOwnerName(),
+                            vehicle.getVehicleFuelQuota()))
+                    .collect(Collectors.toList());
+        }
+        else{
+            throw new RuntimeException("Vehicle owner not found by ID : " + ownerId);
+        }
+    }
+
+    @Override
     public void updateFuelQuota(int id, double fuelQuota) throws Exception {
         // Fetch the vehicle by ID
         Optional<Vehicle> existingVehicle = vehicleRepository.findById(id);

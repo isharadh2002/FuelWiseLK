@@ -71,7 +71,7 @@ function Overview() {
   }
 
   return (
-    <div>
+    <div className="p-4">
       <h2 className="mb-4 text-xl font-semibold text-gray-800">
         Fuel Station Dashboard Overview
       </h2>
