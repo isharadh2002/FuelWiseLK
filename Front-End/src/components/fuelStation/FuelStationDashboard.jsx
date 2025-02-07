@@ -1,39 +1,29 @@
 import { useState, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { Fuel, TrendingUp, User, UserPen, History } from "lucide-react";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { TrendingUp, User, UserPen, History } from "lucide-react";
 import Header from "./Header";
 
 function FuelStationDashboard() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedView, setSelectedView] = useState("overview");
 
   const NAVIGATION = [
-    {
-      title: "Overview",
-      icon: <TrendingUp className="w-5 h-5" />,
-      view: "overview",
-    },
-    {
-      title: "View Profile",
-      icon: <User className="w-5 h-5" />,
-      view: "profile",
-    },
-    {
-      title: "Manage Profile",
-      icon: <UserPen className="w-5 h-5" />,
-      view: "manage-profile",
-    },
-    {
-      title: "View Fuel Transaction",
-      icon: <History className="w-5 h-5" />,
-      view: "fuel-transactions",
-    },
+    { title: "Overview", icon: <TrendingUp className="w-5 h-5" />, view: "overview" },
+    { title: "View Profile", icon: <User className="w-5 h-5" />, view: "profile" },
+    { title: "Manage Profile", icon: <UserPen className="w-5 h-5" />, view: "manage-profile" },
+    { title: "View Fuel Transaction", icon: <History className="w-5 h-5" />, view: "fuel-transactions" },
   ];
 
   useEffect(() => {
     const adminId = localStorage.getItem("userId");
     if (!adminId) navigate("/login");
   }, [navigate]);
+
+  useEffect(() => {
+    const currentView = location.pathname.split("/").pop();
+    setSelectedView(currentView || "overview");
+  }, [location]);
 
   return (
       <div className="w-full bg-green-600 shadow-lg">
@@ -46,7 +36,9 @@ function FuelStationDashboard() {
                 {NAVIGATION.map((item, index) => (
                     <li
                         key={index}
-                        className={`flex items-center p-2 rounded cursor-pointer ${selectedView === item.view ? "bg-green-800" : "hover:bg-green-700"}`}
+                        className={`flex items-center p-2 rounded cursor-pointer ${
+                            selectedView === item.view ? "bg-green-800" : "hover:bg-green-700"
+                        }`}
                         onClick={() => navigate(`/fuelStation-dashboard/${item.view}`)}
                     >
                       {item.icon}
