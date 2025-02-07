@@ -52,7 +52,7 @@ export default function FuelTransactionList() {
                 <h2 className="text-4xl font-bold text-black text-center">Transaction Records</h2>
             </div>
             <div className="flex flex-col items-center p-4">
-                <div className="w-full max-w-4xl">
+                <div className="w-full max-w-5xl">
                     {currentTransactions.map((transaction) => {
                         const vehicle = vehicleDetails[transaction.vehicleID];
                         return (
@@ -73,6 +73,7 @@ export default function FuelTransactionList() {
                                     <div className="flex flex-row gap-10 border-t pt-1">
                                         <p className="text-gray-800">Vehicle Details</p>
                                         <p className="text-gray-600">Registration Number: {vehicle.registrationNumber}</p>
+                                        <p className="text-gray-600">Vehicle Model: {vehicle.vehicleModel}</p>
                                         <p className="text-gray-600">Owner Name: {vehicle.ownerName}</p>
                                         {/*<p className="text-gray-600">Fuel Quota: {vehicle.vehicleFuelQuota}</p>*/}
                                     </div>
