@@ -69,7 +69,7 @@ public class VehicleServiceImpl implements VehicleService {
             Vehicle vehicle = new Vehicle();
             vehicle.setLicensePlate(vehicleRegistrationDTO.getLicensePlate());
             vehicle.setVehicleModel(vehicleRegistrationDTO.getVehicleModel());
-            vehicle.setVehicleFuelQuota(0);
+            vehicle.setVehicleFuelQuota(50);
             vehicle.setVehicleOwner(owner);
 
             Vehicle savedVehicle =  vehicleRepository.save(vehicle);
