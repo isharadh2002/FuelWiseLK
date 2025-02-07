@@ -34,7 +34,8 @@ public class VehicleServiceImpl implements VehicleService {
                     vehicleEntity.getVehicleId(),
                     vehicleEntity.getLicensePlate(),
                     vehicleEntity.getVehicleOwner().getOwnerName(),
-                    vehicleEntity.getVehicleFuelQuota()
+                    vehicleEntity.getVehicleFuelQuota(),
+                    vehicleEntity.getVehicleModel()
             );
             return Optional.of(vehicleDTO);
         }
@@ -136,7 +137,8 @@ public class VehicleServiceImpl implements VehicleService {
                         vehicle.getVehicleId(),
                         vehicle.getLicensePlate(),
                         vehicle.getVehicleOwner().getOwnerName(),
-                        vehicle.getVehicleFuelQuota()))
+                        vehicle.getVehicleFuelQuota(),
+                        vehicle.getVehicleModel()))
                 .collect(Collectors.toList());
     }
 
@@ -151,7 +153,8 @@ public class VehicleServiceImpl implements VehicleService {
                             vehicle.getVehicleId(),
                             vehicle.getLicensePlate(),
                             vehicle.getVehicleOwner().getOwnerName(),
-                            vehicle.getVehicleFuelQuota()))
+                            vehicle.getVehicleFuelQuota(),
+                            vehicle.getVehicleModel()))
                     .collect(Collectors.toList());
         }
         else{

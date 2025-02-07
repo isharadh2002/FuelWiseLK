@@ -12,4 +12,5 @@ public class VehicleDTO {
     private String registrationNumber;
     private String ownerName;
     private double vehicleFuelQuota;
+    private String vehicleModel;
 }
