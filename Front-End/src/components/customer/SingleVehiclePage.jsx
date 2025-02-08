@@ -16,7 +16,7 @@ const SingleVehiclePage = () => {
         const fetchVehicleData = async () => {
             try {
                 setLoading(true);
-                const vehicleResponse = await axios.get(`http://localhost:8080/api/v1/vehicles/${vehicleId}`);
+                const vehicleResponse = await axios.get(`http://localhost:8080/api/v1/vehicles/get/${vehicleId}`);
                 setVehicle(vehicleResponse.data);
 
                 const qrResponse = await fetch(`http://localhost:8080/api/v1/qr/${vehicleId}`);

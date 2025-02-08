@@ -72,10 +72,13 @@ public class FuelQuotaServiceIMPL implements FuelQuotaService {
             fuelTransaction.setFuelStation(fuelStation.get());
 
 
+
             //send sms
-//            String message = String.format("Hello %s, your fuel quota has been updated. Remaining balance: %.2f liters. Date: %s.",
-//                    existingVehicle.getVehicleOwner(), newFuelQuota, LocalDateTime.now());
-//            notificationService.sendSms(existingVehicle.getVehicleOwner().getOwnerPhone(), message);
+            String message = String.format("Hello %s, your fuel quota has been updated. Remaining balance: %.2f liters. Date: %s.",
+                    existingVehicle.getVehicleOwner().getOwnerName(), newFuelQuota, LocalDateTime.now());
+            System.out.println(existingVehicle.getVehicleOwner().getOwnerPhone());
+            System.out.println(message);
+            notificationService.sendSms(existingVehicle.getVehicleOwner().getOwnerPhone(), message);
 
 
             // Save the transaction
