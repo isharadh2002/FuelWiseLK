@@ -16,7 +16,7 @@ const ManageVehiclePage = () => {
     useEffect(() => {
         const fetchVehicleData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/v1/vehicles/${vehicleId}`);
+                const response = await axios.get(`http://localhost:8080/api/v1/vehicles/get/${vehicleId}`);
                 setVehicle(response.data);
             } catch (err) {
                 setError("Error fetching vehicle details.");
