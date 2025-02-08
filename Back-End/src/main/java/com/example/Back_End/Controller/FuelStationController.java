@@ -17,9 +17,9 @@ public class FuelStationController {
     private FuelStationService fuelStationService;
 
     @PostMapping(path = "/save")
-    public String saveFuelStation(@RequestBody FuelStationDTO fuelStationDTO) {
+    public String saveFuelStation(@RequestBody FuelStationRetrieveDTO fuelStationRetrieveDTO) {
 
-        return fuelStationService.addFuelStation(fuelStationDTO);
+        return fuelStationService.addFuelStation(fuelStationRetrieveDTO);
 
     }
 

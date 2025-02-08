@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface FuelStationService {
 
-    String addFuelStation(FuelStationDTO fuelStationDTO);
+    String addFuelStation(FuelStationRetrieveDTO fuelStationRetrieveDTO);
     FuelStationDTO getFuelStation(String stationName) throws Exception;
     FuelStationDTO updateFuelStation(int stationID, FuelStationDTO fuelStationDTO) throws FuelStationException;
     FuelStationDTO updateFuelStation(FuelStationDTO fuelStationDTO) throws FuelStationException;

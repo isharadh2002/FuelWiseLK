@@ -26,13 +26,14 @@ public class FuelStationServiceIMPL implements FuelStationService {
     private UserRepository userRepository;
 
     @Override
-    public String addFuelStation(FuelStationDTO fuelStationDTO) {
+    public String addFuelStation(FuelStationRetrieveDTO fuelStationRetrieveDTO) {
 
         //Create a FuelStation instance using the DTO values
         FuelStation fuelStation = new FuelStation();
-        fuelStation.setStationName(fuelStationDTO.getStationName());
-        fuelStation.setStationLocation(fuelStationDTO.getStationLocation());
-        fuelStation.setStationContact(fuelStationDTO.getStationContact());
+        fuelStation.setStationName(fuelStationRetrieveDTO.getStationName());
+        fuelStation.setStationLocation(fuelStationRetrieveDTO.getStationLocation());
+        fuelStation.setStationContact(fuelStationRetrieveDTO.getStationContact());
+        fuelStation.setUser(userRepository.findById(fuelStationRetrieveDTO.getUserID()).get());
 
         //Save the FuelStation instance to the database
         fuelStationRepository.save(fuelStation);
