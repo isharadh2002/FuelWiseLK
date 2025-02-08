@@ -56,7 +56,7 @@ function App() {
           <Global styles={globalStyles} />
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<VehicleRegistrationPage />} />
+            <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegistrationForm />} />

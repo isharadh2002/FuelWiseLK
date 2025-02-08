@@ -11,14 +11,15 @@ function VehicleForm() {
     padding: theme.spacing(2),
     textAlign: "center",
   }));
+  let gettingOwnerId=localStorage.getItem("ownerId");
 
   const [errors, setErrors] = useState({});
-  const [ setIsSubmitted] = useState(false);
+  const [ isSubmitted,setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     licensePlate: "",
     vehicleModel: "",
-    ownerId: 1,
+    ownerId: gettingOwnerId,
     vehicleQuota:50.0
   });
   const[snackbarOpen,setSnackbarOpen]=useState(false);
@@ -60,6 +61,8 @@ function VehicleForm() {
     console.log(`Input changed: ${name} = ${value}`);
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+
 
   const validation = () => {
     const newErrors = {};

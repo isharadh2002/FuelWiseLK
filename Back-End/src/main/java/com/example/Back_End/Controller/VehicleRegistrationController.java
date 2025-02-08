@@ -3,6 +3,7 @@ package com.example.Back_End.Controller;
 import com.example.Back_End.DTO.VehicleRegistrationDTO;
 import com.example.Back_End.Entity.Vehicle;
 import com.example.Back_End.Services.Validation;
+import com.example.Back_End.Services.VehicleOwnerService;
 import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,12 @@ public class VehicleRegistrationController {
     public VehicleService vehicleService;
 
     public final Validation validation;
+    public final VehicleOwnerService vehicleOwnerService;
     @Autowired
-    public VehicleRegistrationController(VehicleService vehicleService, Validation validation) {
+    public VehicleRegistrationController(VehicleOwnerService vehicleOwnerService, Validation validation) {
 
         this.validation = validation;
+        this.vehicleOwnerService=vehicleOwnerService;
     }
 
 
@@ -38,12 +41,14 @@ public class VehicleRegistrationController {
     @PostMapping("/addVehicle")
     public ResponseEntity<String> saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO) {
         try {
+
             if (validation.vehicleValidation(vehicleRegistrationDTO)) {
                 vehicleService.saveVehicle(vehicleRegistrationDTO);
                 return ResponseEntity.ok("Vehicle added successfully");
             } else {
                 return ResponseEntity.badRequest().body("Invalid vehicle data");
             }
+
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
         }
