@@ -38,6 +38,7 @@ import UpdateVehicleForm from "./components/admin/UpdateVehicle.jsx";
 import AddFuelStationForm from "./components/admin/AddFuelStation.jsx";
 import UpdateFuelStationForm from "./components/admin/UpdatefuelStation.jsx";
 import Overview from "./components/admin/Overview.jsx";
+import UpdateAdmin from "./components/admin/UpdateAdmin.jsx";
 
 // Fuel Station Dashboard
 import FuelStationRegistrationPageNew from "./pages/FuelStationRegistrationPage";
@@ -61,7 +62,7 @@ function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<ContactUs />} />
-            <Route path="/services" element={<Services/>} />
+            <Route path="/services" element={<Services />} />
             <Route path="/footer" element={<Footer />} />
 
             {/* Fuel Station Registration NEW*/}
@@ -87,6 +88,7 @@ function App() {
             <Route path="/admin-dashboard" element={<AdminDashboard />}>
               <Route index element={<Overview />} />
               <Route path="overview" element={<Overview />} />
+              <Route path="update-admin/:adminId" element={<UpdateAdmin />} />
               <Route path="createAdmin" element={<CreateAdmins />} />
               <Route path="view-admins" element={<ViewAdmins />} />
               <Route path="manage-vehicles" element={<ManageVehicles />} />
@@ -101,7 +103,7 @@ function App() {
               />
               <Route path="add-fuel-station" element={<AddFuelStationForm />} />
               <Route
-                path="update-fuel-station/:id"
+                path="update-fuel-station/:stationId"
                 element={<UpdateFuelStationForm />}
               />
             </Route>

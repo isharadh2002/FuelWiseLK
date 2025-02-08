@@ -40,6 +40,8 @@ public class FuelStationServiceIMPL implements FuelStationService {
 
     }
 
+
+
     @Override
     public FuelStationDTO getFuelStation(String stationName) throws FuelStationException {
 
@@ -67,6 +69,21 @@ public class FuelStationServiceIMPL implements FuelStationService {
             retrieveDTO.setUserID(fuelStation.getUser().getId()); // Manually set userID
             return retrieveDTO;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public FuelStationDTO getFuelStationByID(int stationID) throws FuelStationException {
+
+        // Find the FuelStation by stationID or throw an exception if not found
+        FuelStation fuelStation = fuelStationRepository.findStationById(stationID)
+                .orElseThrow(() -> new FuelStationException("Fuel station not found with stationID: " + stationID));
+
+        // Map entity to DTO
+        FuelStationDTO fuelStationDTO = new FuelStationDTO();
+        fuelStationDTO.setStationName(fuelStation.getStationName());
+        fuelStationDTO.setStationLocation(fuelStation.getStationLocation());
+        fuelStationDTO.setStationContact(fuelStation.getStationContact());
+        return fuelStationDTO;
     }
 
     @Override
@@ -153,6 +170,8 @@ public class FuelStationServiceIMPL implements FuelStationService {
         return updatedStationDTO;
     }
 
+
+
     @Override
     public String deleteFuelStation(String stationName) throws FuelStationException {
         // Check if the fuel station exists
@@ -164,6 +183,20 @@ public class FuelStationServiceIMPL implements FuelStationService {
 
         // Return success message
         return "Fuel station '" + stationName + "' deleted successfully.";
+    }
+
+    @Override
+    public String deleteFuelStation(int stationID) throws FuelStationException {
+
+        // Check if the fuel station exists
+        FuelStation existingStation = fuelStationRepository.findStationById(stationID)
+                .orElseThrow(() -> new FuelStationException("Fuel station not found with stationID : " + stationID));
+
+        // Delete the station
+        fuelStationRepository.delete(existingStation);
+
+        // Return success message
+        return "Fuel station with ID '" + stationID + "' deleted successfully.";
     }
 
 }
