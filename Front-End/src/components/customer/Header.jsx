@@ -22,7 +22,7 @@ function Header() {
                 onClick={() => {
                   localStorage.removeItem("userId");
                   localStorage.clear();
-                  navigate("/login");
+                  navigate("/home");
                 }}
                 className={`block w-full px-4 py-2 text-left text-sm ${
                   active ? "bg-red-50 text-red-700" : "text-gray-700"

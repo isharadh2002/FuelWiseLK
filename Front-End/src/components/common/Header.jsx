@@ -6,7 +6,6 @@ function Header() {
     const navigationLinks = [
         {name: "Home", path: "/home"},
         {name: "About Us", path: "/about"},
-        {name: "Resources", path: "/resources"},
         {name: "Services", path: "/services"},
         {name: "Contact Us", path: "/contact"}
     ];
