@@ -16,7 +16,7 @@ class LoginController {
 
   //Retrieve FuelStationID after login
   Future<void> fetchAndStoreStationID(String userId) async {
-    const String fuelStationBaseUrl = 'http://192.168.1.55:8080/api/v1/FuelStation';
+    const String fuelStationBaseUrl = 'http://10.0.2.2:8080/api/v1/FuelStation';
 
     try {
       final response = await http.get(
