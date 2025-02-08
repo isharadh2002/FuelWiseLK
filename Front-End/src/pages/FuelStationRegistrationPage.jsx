@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
-const FuelStationRegistrationPage = () => {
+const FuelStationRegistrationPageNew = () => {
   const [formData, setFormData] = useState({
     name: "",
     Location: "",
@@ -103,4 +103,4 @@ const FuelStationRegistrationPage = () => {
   );
 };
 
-export default FuelStationRegistrationPage;
+export default FuelStationRegistrationPageNew;
