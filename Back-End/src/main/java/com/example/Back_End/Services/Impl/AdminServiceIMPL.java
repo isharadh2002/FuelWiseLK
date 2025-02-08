@@ -3,7 +3,6 @@ package com.example.Back_End.Services.Impl;
 import com.example.Back_End.DTO.AdminDTO;
 import com.example.Back_End.DTO.LoginDTO;
 import com.example.Back_End.Entity.Admin;
-import com.example.Back_End.Entity.User;
 import com.example.Back_End.Exceptions.AdminException;
 import com.example.Back_End.Repository.AdminRepository;
 import com.example.Back_End.Response.LoginResponse;

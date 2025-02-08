@@ -42,12 +42,15 @@ const ManageFuelStations = () => {
   const handleDelete = async (stationId) => {
     try {
       await axios.delete(
-        `http://localhost:8080/api/v1/FuelStation/delete/${stationId}`
+        `http://localhost:8080/api/v1/FuelStation/deleteByID/${stationId}`
       );
-      // Update local state by filtering out the deleted station
-      setStations((prevStations) =>
-        prevStations.filter((station) => station.id !== stationId)
-      );
+      
+setStations(
+  (prevStations) =>
+    prevStations.filter((station) => station.stationID !== stationId) // Ensure correct key
+);
+
+
     } catch (error) {
       console.error("Error deleting station:", error);
     }

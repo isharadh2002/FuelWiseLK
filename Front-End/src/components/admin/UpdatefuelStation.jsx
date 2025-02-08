@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation , useParams } from "react-router-dom";
 import {
   Dialog,
   DialogActions,
@@ -10,7 +10,7 @@ import {
   Alert,
 } from "@mui/material";
 
-const UpdateFuelStationForm = ({ stationId }) => {
+const UpdateFuelStationForm = () => {
   const [stationData, setStationData] = useState({
     stationName: "",
     stationLocation: "",
@@ -24,12 +24,21 @@ const UpdateFuelStationForm = ({ stationId }) => {
   const [dialogType, setDialogType] = useState(""); // success or error
   const navigate = useNavigate();
 
+
+  const { stationId } = useParams();
+
+  
   useEffect(() => {
-    // Fetch station data based on stationId for updating
+    
+    if (!stationId) {
+      console.error("Error: stationId is undefined.");
+      return;
+    }
+
     const fetchStationData = async () => {
       try {
         const response = await axios.get(
-          `http://backend-api.com/fuel-station/${stationId}`
+          `http://localhost:8080/api/v1/FuelStation/getByID/${stationId}`
         );
         setStationData(response.data);
       } catch (error) {
@@ -52,7 +61,7 @@ const UpdateFuelStationForm = ({ stationId }) => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://backend-api.com/fuel-station/${stationId}`,
+        `http://localhost:8080/api/v1/FuelStation/update/${stationId}`,
         stationData,
         {
           headers: {
@@ -77,7 +86,7 @@ const UpdateFuelStationForm = ({ stationId }) => {
 
       // Redirect to manage fuel station page after a delay
       setTimeout(() => {
-        navigate("/manage-fuel-station");
+        navigate("/admin-dashboard/manage-fuel-stations");
       }, 2000);
     } catch (error) {
       console.error("Error updating fuel station:", error);
