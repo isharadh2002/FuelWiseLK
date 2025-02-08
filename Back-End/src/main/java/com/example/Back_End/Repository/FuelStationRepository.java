@@ -3,7 +3,9 @@ package com.example.Back_End.Repository;
 import com.example.Back_End.Entity.FuelStation;
 import com.example.Back_End.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -25,4 +27,9 @@ public interface FuelStationRepository extends JpaRepository<FuelStation, Intege
     FuelStation getStationById(int StationID);
 
     Optional<FuelStation> findOneByUser(User user);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM fuel_station WHERE stationID = ?1", nativeQuery = true)
+    void deleteByStationID(int stationID);
 }
