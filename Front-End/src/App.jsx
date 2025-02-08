@@ -12,6 +12,7 @@ import RegistrationForm from "./pages/RegisterPage";
 import Terms from "./pages/Terms";
 import About from "./pages/About";
 import ContactUs from "./pages/Contact";
+import Services from "./pages/Services.jsx";
 import PageNotFound from "./pages/PageNotFound";
 import FuelStationRegistrationPage from "./pages/FuelStationRegistrationPage";
 
@@ -60,6 +61,7 @@ function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/services" element={<Services/>} />
             <Route path="/footer" element={<Footer />} />
 
             {/* Fuel Station Registration NEW*/}
