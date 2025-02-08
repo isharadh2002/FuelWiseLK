@@ -32,4 +32,9 @@ public interface FuelStationRepository extends JpaRepository<FuelStation, Intege
     @Transactional
     @Query(value = "DELETE FROM fuel_station WHERE stationID = ?1", nativeQuery = true)
     void deleteByStationID(int stationID);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO fuel_station (station_name, station_location, station_contact, user_id) VALUES (?1, ?2, ?3, ?4)", nativeQuery = true)
+    void addFuelStation(String stationName, String stationLocation, String stationContact, int userID);
 }

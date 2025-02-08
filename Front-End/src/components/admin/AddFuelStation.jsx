@@ -1,26 +1,37 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+  Alert,
+} from "@mui/material";
+import { useParams } from "react-router-dom";
 
 const AddFuelStationForm = () => {
   const [stationName, setStationName] = useState("");
   const [stationLocation, setStationLocation] = useState("");
   const [stationContact, setStationContact] = useState("");
   const [userId, setUserId] = useState("");
+  const [stationID, setStationID] = useState(null); // Add state for stationID
   const [errors, setErrors] = useState({});
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogType, setDialogType] = useState(""); // success or error
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { stationId } = useParams();
 
   // Validate form inputs
   const validate = () => {
     const errors = {};
     if (!stationName) errors.stationName = "Station Name is required";
-    if (!stationLocation) errors.stationLocation = "Station Location is required";
+    if (!stationLocation)
+      errors.stationLocation = "Station Location is required";
     if (!stationContact) errors.stationContact = "Station Contact is required";
     if (!userId) errors.userId = "User ID is required";
     return errors;
@@ -37,16 +48,23 @@ const AddFuelStationForm = () => {
     try {
       // API call to add fuel station
       const response = await axios.post(
-        "http://localhost:8080/api/v1/fuelstations/save",
+        "http://localhost:8080/api/v1/FuelStation/save",
         {
           stationName,
           stationLocation,
           stationContact,
-          userId,
+          userID: parseInt(userId, 10),
         }
       );
 
-      if (response.status === 200) {
+      console.log("Sending data:", {
+        stationName,
+        stationLocation,
+        stationContact,
+        userID: parseInt(userId, 10),
+      });
+
+      if (response.data?.message === "Fuel Station added successfully") {
         console.log("Fuel Station added:", response.data);
 
         // Simulate a successful submission
@@ -83,7 +101,9 @@ const AddFuelStationForm = () => {
       <div className="overflow-hidden bg-white shadow-lg bg-opacity-90 w-96 rounded-2xl">
         <div className="p-6 bg-gradient-to-r from-green-500 to-green-600">
           <h2 className="text-2xl font-bold text-white">Add Fuel Station</h2>
-          <p className="mt-1 text-green-100">Enter fuel station details to add a new station</p>
+          <p className="mt-1 text-green-100">
+            Enter fuel station details to add a new station
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
@@ -96,7 +116,9 @@ const AddFuelStationForm = () => {
               onChange={(e) => setStationName(e.target.value)}
               placeholder="Enter station name"
             />
-            {errors.stationName && <p className="text-sm text-red-500">{errors.stationName}</p>}
+            {errors.stationName && (
+              <p className="text-sm text-red-500">{errors.stationName}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -108,7 +130,9 @@ const AddFuelStationForm = () => {
               onChange={(e) => setStationLocation(e.target.value)}
               placeholder="Enter station location"
             />
-            {errors.stationLocation && <p className="text-sm text-red-500">{errors.stationLocation}</p>}
+            {errors.stationLocation && (
+              <p className="text-sm text-red-500">{errors.stationLocation}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -120,7 +144,9 @@ const AddFuelStationForm = () => {
               onChange={(e) => setStationContact(e.target.value)}
               placeholder="Enter station contact"
             />
-            {errors.stationContact && <p className="text-sm text-red-500">{errors.stationContact}</p>}
+            {errors.stationContact && (
+              <p className="text-sm text-red-500">{errors.stationContact}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -132,7 +158,9 @@ const AddFuelStationForm = () => {
               onChange={(e) => setUserId(e.target.value)}
               placeholder="Enter user ID"
             />
-            {errors.userId && <p className="text-sm text-red-500">{errors.userId}</p>}
+            {errors.userId && (
+              <p className="text-sm text-red-500">{errors.userId}</p>
+            )}
           </div>
 
           <button
