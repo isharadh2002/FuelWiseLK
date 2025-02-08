@@ -1,11 +1,16 @@
 package com.example.Back_End.Controller;
 
 import com.example.Back_End.DTO.FuelStationDTO;
+import com.example.Back_End.DTO.FuelStationRegisterDTO;
 import com.example.Back_End.DTO.FuelStationRetrieveDTO;
 import com.example.Back_End.Exceptions.FuelStationException;
 import com.example.Back_End.Services.FuelStationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -16,11 +21,14 @@ public class FuelStationController {
     @Autowired
     private FuelStationService fuelStationService;
 
-    @PostMapping(path = "/save")
-    public String saveFuelStation(@RequestBody FuelStationDTO fuelStationDTO) {
-
-        return fuelStationService.addFuelStation(fuelStationDTO);
-
+    @PostMapping("/save")
+    public ResponseEntity<?> saveFuelStation(@RequestBody FuelStationRegisterDTO fuelStationRegisterDTO) {
+        try {
+            String message = fuelStationService.addFuelStation(fuelStationRegisterDTO);
+            return ResponseEntity.ok().body(Collections.singletonMap("message", message));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("error", e.getMessage()));
+        }
     }
 
     @GetMapping(path = "/get")

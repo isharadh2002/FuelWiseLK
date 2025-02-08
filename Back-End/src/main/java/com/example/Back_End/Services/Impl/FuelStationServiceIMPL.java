@@ -1,6 +1,7 @@
 package com.example.Back_End.Services.Impl;
 
 import com.example.Back_End.DTO.FuelStationDTO;
+import com.example.Back_End.DTO.FuelStationRegisterDTO;
 import com.example.Back_End.DTO.FuelStationRetrieveDTO;
 import com.example.Back_End.Entity.FuelStation;
 import com.example.Back_End.Entity.User;
@@ -25,19 +26,22 @@ public class FuelStationServiceIMPL implements FuelStationService {
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public String addFuelStation(FuelStationDTO fuelStationDTO) {
+    public String addFuelStation(FuelStationRegisterDTO fuelStationRegisterDTO) {
+        // Handle potential null user
+        User user = userRepository.findById(fuelStationRegisterDTO.getUserID())
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + fuelStationRegisterDTO.getUserID()));
 
-        //Create a FuelStation instance using the DTO values
-        FuelStation fuelStation = new FuelStation();
-        fuelStation.setStationName(fuelStationDTO.getStationName());
-        fuelStation.setStationLocation(fuelStationDTO.getStationLocation());
-        fuelStation.setStationContact(fuelStationDTO.getStationContact());
-
-        //Save the FuelStation instance to the database
-        fuelStationRepository.save(fuelStation);
-        return "Fuel Station added successfully";
-
+        try {
+            fuelStationRepository.addFuelStation(
+                    fuelStationRegisterDTO.getStationName(),
+                    fuelStationRegisterDTO.getStationLocation(),
+                    fuelStationRegisterDTO.getStationContact(),
+                    fuelStationRegisterDTO.getUserID()
+            );
+            return "Fuel Station added successfully";
+        } catch (Exception e) {
+            throw new RuntimeException("Error saving Fuel Station: " + e.getMessage());
+        }
     }
 
 

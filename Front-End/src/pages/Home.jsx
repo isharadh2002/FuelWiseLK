@@ -113,7 +113,7 @@ const HomePage = () => {
                         {slidingImages.map((image, index) => (
                             <SwiperSlide key={index}>
                                 <div
-                                    className="h-full bg-cover bg-center"
+                                    className="h-full bg-center bg-cover"
                                     style={{backgroundImage: `url(${image})`}}
                                 ></div>
                             </SwiperSlide>
@@ -122,9 +122,9 @@ const HomePage = () => {
 
                     {/* Hero Section Overlay */}
                     <div
-                        className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 pointer-events-none">
-                        <div className="text-center text-white z-20 pointer-events-auto m-10">
-                            <h1 className="text-5xl font-bold mb-6">
+                        className="absolute inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50 pointer-events-none">
+                        <div className="z-20 m-10 text-center text-white pointer-events-auto">
+                            <h1 className="mb-6 text-5xl font-bold">
                                 Fuel Smarter, Not Harder
                                 <br/>
                                 Your Weekly QR Code Awaits.
@@ -132,8 +132,9 @@ const HomePage = () => {
                             <p className="mb-8 text-lg">
                                 Access Fuel Seamlessly with a Secure Weekly QR Code System.
                             </p>
+                            
                             <button
-                                className="bg-green-600 px-8 py-4 rounded-lg text-white font-semibold text-lg hover:bg-green-700 transition-all transform hover:scale-105">
+                                className="px-8 py-4 text-lg font-semibold text-white transition-all transform bg-green-600 rounded-lg hover:bg-green-700 hover:scale-105">
                                 Get Your QR Code Now
                             </button>
                         </div>
@@ -143,31 +144,31 @@ const HomePage = () => {
 
                 {/* Hero Section */}
                 {/*
-                <div className="text-center py-20 bg-green-50">
-                    <h1 className="text-4xl font-bold mb-4 text-green-900">
+                <div className="py-20 text-center bg-green-50">
+                    <h1 className="mb-4 text-4xl font-bold text-green-900">
                         Fuel Smarter, Not Harder —<br/>
                         Your Weekly QR Code Awaits.
                     </h1>
                     <p className="mb-8 text-green-700">Access Fuel Seamlessly with a Secure Weekly QR Code System.</p>
-                    <button className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700">
+                    <button className="px-6 py-3 text-white bg-green-600 rounded-md hover:bg-green-700">
                         Get Your QR Code Now
                     </button>
                 </div>
                 */}
 
                 {/* Features Section */}
-                <div className="py-16 px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
+                <div className="px-4 py-16">
+                    <h2 className="mb-12 text-3xl font-bold text-center text-green-800">
                         Why Choose Our Fuel Management System?
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div className="grid max-w-6xl grid-cols-1 gap-8 mx-auto md:grid-cols-3">
                         {features.map((feature, index) => (
                             <motion.div key={index} className="p-6 bg-green-100 rounded-lg"
                                         initial={{opacity: 0, y: 50}}
                                         whileInView={{opacity: 1, y: 0}}
                                         transition={{duration: 0.5, delay: 0.5 + index * 0.25}}>
                                 <div className="mb-4">{feature.icon}</div>
-                                <h3 className="text-xl font-semibold mb-2 text-green-800">{feature.title}</h3>
+                                <h3 className="mb-2 text-xl font-semibold text-green-800">{feature.title}</h3>
                                 <p className="text-green-600">{feature.description}</p>
                             </motion.div>
                         ))}
@@ -175,23 +176,23 @@ const HomePage = () => {
                 </div>
 
                 {/* How It Works Section */}
-                <div className="py-16 bg-green-50 px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
+                <div className="px-4 py-16 bg-green-50">
+                    <h2 className="mb-12 text-3xl font-bold text-center text-green-800">
                         How It Works — Simple Steps to Fuel Up
                     </h2>
                     <div className="max-w-4xl mx-auto">
                         {steps.map((step, index) => (
-                            <motion.div key={index} className="flex items-start mb-8 bg-white p-6 rounded-lg"
+                            <motion.div key={index} className="flex items-start p-6 mb-8 bg-white rounded-lg"
                                         initial={{opacity: 0, y: 50}}
                                         whileInView={{opacity: 1, y: 0}}
                                         transition={{duration: 0.25, delay: 0.5}}
                             >
                                 <div
-                                    className="w-12 h-12 flex items-center justify-center bg-green-600 text-white rounded-full mr-4">
+                                    className="flex items-center justify-center w-12 h-12 mr-4 text-white bg-green-600 rounded-full">
                                     {step.number}
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-semibold mb-2 text-green-800">{step.title}</h3>
+                                    <h3 className="mb-2 text-lg font-semibold text-green-800">{step.title}</h3>
                                     <p className="text-green-600">{step.team}</p>
                                 </div>
                             </motion.div>
@@ -200,18 +201,18 @@ const HomePage = () => {
                 </div>
 
                 {/* Testimonials Section */}
-                <div className="py-16 px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
+                <div className="px-4 py-16">
+                    <h2 className="mb-12 text-3xl font-bold text-center text-green-800">
                         See What Users Are Saying
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div className="grid max-w-6xl grid-cols-1 gap-8 mx-auto md:grid-cols-3">
                         {testimonials.map((testimonial, index) => (
-                            <div key={index} className="p-6 bg-green-50 rounded-lg">
+                            <div key={index} className="p-6 rounded-lg bg-green-50">
                                 <div className="flex items-center mb-4">
-                                    <div className="w-10 h-10 bg-green-200 rounded-full mr-3"></div>
+                                    <div className="w-10 h-10 mr-3 bg-green-200 rounded-full"></div>
                                     <div className="font-semibold text-green-800">{testimonial.name}</div>
                                 </div>
-                                <p className="text-green-700 mb-4">{testimonial.comment}</p>
+                                <p className="mb-4 text-green-700">{testimonial.comment}</p>
                                 <div className="flex text-yellow-400">
                                     {[...Array(testimonial.rating)].map((_, i) => (
                                         <span key={i}>★</span>
@@ -223,12 +224,12 @@ const HomePage = () => {
                 </div>
 
                 {/* CTA Section */}
-                <div className="py-16 bg-green-50 px-4 text-center">
-                    <h2 className="text-3xl font-bold mb-4 text-green-800">
+                <div className="px-4 py-16 text-center bg-green-50">
+                    <h2 className="mb-4 text-3xl font-bold text-green-800">
                         Fueling Has Never Been This Simple!
                     </h2>
                     <p className="mb-8 text-green-700">Get Your Weekly QR Code and Start Saving Time and Energy.</p>
-                    <button className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700">
+                    <button className="px-6 py-3 text-white bg-green-600 rounded-md hover:bg-green-700">
                         Get My QR Code
                     </button>
                 </div>
