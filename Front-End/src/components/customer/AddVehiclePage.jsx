@@ -101,7 +101,7 @@ function VehicleForm() {
 
 
 
-      setSnackbarMessage("Vehicle added successfully: " + response.data);
+      setSnackbarMessage( response.data);
       setSnackbarOpen(true);
       setFormData({  licensePlate: "", vehicleModel: ""});
       setErrors({});
