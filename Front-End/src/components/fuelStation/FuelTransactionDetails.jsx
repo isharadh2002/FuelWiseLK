@@ -65,7 +65,7 @@ export default function FuelTransactionList() {
                                     <p className="text-gray-600">Transaction ID: {transaction.transactionID}</p>
                                     <p className="text-gray-600">Fuel Type: {transaction.fuelType}</p>
                                     <p className="text-gray-600">Pumped Litres: {transaction.pumpedLitres}</p>
-                                    <p className="text-gray-600">Remaining Quota: {transaction.remainingQuota}</p>
+                                    {/* <p className="text-gray-600">Remaining Quota: {transaction.remainingQuota}</p> */}
                                 </div>
 
                                 {/* Vehicle Details */}

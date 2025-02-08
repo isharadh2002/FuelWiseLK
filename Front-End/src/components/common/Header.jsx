@@ -36,6 +36,7 @@ function Header() {
 
     const handleLogout = () => {
         localStorage.removeItem('userId');
+        localStorage.clear();
         setIsLoggedIn(false);
         navigate('/home');
     };
