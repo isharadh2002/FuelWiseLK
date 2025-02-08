@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Users, Car, Fuel, TrendingUp } from "lucide-react";
+import { Users, Car, Fuel, TrendingUp, Clipboard } from "lucide-react";
 import Header from "./Header";
 
 function AdminDashboard() {
@@ -27,6 +27,11 @@ function AdminDashboard() {
       title: "Manage Fuelstations",
       icon: <Fuel className="w-5 h-5" />,
       view: "manage-fuel-stations",
+    },
+    {
+      title: "Manage Quotas",
+      icon: <Clipboard className="w-5 h-5" />,
+      view: "manage-fuel-quota",
     },
   ];
 
