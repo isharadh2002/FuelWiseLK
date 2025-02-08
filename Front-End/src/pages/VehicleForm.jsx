@@ -11,7 +11,6 @@ function VehicleForm() {
     padding: theme.spacing(2),
     textAlign: "center",
   }));
-  let gettingOwnerId=localStorage.getItem("ownerId");
 
   const [errors, setErrors] = useState({});
   const [ isSubmitted,setIsSubmitted] = useState(false);
@@ -19,7 +18,7 @@ function VehicleForm() {
   const [formData, setFormData] = useState({
     licensePlate: "",
     vehicleModel: "",
-    ownerId: gettingOwnerId,
+    ownerId: localStorage.getItem("ownerId") || 0,
     vehicleQuota:50.0
   });
   const[snackbarOpen,setSnackbarOpen]=useState(false);
@@ -65,6 +64,7 @@ function VehicleForm() {
 
 
   const validation = () => {
+    console.log(formData.ownerId);
     const newErrors = {};
     if (!formData.licensePlate.trim()) newErrors.brand = "Brand is required.";
     if (!formData.vehicleModel.trim()) newErrors.model = "Model is required.";
@@ -97,6 +97,9 @@ function VehicleForm() {
           "Content-Type": "application/json",
         },
       });
+
+
+
 
       setSnackbarMessage("Vehicle added successfully: " + response.data);
       setSnackbarOpen(true);
