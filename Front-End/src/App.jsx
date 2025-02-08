@@ -39,6 +39,7 @@ import AddFuelStationForm from "./components/admin/AddFuelStation.jsx";
 import UpdateFuelStationForm from "./components/admin/UpdatefuelStation.jsx";
 import Overview from "./components/admin/Overview.jsx";
 import UpdateAdmin from "./components/admin/UpdateAdmin.jsx";
+import ManageFuelQuota from "./components/admin/ManageFuelQuota.jsx";
 
 // Fuel Station Dashboard
 import FuelStationRegistrationPageNew from "./pages/FuelStationRegistrationPage";
@@ -106,6 +107,7 @@ function App() {
                 path="update-fuel-station/:stationId"
                 element={<UpdateFuelStationForm />}
               />
+              <Route path="manage-fuel-quota" element={<ManageFuelQuota />} />
             </Route>
 
             {/* Fuel Station Routes */}
