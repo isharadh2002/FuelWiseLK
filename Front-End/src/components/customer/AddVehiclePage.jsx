@@ -66,8 +66,8 @@ function VehicleForm() {
   const validation = () => {
     console.log(formData.ownerId);
     const newErrors = {};
-    if (!formData.licensePlate.trim()) newErrors.brand = "Brand is required.";
-    if (!formData.vehicleModel.trim()) newErrors.model = "Model is required.";
+    if (!formData.licensePlate.trim()) newErrors.brand = "License Plate is required.";
+    if (!formData.vehicleModel.trim()) newErrors.model = "Vehicle Model is required.";
 
 
     setErrors(newErrors);
