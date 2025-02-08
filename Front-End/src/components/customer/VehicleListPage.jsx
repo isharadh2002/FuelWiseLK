@@ -7,10 +7,12 @@ const VehicleListPage = () => {
     const [error, setError] = useState(null);
     const [qrCodes, setQrCodes] = useState({});
 
+    const ownerID = localStorage.getItem("ownerId");
+
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await fetch("http://localhost:8080/api/v1/vehicles/all");
+                const response = await fetch(`http://localhost:8080/api/v1/vehicles/getAllByOwnerID/${ownerID}`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch vehicles");
                 }
@@ -62,6 +64,7 @@ const VehicleListPage = () => {
                         <div className="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-4">
                             <div className="text-sm font-medium text-teal-600">Vehicle ID: {vehicle.vehicleId}</div>
                             <div className="text-sm text-gray-700">Reg. No: {vehicle.registrationNumber}</div>
+                            <div className="text-sm text-gray-700">Vehicle Model: {vehicle.vehicleModel}</div>
                             <div className="text-sm text-gray-700">Fuel Quota: {vehicle.vehicleFuelQuota}</div>
                         </div>
 

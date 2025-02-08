@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_quota_app/screens/fuel_quota.dart';
 import 'qr_scanner_screen.dart';
 import 'profile_page.dart';
 import 'login_screen.dart';
+import 'transaction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String?> getUserId() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString('userId');
+}
+
+Future<String?> getStationId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('stationID');
 }
 
 class Dashboard extends StatefulWidget {
@@ -25,11 +30,10 @@ class _DashboardState extends State<Dashboard> {
 
   final Map<String, String> stats = {
     'Today\'s Transactions': '24',
-    'Total Vehicles': '156',
-    'Available Quota': '2500L'
+    'Total Transactions': '500', // Updated
+    'Total Quota': '10000L' // Updated
   };
 
-  // Logout function
   void _logout() {
     Navigator.pushAndRemoveUntil(
       context,
@@ -176,7 +180,7 @@ class _DashboardState extends State<Dashboard> {
             ),
             child: IconButton(
               icon: const Icon(Icons.logout),
-              onPressed: _logout, // Use the logout function
+              onPressed: _logout,
             ),
           ),
         ],
@@ -250,7 +254,7 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
               FutureBuilder<String?>(
-                future: getUserId(), // Fetch userId from SharedPreferences
+                future: getStationId(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
@@ -260,22 +264,43 @@ class _DashboardState extends State<Dashboard> {
                     return Text('Error: ${snapshot.error}');
                   }
 
-                  String? userId = snapshot.data;
+                  String? stationId = snapshot.data;
 
-                  return _buildOptionCard(
-                    title: 'Profile',
-                    icon: Icons.person,
-                    subtitle: 'View and update your profile',
-                    onTap: () {
-                      if (userId != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfilePage(userId: userId),
-                          ),
-                        );
-                      }
-                    },
+                  return Column(
+                    children: [
+                      _buildOptionCard(
+                        title: 'Profile',
+                        icon: Icons.person,
+                        subtitle: 'View and update your profile',
+                        onTap: () async {
+                          String? userId = await getUserId();
+                          if (userId != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProfilePage(userId: userId),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      _buildOptionCard(
+                        title: 'View Transactions',
+                        icon: Icons.receipt_long,
+                        subtitle: 'View all transactions for this station',
+                        onTap: () async{
+                          String? stationId = await getStationId();
+                          if (stationId != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TransactionPage(stationId: stationId),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ],
                   );
                 },
               ),

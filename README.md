@@ -1,3 +1,5 @@
+<img src="https://github.com/MininduBimsara/FuelWiseLK/blob/main/Front-End/public/website_logo.svg" alt="Alt Text" height="100">
+
 # FuelWise.lk - Fuel Quota Management System
 
 ## 🚀 Overview

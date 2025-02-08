@@ -36,102 +36,155 @@ function Header() {
 
     const handleLogout = () => {
         localStorage.removeItem('userId');
+        localStorage.clear();
         setIsLoggedIn(false);
         navigate('/home');
     };
 
-    const AuthButtons = () => {
-        if (isLoggedIn) {
-            return (
-                <>
-                    <button
-                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-white hover:text-green-600 border border-transparent hover:border-green-600 transition-colors"
-                        onClick={() => navigate('/dashboard')}
-                    >
-                        Dashboard
-                    </button>
-                    <button
-                        className="bg-white text-green-600 border border-green-600 px-4 py-2 rounded-lg hover:text-white hover:bg-green-600 transition-colors"
-                        onClick={handleLogout}
-                    >
-                        Log Out
-                    </button>
-                </>
-            );
-        }
+const AuthButtons = () => {
+  if (isLoggedIn) {
+    const userRole = localStorage.getItem("userRole");
+    const dashboardPath =
+      userRole === "fuel_station" ? "/fuelStation-dashboard" : "/dashboard";
 
-        return (
-            <>
-                <button
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-white hover:text-green-600 border border-transparent hover:border-green-600 transition-colors"
-                    onClick={() => navigate('/register')}
-                >
-                    Register
-                </button>
-                <button
-                    className="bg-white text-green-600 border border-green-600 px-4 py-2 rounded-lg hover:text-white hover:bg-green-600 transition-colors"
-                    onClick={() => navigate('/login')}
-                >
-                    Log In
-                </button>
-            </>
-        );
-    };
+    return (
+      <>
+        <button
+          className="px-4 py-2 text-white transition-colors bg-green-600 border border-transparent rounded-lg hover:bg-white hover:text-green-600 hover:border-green-600"
+          onClick={() => navigate(dashboardPath)}
+        >
+          Dashboard
+        </button>
+        <button
+          className="px-4 py-2 text-green-600 transition-colors bg-white border border-green-600 rounded-lg hover:text-white hover:bg-green-600"
+          onClick={handleLogout}
+        >
+          Log Out
+        </button>
+      </>
+    );
+  }
 
-    const MobileAuthButtons = () => {
-        if (isLoggedIn) {
-            return (
-                <>
-                    <button
-                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-                        onClick={() => navigate('/dashboard')}
-                    >
-                        Dashboard
-                    </button>
-                    <button
-                        className="bg-white text-green-600 border border-green-600 px-4 py-2 rounded-lg hover:bg-green-50"
-                        onClick={handleLogout}
-                    >
-                        Log Out
-                    </button>
-                </>
-            );
-        }
+  return (
+    <>
+      <button
+        className="px-4 py-2 text-white transition-colors bg-green-600 border border-transparent rounded-lg hover:bg-white hover:text-green-600 hover:border-green-600"
+        onClick={() => navigate("/register")}
+      >
+        Register
+      </button>
+      <button
+        className="px-4 py-2 text-green-600 transition-colors bg-white border border-green-600 rounded-lg hover:text-white hover:bg-green-600"
+        onClick={() => navigate("/login")}
+      >
+        Log In
+      </button>
+    </>
+  );
+};
 
-        return (
-            <>
-                <button
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-                    onClick={() => navigate('/register')}
-                >
-                    Register
-                </button>
-                <button
-                    className="bg-white text-green-600 border border-green-600 px-4 py-2 rounded-lg hover:bg-green-50"
-                    onClick={() => navigate('/login')}
-                >
-                    Log In
-                </button>
-            </>
-        );
-    };
+const MobileAuthButtons = () => {
+  if (isLoggedIn) {
+    const userRole = localStorage.getItem("userRole");
+    const dashboardPath =
+      userRole === "fuel_station" ? "/fuelStation-dashboard" : "/dashboard";
+
+    return (
+      <>
+        <button
+          className="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700"
+          onClick={() => navigate(dashboardPath)}
+        >
+          Dashboard
+        </button>
+        <button
+          className="px-4 py-2 text-green-600 bg-white border border-green-600 rounded-lg hover:bg-green-50"
+          onClick={handleLogout}
+        >
+          Log Out
+        </button>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <button
+        className="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700"
+        onClick={() => navigate("/register")}
+      >
+        Register
+      </button>
+      <button
+        className="px-4 py-2 text-green-600 bg-white border border-green-600 rounded-lg hover:bg-green-50"
+        onClick={() => navigate("/login")}
+      >
+        Log In
+      </button>
+    </>
+  );
+};
+
+    // const MobileAuthButtons = () => {
+    //     if (isLoggedIn) {
+    //         const userRole = localStorage.getItem("userRole");
+    //         const dashboardPath =
+    //           userRole === "fuel_station"
+    //             ? "/fuelStation-dashboard"
+    //             : "/dashboard";
+
+    //         return (
+    //           <>
+    //             <button
+    //               className="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700"
+    //               onClick={() => navigate(dashboardPath)}
+    //             >
+    //               Dashboard
+    //             </button>
+    //             <button
+    //               className="px-4 py-2 text-green-600 bg-white border border-green-600 rounded-lg hover:bg-green-50"
+    //               onClick={handleLogout}
+    //             >
+    //               Log Out
+    //             </button>
+    //           </>
+    //         );
+    //     }
+
+    //     return (
+    //         <>
+    //             <button
+    //                 className="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700"
+    //                 onClick={() => navigate('/register')}
+    //             >
+    //                 Register
+    //             </button>
+    //             <button
+    //                 className="px-4 py-2 text-green-600 bg-white border border-green-600 rounded-lg hover:bg-green-50"
+    //                 onClick={() => navigate('/login')}
+    //             >
+    //                 Log In
+    //             </button>
+    //         </>
+    //     );
+    // };
 
     return (
         <header className="w-full px-2 py-2">
-            <div className="max-w-8xl mx-auto">
-                <div className="mx-5 flex items-center justify-between">
+            <div className="mx-auto max-w-8xl">
+                <div className="flex items-center justify-between mx-5">
                     {/* Logo Section */}
                     <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                        <div className="flex items-center justify-center w-12 h-12 bg-white rounded-full">
                             <img src="/website_logo.svg" alt="Website Logo" className="w-10 h-10"/>
                         </div>
-                        <h1 className="font-semibold font-mono text-green-600 text-2xl md:text-4xl">
+                        <h1 className="font-mono text-2xl font-semibold text-green-600 md:text-4xl">
                             FuelWise.lk
                         </h1>
                     </div>
 
                     {/* Navigation Links */}
-                    <nav className="hidden md:flex items-center justify-center flex-1 px-4">
+                    <nav className="items-center justify-center flex-1 hidden px-4 md:flex">
                         {navigationLinks.map((navItem, index) => (
                             <Link
                                 key={index}
@@ -149,14 +202,14 @@ function Header() {
                     </nav>
 
                     {/* Authentication Buttons */}
-                    <div className="hidden md:flex items-center space-x-2">
+                    <div className="items-center hidden space-x-2 md:flex">
                         <AuthButtons/>
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <div className="md:hidden flex items-center">
+                    <div className="flex items-center md:hidden">
                         <button
-                            className="p-2 text-green-600 hover:bg-green-50 rounded-lg"
+                            className="p-2 text-green-600 rounded-lg hover:bg-green-50"
                             onClick={() => setShowMobileMenu(!showMobileMenu)}
                         >
                             ☰
@@ -166,8 +219,8 @@ function Header() {
 
                 {/* Mobile Menu Dropdown */}
                 {showMobileMenu && (
-                    <div className="md:hidden mt-2">
-                        <div className="flex flex-col space-y-2 bg-white rounded-lg shadow-lg p-4">
+                    <div className="mt-2 md:hidden">
+                        <div className="flex flex-col p-4 space-y-2 bg-white rounded-lg shadow-lg">
                             {navigationLinks.map((navItem, index) => (
                                 <Link
                                     key={index}
@@ -185,7 +238,7 @@ function Header() {
                                     {navItem.name}
                                 </Link>
                             ))}
-                            <div className="flex flex-col space-y-2 pt-2 border-t">
+                            <div className="flex flex-col pt-2 space-y-2 border-t">
                                 <MobileAuthButtons/>
                             </div>
                         </div>

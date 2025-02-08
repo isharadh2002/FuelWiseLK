@@ -34,7 +34,8 @@ public class VehicleServiceImpl implements VehicleService {
                     vehicleEntity.getVehicleId(),
                     vehicleEntity.getLicensePlate(),
                     vehicleEntity.getVehicleOwner().getOwnerName(),
-                    vehicleEntity.getVehicleFuelQuota()
+                    vehicleEntity.getVehicleFuelQuota(),
+                    vehicleEntity.getVehicleModel()
             );
             return Optional.of(vehicleDTO);
         }
@@ -69,7 +70,7 @@ public class VehicleServiceImpl implements VehicleService {
             Vehicle vehicle = new Vehicle();
             vehicle.setLicensePlate(vehicleRegistrationDTO.getLicensePlate());
             vehicle.setVehicleModel(vehicleRegistrationDTO.getVehicleModel());
-            vehicle.setVehicleFuelQuota(0);
+            vehicle.setVehicleFuelQuota(50);
             vehicle.setVehicleOwner(owner);
 
             Vehicle savedVehicle =  vehicleRepository.save(vehicle);
@@ -136,8 +137,29 @@ public class VehicleServiceImpl implements VehicleService {
                         vehicle.getVehicleId(),
                         vehicle.getLicensePlate(),
                         vehicle.getVehicleOwner().getOwnerName(),
-                        vehicle.getVehicleFuelQuota()))
+                        vehicle.getVehicleFuelQuota(),
+                        vehicle.getVehicleModel()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VehicleDTO> getAllVehiclesByOwnerId(int ownerId) {
+        Optional<VehicleOwner> vehicleOwnerOpt = vehicleOwnerRepository.findById(ownerId);
+        if (vehicleOwnerOpt.isPresent()) {
+            VehicleOwner vehicleOwner = vehicleOwnerOpt.get();
+            List<Vehicle> vehicles = vehicleRepository.findAllByVehicleOwner(vehicleOwner);
+            return vehicles.stream()
+                    .map(vehicle -> new VehicleDTO(
+                            vehicle.getVehicleId(),
+                            vehicle.getLicensePlate(),
+                            vehicle.getVehicleOwner().getOwnerName(),
+                            vehicle.getVehicleFuelQuota(),
+                            vehicle.getVehicleModel()))
+                    .collect(Collectors.toList());
+        }
+        else{
+            throw new RuntimeException("Vehicle owner not found by ID : " + ownerId);
+        }
     }
 
     @Override
