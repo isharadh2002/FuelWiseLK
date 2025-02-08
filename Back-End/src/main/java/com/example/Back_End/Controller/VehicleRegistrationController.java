@@ -41,9 +41,7 @@ public class VehicleRegistrationController {
     @PostMapping("/addVehicle")
     public ResponseEntity<String> saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO) {
         try {
-            int userId=vehicleRegistrationDTO.getOwnerId();
-            int realOwnerId=vehicleOwnerService.getOwnerID(userId);
-            vehicleRegistrationDTO.setOwnerId(realOwnerId);
+
             if (validation.vehicleValidation(vehicleRegistrationDTO)) {
                 vehicleService.saveVehicle(vehicleRegistrationDTO);
                 return ResponseEntity.ok("Vehicle added successfully");
