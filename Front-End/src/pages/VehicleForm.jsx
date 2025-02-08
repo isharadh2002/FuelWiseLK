@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { styled } from "@mui/material/styles";
 import {Paper, TextField, Button, Box, Card, Grid, Typography, Snackbar} from "@mui/material";
 import PropTypes from "prop-types";
@@ -13,7 +13,7 @@ function VehicleForm() {
   }));
 
   const [errors, setErrors] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [ setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     licensePlate: "",
