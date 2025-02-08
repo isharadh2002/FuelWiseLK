@@ -30,6 +30,13 @@ public class FuelStationController {
 
     }
 
+    @GetMapping(path = "/getByID/{stationID}")
+    public FuelStationDTO getFuelStationByID(@PathVariable int stationID) throws FuelStationException {
+
+        return fuelStationService.getFuelStationByID(stationID);
+
+    }
+
     @GetMapping("/getStations")
     public List<FuelStationRetrieveDTO> getUsers() {
         return fuelStationService.getAllFuelStations();
@@ -51,6 +58,10 @@ public class FuelStationController {
         return fuelStationService.deleteFuelStation(stationName);
     }
 
+    @DeleteMapping(path = "/deleteByID/{stationID}")
+    public String deleteFuelStationByID(@PathVariable int stationID) throws FuelStationException {
+        return fuelStationService.deleteFuelStation(stationID);
+    }
 
     @GetMapping("/getStationID/{UserID}")
     public int getStationIDByUserID(@PathVariable int UserID) throws FuelStationException {

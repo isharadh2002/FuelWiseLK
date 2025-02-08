@@ -63,7 +63,7 @@ const AddVehicleForm = () => {
         setOwnerId("");
 
         // Redirect to manage vehicles page
-        navigate("/manage-vehicles");
+        navigate("/admin-dashboard/manage-vehicles");
       } else {
         throw new Error("Failed to add vehicle");
       }
