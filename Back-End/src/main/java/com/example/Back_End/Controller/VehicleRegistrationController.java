@@ -2,6 +2,7 @@ package com.example.Back_End.Controller;
 
 import com.example.Back_End.DTO.VehicleRegistrationDTO;
 import com.example.Back_End.Entity.Vehicle;
+import com.example.Back_End.Services.Validation;
 import com.example.Back_End.Services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,12 @@ public class VehicleRegistrationController {
    @Autowired
     public VehicleService vehicleService;
 
+    public final Validation validation;
+    @Autowired
+    public VehicleRegistrationController(VehicleService vehicleService, Validation validation) {
 
+        this.validation = validation;
+    }
 
 
    @GetMapping("/getAllVehicles")
@@ -29,10 +35,19 @@ public class VehicleRegistrationController {
        return vehicleService.getAllVehicle();
 
    }
-   @PostMapping("/addVehicle")
-    public VehicleRegistrationDTO saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO){
-     return vehicleService.saveVehicle(vehicleRegistrationDTO);
-   }
+    @PostMapping("/addVehicle")
+    public ResponseEntity<String> saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO) {
+        try {
+            if (validation.vehicleValidation(vehicleRegistrationDTO)) {
+                vehicleService.saveVehicle(vehicleRegistrationDTO);
+                return ResponseEntity.ok("Vehicle added successfully");
+            } else {
+                return ResponseEntity.badRequest().body("Invalid vehicle data");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
+        }
+    }
     @PutMapping("/updateVehicle?id={id}")
     public ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable int id) {
         return vehicleService.updateVehicle(vehicle, id);

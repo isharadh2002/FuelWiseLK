@@ -45,6 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/VehicleForm/getAllVehicles/**").permitAll()
                         .requestMatchers("/api/v1/VehicleForm/updateVehicle/**").permitAll()
                         .requestMatchers("/api/v1/VehicleForm/deleteData/**").permitAll()
+                        .requestMatchers("/api/v1/VehicleForm/validate/**").permitAll()
 
                         .requestMatchers("/api/v1/admins/**").permitAll()
                         .requestMatchers("/api/v1/admins").permitAll()

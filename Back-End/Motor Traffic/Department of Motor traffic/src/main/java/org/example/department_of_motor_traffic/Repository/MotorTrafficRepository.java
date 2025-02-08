@@ -11,3 +11,7 @@ public interface MotorTrafficRepository extends JpaRepository<VehicleData, Integ
 //    @Query("SELECT v FROM VehicleData v WHERE v.licensePlate = ?1")
     Optional<VehicleData> findByLicensePlate(String licensePlate);
 }
+
+
+
+
