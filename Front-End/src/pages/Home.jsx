@@ -17,6 +17,7 @@ const HomePage = () => {
         "/HomePage/SlidingImages/Image2.jpg",
         "/HomePage/SlidingImages/Image3.jpeg",
         "/HomePage/SlidingImages/Image4.jpeg",
+        "/HomePage/SlidingImages/Image5.jpg",
     ];
 
     // Custom green color palette
