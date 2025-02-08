@@ -1,132 +1,179 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import  { useState } from "react";
+import { styled } from "@mui/material/styles";
+import {Paper, TextField, Button, Box, Card, Grid, Typography, Snackbar} from "@mui/material";
+import PropTypes from "prop-types";
+import axios from "axios";
 
-const AddVehiclePage = () => {
-  const [licensePlate, setLicensePlate] = useState("");
-  const [vehicleModel, setVehicleModel] = useState("");
-  const [error, setError] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [ownerId, setOwnerId] = useState(null);
-  const navigate = useNavigate();
+function VehicleForm() {
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: "#fff",
+    ...theme.typography.body2,
+    padding: theme.spacing(2),
+    textAlign: "center",
+  }));
 
-  useEffect(() => {
-    const fetchOwnerId = async () => {
-      const userId = localStorage.getItem("userId");
+  const [errors, setErrors] = useState({});
+  const [ isSubmitted,setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    licensePlate: "",
+    vehicleModel: "",
+    ownerId: localStorage.getItem("ownerId") || 0,
+    vehicleQuota:50.0
+  });
+  const[snackbarOpen,setSnackbarOpen]=useState(false);
+  const[snackbarMessage,setSnackbarMessage]=useState("");
+  const CustomTextField = ({ name, onChange, id, label, error, value, helperText }) => (
+      <TextField
+          name={name}
+          onChange={onChange}
+          id={id}
+          label={label}
+          variant="outlined"
+          color="success"
+          fullWidth
+          required
+          value={value}
+          error={!!error}
+          helperText={helperText || ""}
+          sx={{
+            marginBottom: "20px",
+            marginTop: "20px",
+            width: "265px",
+          }}
+          aria-describedby={`${name}-helper-text`}
+      />
+  );
 
-      if (!userId) {
-        setError("User is not logged in.");
-        return;
-      }
+  CustomTextField.propTypes = {
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    error: PropTypes.bool,
+    value: PropTypes.string,
+    helperText: PropTypes.string,
+  };
 
-      try {
-        const response = await fetch(`http://localhost:8080/api/v1/VehicleOwner/getOwnerID/${userId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch owner ID");
-        }
-        const data = await response.json();
-        setOwnerId(data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
+  const handleInputs = (e) => {
+    const { name, value } = e.target;
+    console.log(`Input changed: ${name} = ${value}`);
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-    fetchOwnerId();
-  }, []);
 
-  const handleAddVehicle = async (e) => {
+
+  const validation = () => {
+    console.log(formData.ownerId);
+    const newErrors = {};
+    if (!formData.licensePlate.trim()) newErrors.brand = "Brand is required.";
+    if (!formData.vehicleModel.trim()) newErrors.model = "Model is required.";
+
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  const handleSnackbarClose=()=>{
+    setSnackbarOpen(false);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitted(true);
 
-    if (!ownerId) {
-      setError("Owner ID not available.");
+    if (!validation()) {
       return;
     }
 
-    const vehicleData = {
-      licensePlate,
-      vehicleModel,
-      ownerId,
-    };
+    setLoading(true);
+    postingData();
+  };
 
-    console.log("Sending Vehicle Data:", vehicleData);
-
+  const postingData = async () => {
     try {
-      setIsSubmitting(true);
-      const response = await fetch("http://localhost:8080/api/v1/vehicles/add", {
-        method: "POST",
+      const apiUrl =  "http://localhost:8080/api/v1/VehicleForm/addVehicle";
+      const response = await axios.post(apiUrl, formData, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(vehicleData),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to add vehicle");
-      }
 
-      if (response.status === 200) {
-        alert("Vehicle added successfully!");
-        navigate("/dashboard");
-      }
 
+
+      setSnackbarMessage("Vehicle added successfully: " + response.data);
+      setSnackbarOpen(true);
+      setFormData({  licensePlate: "", vehicleModel: ""});
+      setErrors({});
+      setIsSubmitted(false);
     } catch (error) {
-      setError(error.message);
+      setSnackbarMessage(error.response?.data?.message || "Failed to add vehicle");
+      setSnackbarOpen(true);
     } finally {
-      setIsSubmitting(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="flex flex-col mx-auto max-w-7xl md:flex-row">
-        {/* Main content area */}
-        <main className="flex-1 p-4">
-          <h1 className="text-2xl font-semibold text-gray-800 mb-4">Add Vehicle</h1>
+      <div className="m my-28 flex justify-center items-center">
+        <Box sx={{ display:"flex", alignItems: "center", justifyContent: "center", width: "auto", height: "auto" }}>
+          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 1, sm: 1, md: 2 }}>
 
-          {error && <div className="text-red-600 mb-4">{error}</div>}
 
-          <div className="p-6 bg-white rounded-lg shadow-sm">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Enter Vehicle Details</h3>
 
-            <form onSubmit={handleAddVehicle}>
-              <div className="space-y-4">
-                <div className="flex flex-col">
-                  <label className="text-sm font-semibold text-gray-600">License Plate</label>
-                  <input
-                    type="text"
-                    value={licensePlate}
-                    onChange={(e) => setLicensePlate(e.target.value)}
-                    className="p-2 border rounded-md w-full text-sm text-gray-900"
-                    required
-                  />
-                </div>
+            <Card sx={{display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column", maxWidth: 345, boxShadow: "5px", margin: "25px", backgroundColor: "#f0fff2" }}>
+              <Typography fontSize="40px" color="success" fontWeight={700}>
+                Register Form
+              </Typography>
 
-                <div className="flex flex-col">
-                  <label className="text-sm font-semibold text-gray-600">Vehicle Model</label>
-                  <input
-                    type="text"
-                    value={vehicleModel}
-                    onChange={(e) => setVehicleModel(e.target.value)}
-                    className="p-2 border rounded-md w-full text-sm text-gray-900"
-                    required
-                  />
-                </div>
+              <div className="mx-10 my-8">
+                <form className="flex items-center justify-center flex-col w-full " onSubmit={handleSubmit}>
+                  {[
+                    { name: "licensePlate", label: "Vehicle License Plate" },
+                    { name: "vehicleModel", label: "Vehicle Model" },
+
+                  ].map(({ name, label }) => (
+                      <CustomTextField
+                          key={name}
+                          onChange={handleInputs}
+                          id={name}
+                          label={label}
+                          name={name}
+                          value={formData[name]}
+                          error={!!errors[name]}
+                          helperText={errors[name] || ""}
+                      />
+                  ))}
+
+                  <div>
+                    <Button
+                        variant="contained"
+                        color="success"
+                        sx={{
+                          width: "265px",
+                          marginBottom: "18px",
+                          marginTop: "12px",
+                          borderRadius: "10px",
+                        }}
+                        type="submit"
+
+                    >
+                      <Typography>{loading ? "Submitting..." : "Register"}</Typography>
+                    </Button>
+                  </div>
+                </form>
               </div>
-
-              <div className="mt-6">
-                <button
-                  type="submit"
-                  className="w-full px-4 py-2 text-white bg-emerald-600 rounded-md"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Adding..." : "Add Vehicle"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </main>
+            </Card>
+          </Grid>
+        </Box>
+        <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={6000}
+            onClose={handleSnackbarClose}
+            message={snackbarMessage}
+        />
       </div>
-    </div>
   );
-};
+}
 
-export default AddVehiclePage;
+export default VehicleForm;
