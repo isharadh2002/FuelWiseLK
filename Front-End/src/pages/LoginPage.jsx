@@ -134,9 +134,9 @@ const LoginForm = () => {
 
             setTimeout(() => {
               if (userRole === "vehicle_owner") {
-                navigate("/dashboard");
+                navigate("/home");
               } else if (userRole === "fuel_station") {
-                navigate("/fuelStation-dashboard");
+                navigate("/home");
               } else {
                 navigate("/home"); // Fallback route
               }
