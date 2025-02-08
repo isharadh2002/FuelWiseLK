@@ -58,7 +58,7 @@ function CustomerDashboard() {
   const stats = [
     {
       title: "Total Vehicles",
-      value: "147",
+      value: "150",
     },
     {
       title: "Total Fuel Quota",

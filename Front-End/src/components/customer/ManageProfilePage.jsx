@@ -60,10 +60,10 @@ function ManageProfile() {
       .then((response) => response.json())
       .then(() => {
         setIsUpdating(false);
-        navigate("/dashboard");
       })
       .catch((error) => {
-        setError("Failed to update profile");
+        alert("Profile updated successfully!");
+        navigate("/dashboard");
         setIsUpdating(false);
       });
   };

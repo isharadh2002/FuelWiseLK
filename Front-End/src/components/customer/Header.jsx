@@ -32,6 +32,20 @@ function Header() {
               </button>
             )}
           </MenuItem>
+          <MenuItem>
+            {({ active }) => (
+              <button
+                onClick={() => {
+                  navigate("/home");
+                }}
+                className={`block w-full px-4 py-2 text-left text-sm ${
+                  active ? "bg-red-50 text-red-700" : "text-gray-700"
+                }`}
+              >
+                Go to Home Page
+              </button>
+            )}
+          </MenuItem>
         </MenuItems>
       </Menu>
     );
