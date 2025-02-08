@@ -14,7 +14,7 @@ function VehicleForm() {
   let gettingOwnerId=localStorage.getItem("ownerId");
 
   const [errors, setErrors] = useState({});
-  const [ setIsSubmitted] = useState(false);
+  const [ isSubmitted,setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     licensePlate: "",
