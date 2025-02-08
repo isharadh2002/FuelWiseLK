@@ -35,15 +35,19 @@ public class VehicleRegistrationController {
        return vehicleService.getAllVehicle();
 
    }
-   @PostMapping("/addVehicle")
-    public boolean saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO) {
-       if (validation.vehicleValidation(vehicleRegistrationDTO)) {
-
-            vehicleService.saveVehicle(vehicleRegistrationDTO);
-            return true;
-       }
-       return false;
-   }
+    @PostMapping("/addVehicle")
+    public ResponseEntity<String> saveVehicle(@RequestBody VehicleRegistrationDTO vehicleRegistrationDTO) {
+        try {
+            if (validation.vehicleValidation(vehicleRegistrationDTO)) {
+                vehicleService.saveVehicle(vehicleRegistrationDTO);
+                return ResponseEntity.ok("Vehicle added successfully");
+            } else {
+                return ResponseEntity.badRequest().body("Invalid vehicle data");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
+        }
+    }
     @PutMapping("/updateVehicle?id={id}")
     public ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable int id) {
         return vehicleService.updateVehicle(vehicle, id);
