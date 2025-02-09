@@ -53,7 +53,6 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
       return;
     }
 
-    // Update UI optimistically
     setState(() {
       currentFuelQuota = currentFuelQuota - enteredFuel;
     });
@@ -61,7 +60,6 @@ class _FuelQuotaPageState extends State<FuelQuotaPage> {
     fuelController.clear();
 
 
-    //Checking with the new one
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? stationID = prefs.getString('stationID');
 
