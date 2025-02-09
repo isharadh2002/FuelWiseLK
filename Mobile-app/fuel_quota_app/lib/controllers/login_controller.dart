@@ -69,7 +69,7 @@ class LoginController {
 
         if (responseBody['status'] == true) {
           // Use 'id' from response instead of 'userId'
-          final String userId = responseBody['id'].toString();  // Convert it to String
+          final String userId = responseBody['id'].toString();
 
           // Store the userId in SharedPreferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
