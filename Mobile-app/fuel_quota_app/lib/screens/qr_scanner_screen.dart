@@ -60,7 +60,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                     final vehicleDetails = await vehicleDetailsController.fetchVehicleDetails(vehicleId);
 
                     if (vehicleDetails != null) {
-                      cameraController.stop(); // Stop camera before navigation
+                      cameraController.stop();
 
                       await Navigator.push(
                         context,
