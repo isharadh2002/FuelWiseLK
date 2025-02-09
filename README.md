@@ -45,7 +45,7 @@ FuelWise.lk is a comprehensive fuel quota management system designed to address 
 - Material-UI/Tailwind CSS for web interface
 
 ### Database
-- PostgreSQL
+- MySQL
 
 ### External Services
 - Twilio for SMS notifications
@@ -57,16 +57,16 @@ The system consists of multiple components:
 1. Vehicle Owner Portal (Vite React Web Application)
 2. Fuel Station Owner Portal (Vite React Web Application)
 3. Admin Portal (Vite React Web Application)
-4. Fuel Station Operator App (Flutter Application)
+4. Fuel Station Operator App (Flutter Mobile Application)
 5. Backend API Server (Spring Boot)
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Java JDK 11 or higher
+- Java JDK 17 or higher
 - Node.js 16.x or higher
 - Flutter SDK 3.x or higher
-- PostgreSQL 12.x or higher
+- MySQL
 - Maven 3.x
 
 ### Backend Setup (Spring Boot)
@@ -129,9 +129,6 @@ The system consists of multiple components:
    flutter build apk --release
    ```
 
-## 📝 API Documentation
-API documentation is available at `/api/swagger-ui.html` when running the backend server.
-
 ## 🤝 Contributing
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
@@ -139,8 +136,6 @@ API documentation is available at `/api/swagger-ui.html` when running the backen
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📜 License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## 👥 Team Members
 - SE/2021/001 - Isuru Ranasundara
