@@ -79,8 +79,9 @@ const AddFuelStationForm = () => {
         setStationContact("");
         setUserId("");
 
-        // Redirect to manage fuel stations page
-        navigate("/manage-fuel-stations");
+        setTimeout(() => {
+          navigate("/admin-dashboard/manage-fuel-stations"); // ✅ Correct navigation
+        }, 2000); // ✅ Wait 2 seconds before navigating
       } else {
         throw new Error("Failed to add fuel station");
       }
