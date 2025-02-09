@@ -103,7 +103,7 @@ const CreateAdmins = () => {
       setPassword("");
       setConfirmPassword("");
       // Redirect to manage vehicles page
-      navigate("/view-admins");
+      navigate("/admin-dashboard/view-admins");
     } catch (error) {
       console.error("Error creating admin:", error);
       setDialogTitle("Error");
