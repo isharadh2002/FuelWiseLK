@@ -57,7 +57,7 @@ const login = async (event) => {
 
   try {
     const response = await axios.post(
-      `http://${ServerHost}/api/v1/admins/login`,
+      `${ServerHost}/api/v1/admins/login`,
       { email, password }
     );
 

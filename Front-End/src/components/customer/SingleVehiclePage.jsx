@@ -18,10 +18,10 @@ const SingleVehiclePage = () => {
         const fetchVehicleData = async () => {
             try {
                 setLoading(true);
-                const vehicleResponse = await axios.get(`http://${ServerHost}/api/v1/vehicles/get/${vehicleId}`);
+                const vehicleResponse = await axios.get(`${ServerHost}/api/v1/vehicles/get/${vehicleId}`);
                 setVehicle(vehicleResponse.data);
 
-                const qrResponse = await fetch(`http://${ServerHost}/api/v1/qr/${vehicleId}`);
+                const qrResponse = await fetch(`${ServerHost}/api/v1/qr/${vehicleId}`);
                 if (qrResponse.ok) {
                     const qrData = await qrResponse.json();
                     setQrCode(qrData);
@@ -39,7 +39,7 @@ const SingleVehiclePage = () => {
 
     const generateQRCode = async () => {
         try {
-            const response = await axios.post(`http://${ServerHost}/api/v1/qr/generate/${vehicleId}`);
+            const response = await axios.post(`${ServerHost}/api/v1/qr/generate/${vehicleId}`);
             setQrCode(response.data);
             setIsQrGenerated(true);
         } catch (error) {
@@ -50,7 +50,7 @@ const SingleVehiclePage = () => {
     const handleDelete = async () => {
         if (window.confirm("Are you sure you want to delete this vehicle?")) {
             try {
-                await axios.delete(`http://${ServerHost}/api/v1/VehicleForm/deleteData/${vehicleId}`);
+                await axios.delete(`${ServerHost}/api/v1/VehicleForm/deleteData/${vehicleId}`);
                 alert("Vehicle deleted successfully!");
                 navigate("/dashboard"); // Navigate to dashboard after successful deletion
             } catch (error) {

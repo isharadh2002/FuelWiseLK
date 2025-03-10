@@ -13,7 +13,7 @@ const ManageFuelStations = () => {
     const fetchStations = async () => {
       try {
         const response = await axios.get(
-          `http://${ServerHost}/api/v1/FuelStation/getStations`
+          `${ServerHost}/api/v1/FuelStation/getStations`
         );
         console.log("API Response:", response.data);
 
@@ -44,7 +44,7 @@ const ManageFuelStations = () => {
   const handleDelete = async (stationId) => {
     try {
       await axios.delete(
-        `http://${ServerHost}/api/v1/FuelStation/deleteByID/${stationId}`
+        `${ServerHost}/api/v1/FuelStation/deleteByID/${stationId}`
       );
       
 setStations(

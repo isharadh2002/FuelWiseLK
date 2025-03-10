@@ -12,7 +12,7 @@ export default function FuelTransactionList() {
 
     useEffect(() => {
         if (stationID) {
-            fetch(`http://${ServerHost}/api/v1/FuelTransaction/getTransactions/${stationID}`)
+            fetch(`${ServerHost}/api/v1/FuelTransaction/getTransactions/${stationID}`)
                 .then((res) => res.json())
                 .then((data) => {
                     // Sort transactions by transactionID in descending order
@@ -30,7 +30,7 @@ export default function FuelTransactionList() {
 
     const fetchVehicleDetails = (vehicleID) => {
         if (!vehicleDetails[vehicleID]) {  // Fetch only if not already stored
-            fetch(`http://${ServerHost}/api/v1/vehicles/get/${vehicleID}`)
+            fetch(`${ServerHost}/api/v1/vehicles/get/${vehicleID}`)
                 .then((res) => res.json())
                 .then((data) => {
                     setVehicleDetails(prevDetails => ({

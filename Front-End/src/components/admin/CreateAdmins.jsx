@@ -83,7 +83,7 @@ const CreateAdmins = () => {
 
     try {
       const response = await axios.post(
-        `http://${ServerHost}/api/v1/admins/create`,
+        `${ServerHost}/api/v1/admins/create`,
         {
           adminName,
           email,

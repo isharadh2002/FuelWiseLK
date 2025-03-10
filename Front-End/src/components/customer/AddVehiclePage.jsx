@@ -93,7 +93,7 @@ function VehicleForm() {
 
   const postingData = async () => {
     try {
-      const apiUrl =  `http://${ServerHost}/api/v1/VehicleForm/addVehicle`;
+      const apiUrl =  `${ServerHost}/api/v1/VehicleForm/addVehicle`;
       const response = await axios.post(apiUrl, formData, {
         headers: {
           "Content-Type": "application/json",

@@ -50,7 +50,7 @@ const AddFuelStationForm = () => {
     try {
       // API call to add fuel station
       const response = await axios.post(
-        `http://${ServerHost}/api/v1/FuelStation/save`,
+        `${ServerHost}/api/v1/FuelStation/save`,
         {
           stationName,
           stationLocation,

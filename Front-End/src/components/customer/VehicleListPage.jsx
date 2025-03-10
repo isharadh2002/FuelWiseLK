@@ -14,7 +14,7 @@ const VehicleListPage = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await fetch(`http://${ServerHost}/api/v1/vehicles/getAllByOwnerID/${ownerID}`);
+                const response = await fetch(`${ServerHost}/api/v1/vehicles/getAllByOwnerID/${ownerID}`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch vehicles");
                 }
@@ -22,7 +22,7 @@ const VehicleListPage = () => {
                 setVehicles(data);
 
                 const qrCodePromises = data.map(async (vehicle) => {
-                    const qrResponse = await fetch(`http://${ServerHost}/api/v1/qr/${vehicle.vehicleId}`);
+                    const qrResponse = await fetch(`${ServerHost}/api/v1/qr/${vehicle.vehicleId}`);
                     if (qrResponse.ok) {
                         const qrData = await qrResponse.json();
                         return { vehicleId: vehicle.vehicleId, qrCode: qrData };
@@ -90,7 +90,7 @@ const VehicleListPage = () => {
                                 // If no QR code, show Generate QR Code button
                                 <button
                                     onClick={async () => {
-                                        const response = await fetch(`http://localhost:8080/api/v1/qr/generate/${vehicle.vehicleId}`, { method: 'POST' });
+                                        const response = await fetch(`${ServerHost}/api/v1/qr/generate/${vehicle.vehicleId}`, { method: 'POST' });
                                         if (response.ok) {
                                             setQrCodes(prevState => ({
                                                 ...prevState,

@@ -35,7 +35,7 @@ const UpdateAdmin = () => {
     const fetchAdminData = async () => {
       try {
         const response = await axios.get(
-          `http://${ServerHost}/api/v1/admins/get/${adminId}`
+          `${ServerHost}/api/v1/admins/get/${adminId}`
         );
         setAdminData(response.data);
       } catch (error) {
@@ -71,7 +71,7 @@ const UpdateAdmin = () => {
 
     try {
       await axios.put(
-        `http://${ServerHost}/api/v1/admins/update/${adminId}`,
+        `${ServerHost}/api/v1/admins/update/${adminId}`,
         adminData,
         {
           headers: {

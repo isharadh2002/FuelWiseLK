@@ -27,7 +27,7 @@ const FuelStationRegistrationPageNew = () => {
     }
 
     try {
-      await axios.post(`http://${ServerHost}/api/v1/FuelStation/save`, {
+      await axios.post(`${ServerHost}/api/v1/FuelStation/save`, {
         stationName: formData.name,
         location: formData.Location,
         phone: formData.phone,

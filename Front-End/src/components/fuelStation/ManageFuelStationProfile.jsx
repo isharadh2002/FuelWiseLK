@@ -13,7 +13,7 @@ function ManageFuelStationProfile() {
     useEffect(() => {
         const userId = localStorage.getItem("userId");
         if (userId) {
-            fetch(`http://${ServerHost}/api/v1/User/getMobileUser/${userId}`, {
+            fetch(`${ServerHost}/api/v1/User/getMobileUser/${userId}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             })
@@ -57,7 +57,7 @@ function ManageFuelStationProfile() {
         try {
             console.log("Sending update request with data:", updatedData);
 
-            const response = await fetch(`http://${ServerHost}/api/v1/User/updateMobileUser/${userId}`, {
+            const response = await fetch(`${ServerHost}/api/v1/User/updateMobileUser/${userId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedData),

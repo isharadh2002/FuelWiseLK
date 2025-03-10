@@ -40,7 +40,7 @@ const UpdateFuelStationForm = () => {
     const fetchStationData = async () => {
       try {
         const response = await axios.get(
-          `http://${ServerHost}/api/v1/FuelStation/getByID/${stationId}`
+          `${ServerHost}/api/v1/FuelStation/getByID/${stationId}`
         );
         setStationData(response.data);
       } catch (error) {
@@ -63,7 +63,7 @@ const UpdateFuelStationForm = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://${ServerHost}/api/v1/FuelStation/update/${stationId}`,
+        `${ServerHost}/api/v1/FuelStation/update/${stationId}`,
         stationData,
         {
           headers: {

@@ -15,7 +15,7 @@ const ViewAdmins = () => {
     const fetchAdmins = async () => {
       try {
         const response = await axios.get(
-          `http://${ServerHost}/api/v1/admins/getAll`
+          `${ServerHost}/api/v1/admins/getAll`
         );
         setAdmins(response.data);
       } catch (err) {
@@ -34,7 +34,7 @@ const ViewAdmins = () => {
     const fetchAdmins = async () => {
       try {
         const response = await axios.get(
-          `http://${ServerHost}/api/v1/admins/getAll`
+          `${ServerHost}/api/v1/admins/getAll`
         );
         setAdmins(response.data);
       } catch (err) {
@@ -49,7 +49,7 @@ const ViewAdmins = () => {
   const handleDelete = async (adminId) => {
     try {
       await axios.delete(
-        `http://${ServerHost}/api/v1/admins/delete/${adminId}`
+        `${ServerHost}/api/v1/admins/delete/${adminId}`
       );
       setAdmins(admins.filter((admin) => admin.adminID !== adminId));
     } catch (err) {

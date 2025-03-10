@@ -40,7 +40,7 @@ const AddVehicleForm = () => {
     try {
       // API call to add vehicle
       const response = await axios.post(
-        `http://${ServerHost}/api/v1/vehicles/add`,
+        `${ServerHost}/api/v1/vehicles/add`,
         {
           licensePlate,
           vehicleModel,
