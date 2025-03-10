@@ -48,6 +48,9 @@ import FuelStationOverview from "./components/fuelStation/Overview.jsx";
 import FuelStationProfileView from "./components/fuelStation/FuelStationProfileDetails.jsx";
 import ManageFuelStationProfile from "./components/fuelStation/ManageFuelStationProfile.jsx";
 import FuelTransactionDetails from "./components/fuelStation/FuelTransactionDetails.jsx";
+import ServerHost from "./ServerHost.jsx";
+
+console.log("Server Host : " + ServerHost);
 
 function App() {
     return (
