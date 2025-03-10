@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import ServerHost from "../../ServerHost.jsx";
+
 function ManageProfile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ function ManageProfile() {
     const userId = localStorage.getItem("userId");
     if (userId) {
       // Fetch the profile data using the userId
-      fetch(`http://localhost:8080/api/v1/User/get/${userId}`, {
+      fetch(`http://${ServerHost}/api/v1/User/get/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +52,7 @@ function ManageProfile() {
 
     const userId = localStorage.getItem("userId");
 
-    fetch(`http://localhost:8080/api/v1/User/update/${userId}`, {
+    fetch(`http://${ServerHost}/api/v1/User/update/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

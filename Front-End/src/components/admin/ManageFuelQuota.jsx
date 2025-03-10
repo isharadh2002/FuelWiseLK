@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const ResetFuelQuota = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(null);
@@ -12,7 +14,7 @@ const ResetFuelQuota = () => {
 
     try {
       // Replace with your actual API endpoint
-      await axios.put("http://localhost:8080/api/v1/FuelQuota/resetQuota");
+      await axios.put(`http://${ServerHost}/api/v1/FuelQuota/resetQuota`);
       setStatus("success");
     } catch (error) {
       setStatus("error");

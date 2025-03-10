@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const VehicleListPage = () => {
     const [vehicles, setVehicles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ const VehicleListPage = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/v1/vehicles/getAllByOwnerID/${ownerID}`);
+                const response = await fetch(`http://${ServerHost}/api/v1/vehicles/getAllByOwnerID/${ownerID}`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch vehicles");
                 }
@@ -20,7 +22,7 @@ const VehicleListPage = () => {
                 setVehicles(data);
 
                 const qrCodePromises = data.map(async (vehicle) => {
-                    const qrResponse = await fetch(`http://localhost:8080/api/v1/qr/${vehicle.vehicleId}`);
+                    const qrResponse = await fetch(`http://${ServerHost}/api/v1/qr/${vehicle.vehicleId}`);
                     if (qrResponse.ok) {
                         const qrData = await qrResponse.json();
                         return { vehicleId: vehicle.vehicleId, qrCode: qrData };

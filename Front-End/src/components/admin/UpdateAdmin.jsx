@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const UpdateAdmin = () => {
   const { adminId } = useParams(); // Retrieve adminId from the URL
   const navigate = useNavigate();
@@ -33,7 +35,7 @@ const UpdateAdmin = () => {
     const fetchAdminData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/v1/admins/get/${adminId}`
+          `http://${ServerHost}/api/v1/admins/get/${adminId}`
         );
         setAdminData(response.data);
       } catch (error) {
@@ -69,7 +71,7 @@ const UpdateAdmin = () => {
 
     try {
       await axios.put(
-        `http://localhost:8080/api/v1/admins/update/${adminId}`,
+        `http://${ServerHost}/api/v1/admins/update/${adminId}`,
         adminData,
         {
           headers: {

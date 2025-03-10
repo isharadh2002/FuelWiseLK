@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import ServerHost from "../ServerHost.jsx";
+
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
     userName: "",
@@ -80,7 +82,7 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    await axios.post("http://localhost:8080/api/v1/User/save", {
+    await axios.post(`http://${ServerHost}/api/v1/User/save`, {
       userName: formData.userName,
       phone: formData.phone,
       email: formData.email,

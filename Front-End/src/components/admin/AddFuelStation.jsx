@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const AddFuelStationForm = () => {
   const [stationName, setStationName] = useState("");
   const [stationLocation, setStationLocation] = useState("");
@@ -48,7 +50,7 @@ const AddFuelStationForm = () => {
     try {
       // API call to add fuel station
       const response = await axios.post(
-        "http://localhost:8080/api/v1/FuelStation/save",
+        `http://${ServerHost}/api/v1/FuelStation/save`,
         {
           stationName,
           stationLocation,

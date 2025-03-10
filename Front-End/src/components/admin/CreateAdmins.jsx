@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const CreateAdmins = () => {
   const navigate = useNavigate();
   const [adminName, setAdminName] = useState("");
@@ -81,7 +83,7 @@ const CreateAdmins = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/admins/create",
+        `http://${ServerHost}/api/v1/admins/create`,
         {
           adminName,
           email,

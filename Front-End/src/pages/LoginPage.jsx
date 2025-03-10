@@ -10,6 +10,8 @@ import {
   Alert,
 } from "@mui/material";
 
+import ServerHost from "../ServerHost.jsx";
+
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,7 +60,7 @@ const LoginForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/User/login",
+        `http://${ServerHost}/api/v1/User/login`,
         {
           email: email,
           password: password,
@@ -84,7 +86,7 @@ const LoginForm = () => {
           if(userRole === 'fuel_station'){
             try {
               const response = await axios.get(
-                  `http://localhost:8080/api/v1/FuelStation/getStationID/${userId}`
+                  `http://${ServerHost}/api/v1/FuelStation/getStationID/${userId}`
               );
 
               const stationId = response.data; // Since response is a raw integer
@@ -107,7 +109,7 @@ const LoginForm = () => {
           else if(userRole === 'vehicle_owner'){
             try {
               const response = await axios.get(
-                  `http://localhost:8080/api/v1/VehicleOwner/getOwnerID/${userId}`
+                  `http://${ServerHost}/api/v1/VehicleOwner/getOwnerID/${userId}`
               );
 
               const ownerId = response.data; // Since response is a raw integer

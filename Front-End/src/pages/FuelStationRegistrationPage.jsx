@@ -2,6 +2,8 @@ import { useState } from "react";
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
+import ServerHost from "../ServerHost.jsx";
+
 const FuelStationRegistrationPageNew = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -25,7 +27,7 @@ const FuelStationRegistrationPageNew = () => {
     }
 
     try {
-      await axios.post("http://localhost:8080/api/v1/FuelStation/save", {
+      await axios.post(`http://${ServerHost}/api/v1/FuelStation/save`, {
         stationName: formData.name,
         location: formData.Location,
         phone: formData.phone,

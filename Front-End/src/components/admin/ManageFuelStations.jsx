@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const ManageFuelStations = () => {
   const [stations, setStations] = useState([]); // Always an array
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ const ManageFuelStations = () => {
     const fetchStations = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/FuelStation/getStations"
+          `http://${ServerHost}/api/v1/FuelStation/getStations`
         );
         console.log("API Response:", response.data);
 
@@ -42,7 +44,7 @@ const ManageFuelStations = () => {
   const handleDelete = async (stationId) => {
     try {
       await axios.delete(
-        `http://localhost:8080/api/v1/FuelStation/deleteByID/${stationId}`
+        `http://${ServerHost}/api/v1/FuelStation/deleteByID/${stationId}`
       );
       
 setStations(

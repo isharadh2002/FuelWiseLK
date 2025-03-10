@@ -10,6 +10,8 @@ import {
   Alert,
 } from "@mui/material";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const UpdateFuelStationForm = () => {
   const [stationData, setStationData] = useState({
     stationName: "",
@@ -38,7 +40,7 @@ const UpdateFuelStationForm = () => {
     const fetchStationData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/v1/FuelStation/getByID/${stationId}`
+          `http://${ServerHost}/api/v1/FuelStation/getByID/${stationId}`
         );
         setStationData(response.data);
       } catch (error) {
@@ -61,7 +63,7 @@ const UpdateFuelStationForm = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:8080/api/v1/FuelStation/update/${stationId}`,
+        `http://${ServerHost}/api/v1/FuelStation/update/${stationId}`,
         stationData,
         {
           headers: {

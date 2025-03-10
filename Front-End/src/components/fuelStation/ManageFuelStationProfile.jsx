@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import ServerHost from "../../ServerHost.jsx";
+
 function ManageFuelStationProfile() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ function ManageFuelStationProfile() {
     useEffect(() => {
         const userId = localStorage.getItem("userId");
         if (userId) {
-            fetch(`http://localhost:8080/api/v1/User/getMobileUser/${userId}`, {
+            fetch(`http://${ServerHost}/api/v1/User/getMobileUser/${userId}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             })
@@ -55,7 +57,7 @@ function ManageFuelStationProfile() {
         try {
             console.log("Sending update request with data:", updatedData);
 
-            const response = await fetch(`http://localhost:8080/api/v1/User/updateMobileUser/${userId}`, {
+            const response = await fetch(`http://${ServerHost}/api/v1/User/updateMobileUser/${userId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedData),

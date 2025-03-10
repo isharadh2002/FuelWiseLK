@@ -4,6 +4,8 @@ import { Car, Edit, Fuel } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Alert } from "@mui/material";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const AddVehicleForm = () => {
   const [licensePlate, setLicensePlate] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
@@ -38,7 +40,7 @@ const AddVehicleForm = () => {
     try {
       // API call to add vehicle
       const response = await axios.post(
-        "http://localhost:8080/api/v1/vehicles/add",
+        `http://${ServerHost}/api/v1/vehicles/add`,
         {
           licensePlate,
           vehicleModel,

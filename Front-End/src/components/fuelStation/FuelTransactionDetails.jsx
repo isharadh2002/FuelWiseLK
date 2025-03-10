@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Fuel, Clock } from "lucide-react";
 
+import ServerHost from "../../ServerHost.jsx";
+
 export default function FuelTransactionList() {
     const [transactions, setTransactions] = useState([]);
     const [vehicleDetails, setVehicleDetails] = useState({});
@@ -10,7 +12,7 @@ export default function FuelTransactionList() {
 
     useEffect(() => {
         if (stationID) {
-            fetch(`http://localhost:8080/api/v1/FuelTransaction/getTransactions/${stationID}`)
+            fetch(`http://${ServerHost}/api/v1/FuelTransaction/getTransactions/${stationID}`)
                 .then((res) => res.json())
                 .then((data) => {
                     // Sort transactions by transactionID in descending order
@@ -28,7 +30,7 @@ export default function FuelTransactionList() {
 
     const fetchVehicleDetails = (vehicleID) => {
         if (!vehicleDetails[vehicleID]) {  // Fetch only if not already stored
-            fetch(`http://localhost:8080/api/v1/vehicles/get/${vehicleID}`)
+            fetch(`http://${ServerHost}/api/v1/vehicles/get/${vehicleID}`)
                 .then((res) => res.json())
                 .then((data) => {
                     setVehicleDetails(prevDetails => ({
