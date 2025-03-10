@@ -14,7 +14,7 @@ const ResetFuelQuota = () => {
 
     try {
       // Replace with your actual API endpoint
-      await axios.put(`http://${ServerHost}/api/v1/FuelQuota/resetQuota`);
+      await axios.put(`${ServerHost}/api/v1/FuelQuota/resetQuota`);
       setStatus("success");
     } catch (error) {
       setStatus("error");

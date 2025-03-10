@@ -60,7 +60,7 @@ const LoginForm = () => {
 
     try {
       const response = await axios.post(
-        `http://${ServerHost}/api/v1/User/login`,
+        `${ServerHost}/api/v1/User/login`,
         {
           email: email,
           password: password,
@@ -86,7 +86,7 @@ const LoginForm = () => {
           if(userRole === 'fuel_station'){
             try {
               const response = await axios.get(
-                  `http://${ServerHost}/api/v1/FuelStation/getStationID/${userId}`
+                  `${ServerHost}/api/v1/FuelStation/getStationID/${userId}`
               );
 
               const stationId = response.data; // Since response is a raw integer
@@ -109,7 +109,7 @@ const LoginForm = () => {
           else if(userRole === 'vehicle_owner'){
             try {
               const response = await axios.get(
-                  `http://${ServerHost}/api/v1/VehicleOwner/getOwnerID/${userId}`
+                  `${ServerHost}/api/v1/VehicleOwner/getOwnerID/${userId}`
               );
 
               const ownerId = response.data; // Since response is a raw integer

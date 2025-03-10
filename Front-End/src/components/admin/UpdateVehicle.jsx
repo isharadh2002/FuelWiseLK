@@ -32,7 +32,7 @@ const UpdateVehicleForm = () => {
     const fetchVehicleData = async () => {
       try {
         const response = await axios.get(
-          `http://${ServerHost}/api/v1/vehicles/get/${vehicleId}`
+          `${ServerHost}/api/v1/vehicles/get/${vehicleId}`
         );
         setVehicleData(response.data);
       } catch (error) {
@@ -55,7 +55,7 @@ const UpdateVehicleForm = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://${ServerHost}/api/v1/vehicles/update/${vehicleId}`,
+        `${ServerHost}/api/v1/vehicles/update/${vehicleId}`,
         vehicleData,
         {
           headers: {

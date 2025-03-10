@@ -18,7 +18,7 @@ const ManageVehiclePage = () => {
     useEffect(() => {
         const fetchVehicleData = async () => {
             try {
-                const response = await axios.get(`http://${ServerHost}/api/v1/vehicles/get/${vehicleId}`);
+                const response = await axios.get(`${ServerHost}/api/v1/vehicles/get/${vehicleId}`);
                 setVehicle(response.data);
             } catch (err) {
                 setError("Error fetching vehicle details.");
@@ -36,7 +36,7 @@ const ManageVehiclePage = () => {
 
     const handleUpdate = async () => {
         try {
-            await axios.put(`http://${ServerHost}/api/v1/vehicles/update/${vehicleId}`, vehicle);
+            await axios.put(`${ServerHost}/api/v1/vehicles/update/${vehicleId}`, vehicle);
             alert("Vehicle updated successfully!");
             navigate(`/vehicle/${vehicleId}`);
         } catch (error) {
@@ -48,7 +48,7 @@ const ManageVehiclePage = () => {
     const handleDelete = async () => {
         if (window.confirm("Are you sure you want to delete this vehicle?")) {
             try {
-                await axios.delete(`http://${ServerHost}/api/v1/VehicleForm/deleteData/${vehicleId}`);
+                await axios.delete(`${ServerHost}/api/v1/VehicleForm/deleteData/${vehicleId}`);
                 alert("Vehicle deleted successfully!");
                 navigate("/dashboard");
             } catch (error) {

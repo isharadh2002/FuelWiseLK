@@ -14,7 +14,7 @@ function ManageProfile() {
     const userId = localStorage.getItem("userId");
     if (userId) {
       // Fetch the profile data using the userId
-      fetch(`http://${ServerHost}/api/v1/User/get/${userId}`, {
+      fetch(`${ServerHost}/api/v1/User/get/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +52,7 @@ function ManageProfile() {
 
     const userId = localStorage.getItem("userId");
 
-    fetch(`http://${ServerHost}/api/v1/User/update/${userId}`, {
+    fetch(`${ServerHost}/api/v1/User/update/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

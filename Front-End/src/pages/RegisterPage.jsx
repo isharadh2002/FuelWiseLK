@@ -82,7 +82,7 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    await axios.post(`http://${ServerHost}/api/v1/User/save`, {
+    await axios.post(`${ServerHost}/api/v1/User/save`, {
       userName: formData.userName,
       phone: formData.phone,
       email: formData.email,

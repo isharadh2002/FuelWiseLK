@@ -13,7 +13,7 @@ const ManageVehicles = () => {
     const fetchVehicles = async () => {
       try {
         const response = await axios.get(
-          `http://${ServerHost}/api/v1/vehicles/all`
+          `${ServerHost}/api/v1/vehicles/all`
         );
         console.log("API Response:", response.data);
 
@@ -40,7 +40,7 @@ const ManageVehicles = () => {
   const handleDelete = async (vehicleId) => {
     try {
       await axios.delete(
-        `http://${ServerHost}/api/v1/vehicles/delete/${vehicleId}`
+        `${ServerHost}/api/v1/vehicles/delete/${vehicleId}`
       );
       setVehicles((prevVehicles) =>
         prevVehicles.filter((vehicle) => vehicle.vehicleId !== vehicleId)

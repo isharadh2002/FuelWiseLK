@@ -14,7 +14,7 @@ const QRCodePage = () => {
     useEffect(() => {
         const fetchQRCode = async () => {
             try {
-                const response = await axios.get(`http://${ServerHost}/api/v1/qr/${vehicleId}`);
+                const response = await axios.get(`${ServerHost}/api/v1/qr/${vehicleId}`);
                 if (response.data && response.data.qrCodeData) {
                     setQrCode(response.data.qrCodeData);
                 } else {
