@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "./Header";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const QRCodePage = () => {
     const { vehicleId } = useParams();
     const [qrCode, setQrCode] = useState(null);
@@ -12,7 +14,7 @@ const QRCodePage = () => {
     useEffect(() => {
         const fetchQRCode = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/v1/qr/${vehicleId}`);
+                const response = await axios.get(`http://${ServerHost}/api/v1/qr/${vehicleId}`);
                 if (response.data && response.data.qrCodeData) {
                     setQrCode(response.data.qrCodeData);
                 } else {

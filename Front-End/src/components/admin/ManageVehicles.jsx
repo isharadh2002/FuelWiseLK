@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const ManageVehicles = () => {
   const [vehicles, setVehicles] = useState([]);
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ const ManageVehicles = () => {
     const fetchVehicles = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/vehicles/all"
+          `http://${ServerHost}/api/v1/vehicles/all`
         );
         console.log("API Response:", response.data);
 
@@ -38,7 +40,7 @@ const ManageVehicles = () => {
   const handleDelete = async (vehicleId) => {
     try {
       await axios.delete(
-        `http://localhost:8080/api/v1/vehicles/delete/${vehicleId}`
+        `http://${ServerHost}/api/v1/vehicles/delete/${vehicleId}`
       );
       setVehicles((prevVehicles) =>
         prevVehicles.filter((vehicle) => vehicle.vehicleId !== vehicleId)

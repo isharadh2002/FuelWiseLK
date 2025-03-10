@@ -4,6 +4,8 @@ import { Car } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const UpdateVehicleForm = () => {
   
   const { vehicleId } = useParams(); // Retrieve vehicleId from the URL
@@ -30,7 +32,7 @@ const UpdateVehicleForm = () => {
     const fetchVehicleData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/v1/vehicles/get/${vehicleId}`
+          `http://${ServerHost}/api/v1/vehicles/get/${vehicleId}`
         );
         setVehicleData(response.data);
       } catch (error) {
@@ -53,7 +55,7 @@ const UpdateVehicleForm = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:8080/api/v1/vehicles/update/${vehicleId}`,
+        `http://${ServerHost}/api/v1/vehicles/update/${vehicleId}`,
         vehicleData,
         {
           headers: {

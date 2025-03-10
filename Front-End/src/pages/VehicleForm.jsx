@@ -4,6 +4,8 @@ import {Paper, TextField, Button, Box, Card, Grid, Typography, Snackbar} from "@
 import PropTypes from "prop-types";
 import axios from "axios";
 
+import ServerHost from "../ServerHost.jsx";
+
 function VehicleForm() {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
@@ -91,7 +93,7 @@ function VehicleForm() {
 
   const postingData = async () => {
     try {
-      const apiUrl =  "http://localhost:8080/api/v1/VehicleForm/addVehicle";
+      const apiUrl =  `http://${ServerHost}/api/v1/VehicleForm/addVehicle`;
       const response = await axios.post(apiUrl, formData, {
         headers: {
           "Content-Type": "application/json",

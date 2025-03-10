@@ -10,6 +10,8 @@ import {
   Alert,
 } from "@mui/material";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const AdminLoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,7 +57,7 @@ const login = async (event) => {
 
   try {
     const response = await axios.post(
-      "http://localhost:8080/api/v1/admins/login",
+      `http://${ServerHost}/api/v1/admins/login`,
       { email, password }
     );
 

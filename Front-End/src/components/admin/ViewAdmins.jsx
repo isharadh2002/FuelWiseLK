@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import ServerHost from "../../ServerHost.jsx";
+
 const ViewAdmins = () => {
   const [admins, setAdmins] = useState([]);
   const [error, setError] = useState(null);
@@ -13,7 +15,7 @@ const ViewAdmins = () => {
     const fetchAdmins = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/admins/getAll"
+          `http://${ServerHost}/api/v1/admins/getAll`
         );
         setAdmins(response.data);
       } catch (err) {
@@ -32,7 +34,7 @@ const ViewAdmins = () => {
     const fetchAdmins = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/admins/getAll"
+          `http://${ServerHost}/api/v1/admins/getAll`
         );
         setAdmins(response.data);
       } catch (err) {
@@ -47,7 +49,7 @@ const ViewAdmins = () => {
   const handleDelete = async (adminId) => {
     try {
       await axios.delete(
-        `http://localhost:8080/api/v1/admins/delete/${adminId}`
+        `http://${ServerHost}/api/v1/admins/delete/${adminId}`
       );
       setAdmins(admins.filter((admin) => admin.adminID !== adminId));
     } catch (err) {
