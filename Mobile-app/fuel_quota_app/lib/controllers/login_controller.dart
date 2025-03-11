@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fuel_quota_app/app_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,11 +13,11 @@ Future<void> storeUserId(String userId) async {
 }
 
 class LoginController {
-  static const String baseUrl = 'http://10.0.2.2:8080/api/v1/User';
+  static const String baseUrl = '$backendURL/api/v1/User';
 
   //Retrieve FuelStationID after login
   Future<void> fetchAndStoreStationID(String userId) async {
-    const String fuelStationBaseUrl = 'http://10.0.2.2:8080/api/v1/FuelStation';
+    const String fuelStationBaseUrl = '$backendURL/api/v1/FuelStation';
 
     try {
       final response = await http.get(

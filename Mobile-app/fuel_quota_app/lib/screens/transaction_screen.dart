@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../app_config.dart';
 
 class TransactionPage extends StatefulWidget {
   final String stationId;
@@ -23,7 +24,7 @@ class _TransactionPageState extends State<TransactionPage> {
   Future<List<Map<String, dynamic>>> fetchTransactions(String stationId) async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:8080/api/v1/FuelTransaction/getTransactions/$stationId'),
+        Uri.parse('$backendURL/api/v1/FuelTransaction/getTransactions/$stationId'),
       );
 
       if (response.statusCode == 200) {

@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'package:fuel_quota_app/app_config.dart';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = 'http://10.0.2.2:8080/api/v1/FuelQuota';
+const String baseUrl = '$backendURL/api/v1/FuelQuota';
 
 class VehicleDetailsController {
   // Fetch vehicle details by vehicle ID

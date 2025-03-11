@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fuel_quota_app/app_config.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileController {
-  static const String baseUrl = 'http://10.0.2.2:8080/api/v1/User';
+  static const String baseUrl = '$backendURL/api/v1/User';
 
   Future<Map<String, dynamic>> fetchProfile(String userId) async {
     try {
